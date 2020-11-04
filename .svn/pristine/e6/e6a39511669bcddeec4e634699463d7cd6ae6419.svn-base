@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="4.6">
+    <CLASSES>
+      <root url="file://$MAVEN_REPOSITORY$/com/license4j/license4j-runtime-library/4.6.9" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$MAVEN_REPOSITORY$/com/license4j/license4j-runtime-library" />
+    </SOURCES>
+    <jarDirectory url="file://$MAVEN_REPOSITORY$/com/license4j/license4j-runtime-library/4.6.9" recursive="false" />
+  </library>
+</component>

@@ -1,0 +1,164 @@
+
+<div class="container-fluid">
+    <div class="container cus_main_row" >
+
+        <div class="row">
+            <h2 class="pos-header-new">
+                <div>Packages</div>
+            </h2>
+        </div>
+        <div class="row inner_row_bg">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="panel">
+                    <div class="panel-body">
+
+
+                        <div class="col-md-9 col-lg-7 col-sm-9 col-xs-7">
+
+                            <div class="form-group">
+                                <div class="col-sm-2">
+                                    <button type="button" class="btn btn-primary hi_btn"  ng-click="addNewPackage()">Add</button>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="fixed-table-container">
+                    <div class="table_wrapfixed-table-container-inner">
+                        <div class="header-background"></div>
+                        <table data-toggle="table" data-cache="false" data-height="299" class="hi_table table table-hover table-bordered table-striped table-fixed-header">
+                            <thead>
+                            <tr>
+                                <!--<th data-field="state" data-radio="true">-->
+                                <!--<div class="th-inner"></div>-->
+                                <!--</th>-->
+                                <th data-field="cntryname">
+                                    <div class="th-inner">Package Name</div>
+                                </th>
+                                <th data-field="edit">
+                                    <div class="th-inner">Redirect URL</div>
+                                </th>
+                                <th data-field="edit">
+                                    <div class="th-inner">Status</div>
+                                </th>
+                                <th data-field="edit">
+                                    <div class="th-inner">Edit</div>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody id="parentTable">
+                            <tr ng-repeat="package in packageList| filter:searchText">
+                                <td>{{package.packageName}}</td>
+                                <td>{{package.redirectUrl}}</td>
+                                <td>{{package.status}}</td>
+                                <td><a id="edit_{{$index}}" href="javascript:void(0)" ng-click="editpackage(package)" class="edit"><i class="fa fa-pencil-square-o fa-fw orange"></i></a></td>
+
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade ExchangeRate" tabindex="-1" id="add_new_package_modal" role="dialog" data-backdrop="static"
+                 aria-labelledby="mySmallModalLabel">
+                <div class="modal-dialog modal-md">
+                    <div class="modal-content checkout">
+                        <div class="modal-header">
+                            <button type="button" class="close" ng-click="removePackageDetails()" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="title">Add Package</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12">
+                                    <form  class="form-horizontal" name="currency">
+                                        <fieldset>
+                                            <div class="form-group">
+                                                <input type="hidden" ng-model="Obj.packagesSASSId" value="{{Obj.packagesSASSId}}"/>
+                                                <label class="col-md-4 col-sm-4 control-label" >Package Name</label>
+                                                <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                    <input id="packagename" name="packagename"
+                                                           ng-pattern="text" alpha-with-space
+                                                           type="text" placeholder="Package Name"
+                                                           ng-model="packagenameText"
+                                                           class="form-control input-md" >
+
+
+                                                </div>
+                                            </div>
+
+
+                                            <div class="form-group">
+                                                <label class="col-md-4 col-sm-4 control-label">Redirect URL</label>
+                                                <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                    <input id="redirecturl" name="redirecturl"
+                                                           allowpattern="[a-z]"
+                                                           type="text" placeholder="Redirect URL"
+                                                           ng-model="redirecturlText"
+                                                           class="form-control input-md" autocomplete="off" required>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="col-md-4 col-sm-4 control-label">SyncURL</label>
+                                                <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                    <input id="syncurl" name="syncurl"
+                                                           allowpattern="[a-z]"
+                                                           type="text" placeholder="SyncURL"
+                                                           ng-model="syncurlText"
+                                                           class="form-control input-md" autocomplete="off" required>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-4 col-sm-4 control-label">LicncUrl</label>
+                                                <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                    <input id="licncurl" name="licncurl"
+                                                           allowpattern="[a-z]"
+                                                           type="text" placeholder="LicncUrl"
+                                                           ng-model="licncurlText"
+                                                           class="form-control input-md" autocomplete="off" required>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="col-md-4 col-sm-4 control-label" for="">Status</label>
+                                                <div class="col-md-6 col-sm-6" >
+                                                    <select name="currencyStatus" id="currencyStatus" ng-model="pkgStatusText" class="form-control input-md" required>
+                                                        <option value="Active">Active</option>
+                                                        <option value="InActive">InActive</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-4 col-sm-4 control-label">CompanyCreateURL</label>
+                                                <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                    <input id="cmpnyurl" name="cmpnyurl"
+                                                           allowpattern="[a-z]"
+                                                           type="text" placeholder="CompanyCreateURL"
+                                                           ng-model="cmpnyurlText"
+                                                           class="form-control input-md" autocomplete="off" required>
+                                                </div>
+                                            </div>
+
+                                        </fieldset>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" ng-click="saveNewPackage()">Save</button>
+                            <button type="button" class="btn btn-default" ng-click="removePackageDetails()" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

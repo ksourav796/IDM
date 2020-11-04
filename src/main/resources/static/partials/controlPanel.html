@@ -1,0 +1,156 @@
+<body>
+<div class="container-fluid">
+    <div class="container cus_main_row" >
+
+        <div class="row">
+            <h2 class="pos-header-new">
+                <div>ControlPanel</div>
+            </h2>
+        </div>
+        <div class="row">
+            <div class="col-md-3 rep_list_info" ng-show="userPermission.currency==true">
+                <a href="#!/currency">
+                    <div class="custom_info">
+                        <img src="images/icon/controlpanel/configurator/currency.png"  width="100" height="80">
+                        <div class="rep_info"><h5><strong>Currency</strong></h5></div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-3 rep_list_info" ng-show="userPermission.paymentMethod==true">
+                <a href="#!/paymentmethod">
+                    <div class="custom_info">
+                        <img src="images/icon/controlpanel/configurator/paymentmethod.png"  width="100" height="80">
+                        <div class="rep_info"><h5><strong>Payment Method</strong></h5></div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-3 rep_list_info" ng-show="userPermission.country==true">
+                <a href="#!/countryList">
+                    <div class="custom_info">
+                        <img src="images/icon/controlpanel/configurator/country.png"  width="100" height="80">
+                        <div class="rep_info"><h5><strong>Country</strong></h5></div>
+                    </div>
+                </a>
+            </div>
+
+
+            <div class="col-md-3 rep_list_info" ng-show="userPermission.state==true">
+                <a href="#!/StateList">
+                    <div class="custom_info">
+                        <img src="images/icon/report/reportbankreconciliation/bankrep.png"  width="100" height="80">
+                        <div class="rep_info"><h5><strong>State</strong></h5></div>
+                    </div>
+                </a>
+            </div>
+
+
+            <div class="col-md-3 rep_list_info" ng-show="userPermission.versionControl==true">
+                <a href="#!/versioncontrol">
+                    <div class="custom_info">
+                        <img src="images/icon/controlpanel/configurator/project.png"  width="100" height="80">
+                        <div class="rep_info"><h5><strong>Version Control</strong></h5></div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-3 rep_list_info" ng-show="userPermission.subscription==true">
+                <a href="#!/subscription">
+                    <div class="custom_info">
+                        <img src="images/icon/inventory/salesdiscountconfigurationinv.png"  width="100" height="80">
+                        <div class="rep_info"><h5><strong>Subscription</strong></h5></div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-3 rep_list_info" ng-show="userPermission.packages==true">
+                <a href="#!/packages">
+                    <div class="custom_info">
+                        <img src="images/icon/inventory/productmerger.png"  width="100" height="80">
+                        <div class="rep_info"><h5><strong>Packages</strong></h5></div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-3 rep_list_info" ng-show="userPermission.practitionerRegistration==true">
+                <a href="#!/PractitionerRegistration">
+                    <div class="custom_info">
+                        <img src="images/icon/controlpanel/displaysetup/editformno.png"  width="100" height="80">
+                        <div class="rep_info"><h5><strong>PractitionerRegistration</strong></h5></div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-3 rep_list_info" ng-show="userPermission.practitionerOrders==true">
+                <a href="#!/Practitionerorders">
+                    <div class="custom_info">
+                        <img src="images/icon/report/reportfinancialstatement/viewledger.png"  width="100" height="80">
+                        <div class="rep_info"><h5><strong>Practitionerorders</strong></h5></div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-3 rep_list_info" ng-show="userPermission.customer==true">
+                <a href="#!/customer">
+                    <div class="custom_info">
+                        <img src="images/icon/controlpanel/configurator/agent.png"  width="100" height="80">
+                        <div class="rep_info"><h5><strong>Customer</strong></h5></div>
+                    </div>
+                </a>
+            </div>
+                <div class="col-md-3 rep_list_info" ng-show="userPermission.item==true">
+                <a href="#!/item">
+                    <div class="custom_info">
+                        <img src="images/icon/inventory/itemcommission.png"  width="100" height="80">
+                        <div class="rep_info"><h5><strong>Item</strong></h5></div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-3 rep_list_info" ng-show="userPermission.addOn==true">
+                <a href="#!/addon">
+                    <div class="custom_info">
+                        <img src="images/icon/controlpanel/openingbalance/openingbalanceofinventory.png"  width="100" height="80">
+                        <div class="rep_info"><h5><strong>AddOn</strong></h5></div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-3 rep_list_info" ng-show="userPermission.cartRegistration==true">
+                <a href="#!/cartRegistration">
+                    <div class="custom_info">
+                        <img src="images/purchase-adjustment.png"  width="100" height="80">
+                        <div class="rep_info"><h5><strong>Cart Registration</strong></h5></div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-3 rep_list_info" ng-show="userPermission.user==true">
+                <a href="#!/user">
+                    <div class="custom_info">
+                        <img src="images/icon/controlpanel/useraccountsetup/useraccountsetupwithpermissions.png"  width="100" height="80">
+                        <div class="rep_info"><h5><strong>User</strong></h5></div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-3 rep_list_info" ng-show="userPermission.cartCustomer==true">
+                <a href="#!/cartcustomerlink">
+                    <div class="custom_info">
+                        <img src="images/icon/controlpanel/configurator/shippingmethod.png"  width="100" height="80">
+                        <div class="rep_info"><h5><strong>CartCustomer</strong></h5></div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-3 rep_list_info" ng-show="userPermission.rtrSyncSettings==true">
+                <a href="#!/rtrSyncSettings">
+                    <div class="custom_info">
+                        <img src="images/icon/controlpanel/companysetup/backup-restore.png"  width="100" height="80">
+                        <div class="rep_info"><h5><strong>rtrSyncSettings</strong></h5></div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-3 rep_list_info" >
+                <a href="#!/renew">
+                    <div class="custom_info">
+                        <img src="images/icon/controlpanel/companysetup/backup-restore.png"  width="100" height="80">
+                        <div class="rep_info"><h5><strong>Renew</strong></h5></div>
+                    </div>
+                </a>
+            </div>
+
+    </div>
+</div>
+</body>
+
+

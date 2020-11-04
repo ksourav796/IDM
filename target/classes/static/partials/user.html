@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<div class="container-fluid">
+    <div class="container cus_main_row" >
+        <div class="row">
+            <h2 class="pos-header-new">
+                <div>User</div>
+            </h2>
+        </div>
+        <div class="row inner_row_bg">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="panel">
+                    <div class="panel-body" style="height: 65px;">
+                        <div class="col-md-4 col-lg-3 col-sm-5 col-xs-5">
+                            <form class="form-horizontal ng-pristine ng-valid">
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="col-lg-7 col-md-9 col-sm-9">
+
+                            <div class="form-group">
+                                <div class="col-sm-2">
+                                    <button type="button" class="btn btn-default hi_btn"  ng-click="addUserDetails()">Add</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="fixed-table-container">
+                        <div class="table_wrap fixed-table-container-inner">
+                            <div class="header-background"> </div>
+                            <table data-toggle="table" data-cache="false" data-height="299" style="margin-bottom: 0;" class="hi_table table table-hover table-bordered table-striped table-fixed-header">
+                                <thead>
+                                <th data-field="cntryname"><div class="th-inner">User Name</div></th>
+                                <th data-field="cntryname"><div class="th-inner">Full Name</div></th>
+                                <th data-field="cntryname"><div class="th-inner">Telephone Number</div></th>
+                                <th data-field="cntryname"><div class="th-inner">Email Address</div></th>
+                                <th data-field="cntryname"><div class="th-inner">Edit</div></th>
+                                <th data-field="cntryname"><div class="th-inner">Permission</div></th>
+
+                                </tr></thead>
+                                <tbody id="parentTable">
+
+                                <tr ng-repeat="user in userList| filter:searchText">
+                                    <td><a href="" ng-click="changePassword(user)">{{user.userName}}</a></td>
+                                    <td>{{user.full_name}}</td>
+                                    <td>{{user.phone}}</td>
+                                    <td>{{user.email}}</td>
+                                    <td><a id="edit_{{$index}}" href="javascript:void(0)" ng-click="edituser(user)" class="edit"><i class="fa fa-pencil-square-o fa-fw orange"></i></a></td>
+                                    <td> <a id="edit" ng-click="editUserAccountSetupWithPermissions(user.useraccount_id)" class="edit"><i class="fa fa-pencil-square-o fa-fw orange"></i></a></td>
+
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                    <div class="modal fade addCustomer" tabindex="-1" id="add_user_modal" role="dialog" data-backdrop="static"
+                         aria-labelledby="mySmallModalLabel">
+                        <div class="modal-dialog modal-md">
+                            <div class="modal-content checkout">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                            aria-hidden="true">&times;</span></button>
+                                    <h4  id = "user-title" class="modal-title">Add User</h4>
+
+                                </div>
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-md-12 col-sm-12">
+                                            <form class="form-horizontal" name="mail">
+                                                <fieldset>
+                                                    <div class="form-group">
+                                                        <div class="form-group">
+                                                            <input type="hidden" ng-model="sasspermission.id" value="{{sasspermission.id}}"/>
+                                                            <label class="col-md-4 col-sm-4 control-label" for="">User Name</label>
+                                                            <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                                <input id="username" name="username"
+                                                                       maxlength="125"
+                                                                       placeholder="username"
+                                                                       ng-pattern="text" alpha-with-space
+                                                                       ng-model="userText"
+                                                                       class="form-control input-md" autocomplete="off" required>
+                                                                <!--<p class="error" ng-show="mail.UserName.$error.pattern">Enter Valid EmailId</p>-->
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div class="form-group">
+                                                            <label class="col-md-4 col-sm-4 control-label">Password
+                                                                <span>*</span></label>
+                                                            <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                                <input id="newPassword" name="newPassword"
+                                                                       maxlength="125"
+                                                                       type="password" placeholder="Password"
+                                                                       ng-model="PasswordText"
+                                                                       class="form-control input-md" autocomplete="off" required>
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div class="form-group">
+                                                            <label class="col-md-4 col-sm-4 control-label">Full Name</label>
+                                                            <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                                <input id="FullName" name="FullName" alpha-with-space
+                                                                       ng-pattern="text" alpha-with-space
+                                                                       maxlength="125"
+                                                                       type="text" placeholder="Full Name"
+                                                                       ng-model="FullNameText"
+                                                                       class="form-control input-md" autocomplete="off" required>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="col-md-4 col-sm-4 control-label">Security Question</label>
+                                                            <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                                <input id="SecurityQuestion" name="SecurityQuestion"
+                                                                       allowpattern="[a-z]"
+                                                                       type="text" placeholder="Security Question"
+                                                                       ng-model="SecurityQuestionText"
+                                                                       class="form-control input-md" autocomplete="off" required>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="col-md-4 col-sm-4 control-label">Answer</label>
+                                                            <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                                <input id="Answer" name="Answer"
+                                                                       allowpattern="[a-z]"
+                                                                       type="text" placeholder="Answer"
+                                                                       ng-model="AnswerText"
+                                                                       ng-value="setuppermission.securityAnswer"
+                                                                       class="form-control input-md" autocomplete="off" required>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="col-md-4 col-sm-4 control-label">Telephone Number</label>
+                                                            <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                                <input id="TelephoneNumber" name="TelephoneNumber" num-with-space maxlength="10"
+                                                                       type="text" mobile-num-with-space
+                                                                       placeholder="Telephone Number"
+                                                                       ng-model="TelephoneNumberText"
+                                                                       class="form-control input-md" autocomplete="off" required>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="col-md-4 col-sm-4 control-label">Email Address</label>
+                                                            <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                                <input id="EmailAddress" name="EmailAddress"
+                                                                       ng-pattern="word"
+                                                                       type="text" placeholder="Email Address"
+                                                                       ng-model="EmailAddressText"
+                                                                       no-special-char=""
+                                                                       class="form-control input-md"  required>
+                                                                <p class="error" ng-show="mail.EmailAddress.$error.pattern">Enter Valid MailID</p>
+                                                            </div>
+                                                        </div>
+
+
+
+                                                        <div class="form-group">
+                                                            <label class="col-md-4 col-sm-4 control-label">Status </label>
+                                                            <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                                <select id="statusId" name="status"
+                                                                        ng-model="status" ng-init="status='Active'"  class="form-control input-md">
+                                                                    <option value="Active">Active</option>
+                                                                    <option value="InActive">InActive</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                </fieldset>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-default" data-toggle="modal" ng-disabled="isDisabled"
+                                            data-target=".print-me" ng-click="saveuserDetails()">Save
+                                    </button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                <div class="modal fade addCustomer" tabindex="-1" id="edit_user_modal" role="dialog" data-backdrop="static"
+                     aria-labelledby="mySmallModalLabel">
+                    <div class="modal-dialog modal-md">
+                        <div class="modal-content checkout">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                        aria-hidden="true">&times;</span></button>
+                                <h4  id = "useredit-title" class="modal-title">Add User</h4>
+
+                            </div>
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12">
+                                        <form class="form-horizontal" name="mail">
+                                            <fieldset>
+                                                <div class="form-group">
+                                                    <div class="form-group">
+                                                        <input type="hidden" ng-model="sasspermission.id" value="{{sasspermission.id}}"/>
+                                                        <label class="col-md-4 col-sm-4 control-label" for="">User Name</label>
+                                                        <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                            <input id="username1" name="user"
+                                                                   maxlength="125"
+                                                                   type="text" placeholder="username"
+                                                                   ng-model="userText"
+                                                                   ng-value="sasspermission.userText"
+                                                                   class="form-control input-md" autocomplete="off" required>
+                                                            <!--<p class="error" ng-show="mail.UserName.$error.pattern">Enter Valid EmailId</p>-->
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="form-group">
+                                                        <label class="col-md-4 col-sm-4 control-label">Password
+                                                            <span>*</span></label>
+                                                        <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                            <input id="Password" name="newPassword"
+                                                                   maxlength="125"
+                                                                   type="password" placeholder="Password"
+                                                                   ng-model="PasswordText"
+                                                                   ng-value="sasspermission.PasswordText"
+                                                                   class="form-control input-md" autocomplete="off" required>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="modal-footer">
+                                                        <button type="submit" class="btn btn-default" data-toggle="modal" ng-disabled="isDisabled"
+                                                                data-target=".print-me" ng-click="saveEditDetails()">Save
+                                                        </button>
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade addCustomer" tabindex="-1" id="change_user_modal" role="dialog" data-backdrop="static"
+                     aria-labelledby="mySmallModalLabel">
+                    <div class="modal-dialog modal-md">
+                        <div class="modal-content checkout">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                        aria-hidden="true">&times;</span></button>
+                                <h4  id = "useredit-title" class="modal-title">Change Password</h4>
+
+                            </div>
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12">
+                                        <form class="form-horizontal" name="mail">
+                                            <fieldset>
+                                                <div class="form-group">
+                                                    <div class="form-group">
+                                                        <label class="col-md-4 col-sm-4 control-label">Old Password
+                                                            </label>
+                                                        <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                            <input id="newPassword" name="newPassword"
+                                                                   maxlength="125"
+                                                                   type="password" placeholder="Password"
+                                                                   ng-model="password"
+                                                                   class="form-control input-md" autocomplete="off" required>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="form-group">
+                                                        <label class="col-md-4 col-sm-4 control-label">New Password
+                                                            </label>
+                                                        <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                            <input id="Password" name="newPassword"
+                                                                   maxlength="125"
+                                                                   type="password" placeholder="New Password"
+                                                                   ng-model="newpassword" ng-change="passwordMatch()"
+                                                                   class="form-control input-md" autocomplete="off" required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-4 col-sm-4 control-label">ReType New Password
+                                                            </label>
+                                                        <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                            <input id="Password" name="newPassword"
+                                                                   maxlength="125"
+                                                                   type="password" placeholder="Retype Password"
+                                                                   ng-model="retypepassword" ng-change="correctPassword()"
+                                                                   class="form-control input-md" autocomplete="off" required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="submit" class="btn btn-default" data-toggle="modal" ng-disabled="isDisabled"
+                                                                data-target=".print-me" ng-click="savepassword()">Save
+                                                        </button>
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" tabindex="-1" id="add_permissions_modal_1check" role="dialog" data-backdrop="static"
+     aria-labelledby="mySmallModalLabel">
+    <div class="modal-dialog modal-md" style="width: 750px;">
+        <div class="modal-content checkout" >
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 id = "User-title" class="modal-title">Edit Permission</h4>
+
+                <div class="panel-body">
+                    <div class="row row_ch_per_info" style=" height: 500px; ">
+                        <div class="col-md-12 col-sm-12">
+                            <input type="checkbox" class="regular-checkbox"
+                                   ng-model="permission.orderList" id="orderlist"
+                                   />
+                            <label for="orderlist"></label><span class="check_span_info">OrderList:</span>
+                        </div>
+                        <div class="col-md-12 col-sm-12">
+                            <input type="checkbox" class="regular-checkbox"
+                                   ng-model="permission.paymentList" id="paymentList"
+                                   />
+                            <label for="paymentList"></label><span class="check_span_info">Payments:</span>
+                        </div>
+                        <div class="col-md-12 col-sm-12">
+                            <input type="checkbox" class="regular-checkbox"
+                                   ng-model="permission.controlPannel" id="control"
+                                   />
+                            <label for="control"></label><span class="check_span_info">ControlPanel:</span>
+                        </div>
+                        <div class="col-md-11 col-md-offset-1 col-sm-11 col-sm-offset-1" ng-hide="!permission.controlPannel">
+                                <div class="col-md-4 col-sm-4">
+                                    <input type="checkbox" class="regular-checkbox"
+                                           ng-model="permission.currency" id="currency"
+                                           />
+                                    <label for="currency"></label><span class="check_span_info">Currency</span>
+                                </div>
+                        </div>
+                        <div class="col-md-11 col-md-offset-1 col-sm-11 col-sm-offset-1" ng-hide="!permission.controlPannel">
+                                <div class="col-md-4 col-sm-4" >
+                                    <input type="checkbox" class="regular-checkbox"
+                                           ng-model="permission.paymentMethod" id="payment"
+                                           />
+                                    <label for="payment"></label><span class="check_span_info">Payment Method</span>
+                                </div>
+                        </div>
+                        <div class="col-md-11 col-md-offset-1 col-sm-11 col-sm-offset-1" ng-hide="!permission.controlPannel">
+                                <div class="col-md-4 col-sm-4" >
+                                    <input type="checkbox" class="regular-checkbox"
+                                           ng-model="permission.country" id="country"
+                                           />
+                                    <label for="country"></label><span class="check_span_info">Country</span>
+                                </div>
+                        </div>
+                        <div class="col-md-11 col-md-offset-1 col-sm-11 col-sm-offset-1" ng-hide="!permission.controlPannel">
+                                <div class="col-md-4 col-sm-4" >
+                                    <input type="checkbox" class="regular-checkbox"
+                                           ng-model="permission.state" id="state"
+                                           />
+                                    <label for="state"></label><span class="check_span_info">State</span>
+                            </div>
+                        </div>
+                        <div class="col-md-11 col-md-offset-1 col-sm-11 col-sm-offset-1" ng-hide="!permission.controlPannel">
+                                <div class="col-md-4 col-sm-4" >
+                                    <input type="checkbox" class="regular-checkbox"
+                                           ng-model="permission.versionControl" id="version"
+                                           />
+                                    <label for="version"></label><span class="check_span_info">Version Control</span>
+                                </div>
+                        </div>
+                        <div class="col-md-11 col-md-offset-1 col-sm-11 col-sm-offset-1" ng-hide="!permission.controlPannel">
+                                <div class="col-md-4 col-sm-4" >
+                                    <input type="checkbox" class="regular-checkbox"
+                                           ng-model="permission.subscription" id="subscription"
+                                           />
+                                    <label for="subscription"></label><span class="check_span_info">Subscription</span>
+                                </div>
+                        </div>
+                        <div class="col-md-11 col-md-offset-1 col-sm-11 col-sm-offset-1" ng-hide="!permission.controlPannel">
+                                <div class="col-md-4 col-sm-4" >
+                                    <input type="checkbox" class="regular-checkbox"
+                                           ng-model="permission.packages" id="packages"
+                                           />
+                                    <label for="packages"></label><span class="check_span_info">Packages</span>
+                                </div>
+                        </div>
+                        <div class="col-md-11 col-md-offset-1 col-sm-11 col-sm-offset-1" ng-hide="!permission.controlPannel">
+                                <div class="col-md-4 col-sm-4" >
+                                    <input type="checkbox" class="regular-checkbox"
+                                           ng-model="permission.practitionerRegistration" id="practitionerregistration"
+                                           />
+                                    <label for="practitionerregistration"></label><span class="check_span_info">PractitionerRegistration</span>
+                                </div>
+                        </div>
+                        <div class="col-md-11 col-md-offset-1 col-sm-11 col-sm-offset-1" ng-hide="!permission.controlPannel">
+                                <div class="col-md-4 col-sm-4" >
+                                    <input type="checkbox" class="regular-checkbox"
+                                           ng-model="permission.practitionerOrders" id="practitioner"
+                                           />
+                                    <label for="practitioner"></label><span class="check_span_info">Practitionerorders</span>
+                                </div>
+                        </div>
+                        <div class="col-md-11 col-md-offset-1 col-sm-11 col-sm-offset-1" ng-hide="!permission.controlPannel">
+                                <div class="col-md-4 col-sm-4" >
+                                    <input type="checkbox" class="regular-checkbox"
+                                           ng-model="permission.customer" id="customer"
+                                           />
+                                    <label for="customer"></label><span class="check_span_info">Customer</span>
+                            </div>
+                        </div>
+                        <div class="col-md-11 col-md-offset-1 col-sm-11 col-sm-offset-1" ng-hide="!permission.controlPannel">
+                                <div class="col-md-4 col-sm-4" >
+                                    <input type="checkbox" class="regular-checkbox"
+                                           ng-model="permission.item" id="item"
+                                           />
+                                    <label for="item"></label><span class="check_span_info">Item</span>
+                                </div>
+                        </div>
+                        <div class="col-md-11 col-md-offset-1 col-sm-11 col-sm-offset-1" ng-hide="!permission.controlPannel">
+                                <div class="col-md-4 col-sm-4" >
+                                    <input type="checkbox" class="regular-checkbox"
+                                           ng-model="permission.addOn" id="addon"
+                                           />
+                                    <label for="addon"></label><span class="check_span_info">AddOn</span>
+                                </div>
+                        </div>
+                        <div class="col-md-11 col-md-offset-1 col-sm-11 col-sm-offset-1" ng-hide="!permission.controlPannel">
+                                <div class="col-md-4 col-sm-4" >
+                                    <input type="checkbox" class="regular-checkbox"
+                                           ng-model="permission.cartRegistration" id="cartregistration"
+                                           />
+                                    <label for="cartregistration"></label><span class="check_span_info">Cart Registration</span>
+                                </div>
+                        </div>
+                        <div class="col-md-11 col-md-offset-1 col-sm-11 col-sm-offset-1" ng-hide="!permission.controlPannel">
+                                <div class="col-md-4 col-sm-4" >
+                                    <input type="checkbox" class="regular-checkbox"
+                                           ng-model="permission.user" id="user"
+                                           />
+                                    <label for="user"></label><span class="check_span_info">User</span>
+                                </div>
+                        </div>
+                        <div class="col-md-11 col-md-offset-1 col-sm-11 col-sm-offset-1" ng-hide="!permission.controlPannel">
+                                <div class="col-md-4 col-sm-4" >
+                                    <input type="checkbox" class="regular-checkbox"
+                                           ng-model="permission.cartCustomer" id="cart"
+                                           />
+                                    <label for="cart"></label><span class="check_span_info">CartCustomer</span>
+                            </div>
+                        </div>
+                        <div class="col-md-11 col-md-offset-1 col-sm-11 col-sm-offset-1" ng-hide="!permission.controlPannel">
+                                <div class="col-md-4 col-sm-4" >
+                                    <input type="checkbox" class="regular-checkbox"
+                                           ng-model="permission.rtrSyncSettings" id="rtc"
+                                           />
+                                    <label for="rtc"></label><span class="check_span_info">rtrSyncSettings</span>
+                                </div>
+                        </div>
+                        <div class="col-md-12 col-sm-12">
+                            <input type="checkbox" class="regular-checkbox"
+                                   ng-model="permission.hiconnect" id="hiconnect"
+                            />
+                            <label for="hiconnect"></label><span class="check_span_info">Hi Connect:</span>
+                        </div>
+                        <div class="col-md-11 col-md-offset-1 col-sm-11 col-sm-offset-1" ng-hide="!permission.hiconnect">
+                                <div class="col-md-4 col-sm-4" >
+                                    <input type="checkbox" class="regular-checkbox"
+                                           ng-model="permission.customerNotification" id="customernotification"
+                                    />
+                                    <label for="customernotification"></label><span class="check_span_info">Customer Notification</span>
+                            </div>
+                        </div>
+                        <div class="col-md-11 col-md-offset-1 col-sm-11 col-sm-offset-1" ng-hide="!permission.hiconnect">
+                                <div class="col-md-4 col-sm-4" >
+                                    <input type="checkbox" class="regular-checkbox"
+                                           ng-model="permission.transactionsData" id="transdata"
+                                    />
+                                    <label for="transdata"></label><span class="check_span_info">Transactions Data</span>
+                                </div>
+                        </div>
+                        <div class="col-md-11 col-md-offset-1 col-sm-11 col-sm-offset-1" ng-hide="!permission.hiconnect">
+                                <div class="col-md-4 col-sm-4" >
+                                    <input type="checkbox" class="regular-checkbox"
+                                           ng-model="permission.destinationType" id="destinationtype"
+                                    />
+                                    <label for="destinationtype"></label><span class="check_span_info">Destination Type</span>
+                                </div>
+                        </div>
+                        <div class="col-md-11 col-md-offset-1 col-sm-11 col-sm-offset-1" ng-hide="!permission.hiconnect">
+                                <div class="col-md-4 col-sm-4" >
+                                    <input type="checkbox" class="regular-checkbox"
+                                           ng-model="permission.destinationMap" id="destinationmap"
+                                    />
+                                    <label for="destinationmap"></label><span class="check_span_info">Destination Map</span>
+                            </div>
+                        </div>
+                        <div class="col-md-11 col-md-offset-1 col-sm-11 col-sm-offset-1" ng-hide="!permission.hiconnect">
+                                <div class="col-md-4 col-sm-4" >
+                                    <input type="checkbox" class="regular-checkbox"
+                                           ng-model="permission.email" id="email"
+                                    />
+                                    <label for="email"></label><span class="check_span_info">Email Reader</span>
+                            </div>
+                        </div>
+                        <div class="col-md-11 col-md-offset-1 col-sm-11 col-sm-offset-1" ng-hide="!permission.hiconnect">
+                                <div class="col-md-4 col-sm-4" >
+                                    <input type="checkbox" class="regular-checkbox"
+                                           ng-model="permission.permissionMaster" id="permissionmaster"
+                                    />
+                                    <label for="permissionmaster"></label><span class="check_span_info">PermissionMaster</span>
+                            </div>
+                        </div>
+                        <div class="col-md-11 col-md-offset-1 col-sm-11 col-sm-offset-1" ng-hide="!permission.hiconnect">
+                                <div class="col-md-4 col-sm-4" >
+                                    <input type="checkbox" class="regular-checkbox"
+                                           ng-model="permission.permissionGroup" id="permissiongroup"
+                                    />
+                                    <label for="permissiongroup"></label><span class="check_span_info">PermissionGroup</span>
+                                </div>
+                        </div>
+                        <div class="col-md-12 col-sm-12">
+                            <input type="checkbox" class="regular-checkbox"
+                                   ng-model="permission.pkt" id="table"
+                            />
+                            <label for="table"></label><span class="check_span_info">PKT:</span>
+                        </div>
+                        <div class="col-md-11 col-md-offset-1 col-sm-11 col-sm-offset-1" ng-hide="!permission.pkt">
+                                <div class="col-md-4 col-sm-4" >
+                                    <input type="checkbox" class="regular-checkbox"
+                                           ng-model="permission.tableValue" id="table"
+                                    />
+                                    <label for="table"></label><span class="check_span_info">Table</span>
+                                </div>
+                        </div>
+                        <div class="col-md-11 col-md-offset-1 col-sm-11 col-sm-offset-1" ng-hide="!permission.pkt">
+                                <div class="col-md-4 col-sm-4" >
+                                    <input type="checkbox" class="regular-checkbox"
+                                           ng-model="permission.tableColoumMapping" id="tablecolumnmapping"
+                                    />
+                                    <label for="tablecolumnmapping"></label><span class="check_span_info">Table Column Mapping</span>
+                                </div>
+                        </div>
+                        <div class="col-md-11 col-md-offset-1 col-sm-11 col-sm-offset-1" ng-hide="!permission.pkt">
+                                <div class="col-md-4 col-sm-4" >
+                                    <input type="checkbox" class="regular-checkbox"
+                                           ng-model="permission.operator" id="operator"
+                                    />
+                                    <label for="operator"></label><span class="check_span_info">Operator</span>
+                            </div>
+                        </div>
+                        <div class="col-md-11 col-md-offset-1 col-sm-11 col-sm-offset-1" ng-hide="!permission.pkt">
+                                <div class="col-md-4 col-sm-4" >
+                                    <input type="checkbox" class="regular-checkbox"
+                                           ng-model="permission.validator" id="validator"
+                                    />
+                                    <label for="validator"></label><span class="check_span_info">Validator</span>
+                                </div>
+                        </div>
+                        <div class="col-md-11 col-md-offset-1 col-sm-11 col-sm-offset-1" ng-hide="!permission.pkt">
+                                <div class="col-md-4 col-sm-4" >
+                                    <input type="checkbox" class="regular-checkbox"
+                                           ng-model="permission.action" id="action"
+                                    />
+                                    <label for="action"></label><span class="check_span_info">Action</span>
+                                </div>
+                        </div>
+                        <div class="col-md-11 col-md-offset-1 col-sm-11 col-sm-offset-1" ng-hide="!permission.pkt">
+                                <div class="col-md-4 col-sm-4" >
+                                    <input type="checkbox" class="regular-checkbox"
+                                           ng-model="permission.permission" id="permission"
+                                    />
+                                    <label for="permission"></label><span class="check_span_info">Permission</span>
+                                </div>
+                        </div>
+                        <div class="col-md-11 col-md-offset-1 col-sm-11 col-sm-offset-1" ng-hide="!permission.pkt">
+                                <div class="col-md-4 col-sm-4" >
+                                    <input type="checkbox" class="regular-checkbox"
+                                           ng-model="permission.columnType" id="columntype"
+                                    />
+                                    <label for="columntype"></label><span class="check_span_info">Column Type</span>
+                            </div>
+                        </div>
+                        <div class="col-md-11 col-md-offset-1 col-sm-11 col-sm-offset-1" ng-hide="!permission.pkt">
+                                <div class="col-md-4 col-sm-4" >
+                                    <input type="checkbox" class="regular-checkbox"
+                                           ng-model="permission.columnPosition" id="columnposition"
+                                    />
+                                    <label for="columnposition"></label><span class="check_span_info">Column Position</span>
+                            </div>
+                        </div>
+                        <div class="col-md-11 col-md-offset-1 col-sm-11 col-sm-offset-1" ng-hide="!permission.pkt">
+                                <div class="col-md-4 col-sm-4" >
+                                    <input type="checkbox" class="regular-checkbox"
+                                           ng-model="permission.pktFeilds" id="pktfields"
+                                    />
+                                    <label for="pktfields"></label><span class="check_span_info">Pkt Fields</span>
+                                </div>
+                        </div>
+                        <div class="col-md-11 col-md-offset-1 col-sm-11 col-sm-offset-1" ng-hide="!permission.pkt">
+                                <div class="col-md-4 col-sm-4" >
+                                    <input type="checkbox" class="regular-checkbox"
+                                           ng-model="permission.application" id="application"
+                                    />
+                                    <label for="application"></label><span class="check_span_info">Application</span>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-disabled="appointmentDisabled" ng-click="savePermission()">Save</button>
+                    <button type="button" class="btn btn-primary" ng-click="removeFloors()" data-dismiss="modal">Close
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

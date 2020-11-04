@@ -1,0 +1,181 @@
+
+
+<body>
+<div class="container-fluid">
+    <div class="container cus_main_row" >
+
+        <div class="row">
+            <h2 class="pos-header-new">
+                <div>RTRSyncSettings</div>
+            </h2>
+        </div>
+        <div class="row inner_row_bg">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="panel">
+                    <div class="panel-body">
+                        <div class="panel-body" style="height: 65px;">
+                            <div class="col-md-4 col-lg-3 col-sm-5 col-xs-5">
+                                <form class="form-horizontal ng-pristine ng-valid">
+                                    <div class="form-group">
+                                        <div class="col-sm-12">
+                                            <p class="input-group" style="display: block;">
+                                                <input id="search_customer" name="textinput"  type="text"
+                                                       placeholder="search " ng-model="SearchText" class="form-control input-md"
+                                                       ng-keyup="$event.keyCode == 13 ? getrtrsyncSettingsList(SearchText) : null" />
+                                            </p>
+
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="col-md-9 col-lg-7 col-sm-9 col-xs-7">
+
+                                <div class="form-group">
+                                    <div class="col-sm-2">
+                                        <button type="button" class="btn btn-primary hi_btn"  ng-click="addNewrtrSyncSettings()">Add</button>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="fixed-table-container">
+                        <div class="table_wrapfixed-table-container-inner">
+                            <div class="header-background"></div>
+                            <table data-toggle="table" data-cache="false" data-height="299" class="hi_table table table-hover table-bordered table-striped table-fixed-header">
+                                <thead>
+                                <tr>
+                                    <!--<th data-field="state" data-radio="true">-->
+                                    <!--<div class="th-inner"></div>-->
+                                    <!--</th>-->
+                                    <th data-field="cntryname">
+                                        <div class="th-inner">companyKeyWord</div>
+                                    </th>
+                                    <th data-field="edit">
+                                        <div class="th-inner">rtrSyncStatus</div>
+                                    </th>
+                                    <th data-field="edit">
+                                        <div class="th-inner">edit</div>
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody id="parentTable">
+                                <input type="hidden" ng-model="rtrSyncID" value="{{rtrsyncSettingsList.rtrSyncID}}"/>
+                                <tr ng-repeat="rtrsync in rtrsyncSettingsList| filter:searchText">
+                                    <td>{{rtrsync.companyKeyWord}}</td>
+                                    <td>{{rtrsync.rtrSyncStatus}}</td>
+                                    <td><a id="rtr_edit_{{$index}}" href="javascript:void(0)" ng-click="editrtrSync(rtrsync)" class="edit"><i class="fa fa-pencil-square-o fa-fw orange"></i></a></td>
+
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade ExchangeRate" tabindex="-1" id="rtr_sync_Settings" role="dialog" data-backdrop="static"
+                     aria-labelledby="mySmallModalLabel">
+                    <div class="modal-dialog modal-md">
+                        <div class="modal-content checkout">
+                            <div class="modal-header">
+                                <h4 id="rtr-title" class="modal-title">Add RTRSyncSettings</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12">
+                                        <form  class="form-horizontal" name="currency">
+                                            <fieldset>
+
+                                                <div class="form-group">
+                                                    <label class="col-md-4 col-sm-4 control-label" >companyKeyWord</label>
+                                                    <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                        <input id="companyKeyWord" name="companyKeyWord"
+                                                               ng-pattern="text" alpha-with-space
+                                                               placeholder="companyKeyWord"
+                                                               ng-model="companyKeyWordText"
+                                                               class="form-control input-md" >
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-4 col-sm-4 control-label" >rtrSyncType</label>
+                                                    <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                        <input id="rtrSyncType" name="rtrSyncType"
+                                                               ng-pattern="text" alpha-with-space
+                                                               placeholder="rtrSyncType"
+                                                               ng-model="rtrSyncTypeText"
+                                                               class="form-control input-md" >
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-4 col-sm-4 control-label" >rtrSyncOption</label>
+                                                    <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                        <input id="rtrSyncOption" name="rtrSyncOption"
+                                                               ng-pattern="text" alpha-with-space
+                                                               placeholder="rtrSyncOption"
+                                                               ng-model="rtrSyncOptionText"
+                                                               class="form-control input-md" >
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-4 col-sm-4 control-label" >rtrSyncSchedulePeriod</label>
+                                                    <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                        <input id="rtrSyncSchedulePeriod" name="rtrSyncSchedulePeriod"
+                                                               allowpattern="[0-9]"
+                                                               type="text" number
+                                                               placeholder="rtrSyncSchedulePeriod"
+                                                               ng-model="rtrSyncSchedulePeriodText"
+                                                               class="form-control input-md" >
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-sm-4" for="">createdAt</label>
+                                                    <div class="col-sm-8">
+                                                        <p class="input-group">
+                                                            <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="createdAtText" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                                                            <span class="input-group-btn">
+                                     <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+                                </span>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-sm-4" for="">updatedAt</label>
+                                                    <div class="col-sm-8">
+                                                        <p class="input-group">
+                                                            <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="updatedAtText" is-open="popup2.opened" datepicker-options="dateOptions"  close-text="Close" alt-input-formats="altInputFormats" />
+                                                            <span class="input-group-btn">
+                                     <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
+                                </span>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-4 col-sm-4 control-label" for="">rtrSyncStatus</label>
+                                                    <div class="col-md-6 col-sm-6" >
+                                                        <select name="currencyStatus" id="currencyStatus" ng-model="rtrSyncStatusText" class="form-control input-md" required>
+                                                            <option value="Active">Active</option>
+                                                            <option value="InActive">InActive</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" ng-click="saveRTRSyncSettings()">Save</button>
+                                <button type="button" class="btn btn-default" ng-click="removertrdetails()" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

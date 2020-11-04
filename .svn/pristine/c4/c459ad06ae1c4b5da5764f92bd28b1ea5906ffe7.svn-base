@@ -1,0 +1,56 @@
+package com.hyva.idm.pkt.pktRepositories;
+
+import com.hyva.idm.pkt.pktRelations.PktPermissions;
+import com.hyva.idm.sass.sassentities.PktPermission;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+/**
+ * krishna
+ */
+@Repository
+public interface PktPermissionsRepository extends JpaRepository<PktPermissions,Long>,JpaSpecificationExecutor {
+    PktPermissions findAllByKeyNameAndKeyGroupNull(String Name);
+    PktPermissions findByKeyGroupNullAndKeyNameAndKeySubscription(String keyName,String keySubscription);
+    List<PktPermissions> findByKeyGroupNotNullAndTableNameAndKeySubscriptionAndOperatorContaining(String tableName,String keySubscription,String operator);
+    List<PktPermissions> findAllByKeyGroupNull();
+    PktPermissions findAllByPktPermissionId(Long id);
+    List<PktPermissions> findAllByStatus(String status, Pageable pageable);
+    List<PktPermissions> findAllByStatusAndKeyGroupNotNull(String status, Pageable pageable);
+   PktPermissions findFirstByStatusAndKeyGroupNotNull(String status, Sort sort);
+    PktPermissions findAllByStatusAndKeyValueAndKeySubscriptionAndKeyGroupIsNull(String status, String KeyValue, String keySubscription);
+    PktPermissions findByTableNameAndKeySubscriptionAndKeyGroupIsNull(String Name,String subscription);
+    List<PktPermissions> findAllByKeySubscription(String subscription);
+    List<PktPermissions> findAllByKeySubscriptionAndMenuKey(String subscription,String menu);
+    List<PktPermissions> findDistinctByKeySubscriptionAndOperatorContaining(String subscription,String operator);
+   PktPermissions findFirstBy(Sort sort);
+    List<PktPermissions>findByKeyGroup(String keyName, Pageable pageable);
+    List<PktPermissions>findByKeyGroupAndKeySubscription(String keyName, String keySubcription);
+    List<PktPermissions>findAllByKeyGroup(String keyGroup);
+    List<PktPermissions>findAllByKeyGroupAndKeySubscription(String keyGroup, String keySubscription);
+    List<PktPermissions>findAllBy(Pageable pageable);
+    List<PktPermissions> findAllByKeySubscriptionAndKeyGroupNull(String name);
+    List<PktPermissions> findAllByKeySubscriptionAndKeyGroupNotNull(String name);
+    List<PktPermissions>findAllByKeyGroupAndStatus(String keyGrop,String status);
+    PktPermissions findAllByKeySubscriptionAndKeyName(String keySubscription,String keyname);
+    PktPermissions findAllByKeySubscriptionAndKeyNameAndPktPermissionIdNotIn(String keySubscription,String keyname,Long id);
+    List<PktPermissions> findAllByKeySubscriptionAndTableNameAndValueeeAndKeyName(String keysubscription,String tablename,String operator,String keyname);
+    List<PktPermissions> findAllByKeySubscriptionAndTableNameAndValueeeAndKeyNameAndPktPermissionIdNotIn(String keysubscription,String tablename,String operator,String keyname,Long id);
+    @Query("from PktPermissions where (keyName=:keyName and keySubscription=:keySubscription) or (keySubscription=:keySubscription and keyValue=:keyValue)")
+    PktPermissions findByKeyNameAndKeySubscription(@Param(value = "keyName") String keyName, @Param(value = "keySubscription") String keySubscription, @Param(value = "keyValue")  String keyValue);
+    PktPermissions findByKeyNameAndKeySubscriptionAndKeyValue(String keyName, String keySubscription, String keyValue);
+
+    @Query("from PktPermissions where (keyName=:keyName and keySubscription=:keySubscription and pktPermissionId  not like :id) or (keySubscription=:keySubscription and keyValue=:keyValue and pktPermissionId not like :id)")
+    PktPermissions findByKeyNameAndKeySubscriptionAndPktPermissionIdNotIn(@Param(value = "keyName") String keyName, @Param(value = "keySubscription") String keySubscription, @Param(value = "keyValue")  String keyValue, @Param(value = "id")Long id);
+    PktPermissions findByKeyNameAndKeySubscriptionAndKeyValueAndPktPermissionIdNotIn(@Param(value = "keyName") String keyName, @Param(value = "keySubscription") String keySubscription, @Param(value = "keyValue")  String keyValue, @Param(value = "id")Long id);
+
+   List<PktPermissions> findAllByKeySubscriptionAndSubMenuKey(String appName,String menuName);
+
+}

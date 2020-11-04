@@ -1,0 +1,328 @@
+package com.hyva.idm.pkt.pktBeans;
+
+import com.hyva.idm.pkt.pktRelations.PktPermissions;
+import lombok.Data;
+
+/**
+ * krishna
+ */
+@Data
+public class PktPermissionBean {
+    private Long pktPermissionId;
+    private String keyName;
+    private String keyValue;
+    private String keyPlaceHolder;
+    private String keyVisibility;
+    private String keyValidation;
+    private String keyPriority;
+    private String keyAction;
+    private String keyReference;
+    private String keyGroup;
+    private String keySubscription;
+    private String keyTiming;
+    private String status;
+    private String permission;
+    private String descriptor;
+    private String roundOff;
+    private String sync;
+    private String columnPosition;
+    private String operator;
+    private String columnName;
+    private String operation;
+    private String tableName;
+    private String inputType;
+    private String valueee;
+    private String menuKey;
+    private String top_pos;
+    private String width_pos;
+    private String left_pos;
+    private String height_pos;
+    private String position_pos;
+
+    private String childKey;
+    private String childKeys;
+    private String searchKey;
+    private String subMenuKey;
+    private String dragid;
+
+
+    public Long getPktPermissionId() {
+        return pktPermissionId;
+    }
+
+    public void setPktPermissionId(Long pktPermissionId) {
+        this.pktPermissionId = pktPermissionId;
+    }
+
+    public String getKeyName() {
+        return keyName;
+    }
+
+    public void setKeyName(String keyName) {
+        this.keyName = keyName;
+    }
+
+    public String getKeyValue() {
+        return keyValue;
+    }
+
+    public void setKeyValue(String keyValue) {
+        this.keyValue = keyValue;
+    }
+
+    public String getKeyPlaceHolder() {
+        return keyPlaceHolder;
+    }
+
+    public void setKeyPlaceHolder(String keyPlaceHolder) {
+        this.keyPlaceHolder = keyPlaceHolder;
+    }
+
+    public String getKeyVisibility() {
+        return keyVisibility;
+    }
+
+    public void setKeyVisibility(String keyVisibility) {
+        this.keyVisibility = keyVisibility;
+    }
+
+    public String getKeyValidation() {
+        return keyValidation;
+    }
+
+    public void setKeyValidation(String keyValidation) {
+        this.keyValidation = keyValidation;
+    }
+
+    public String getKeyPriority() {
+        return keyPriority;
+    }
+
+    public void setKeyPriority(String keyPriority) {
+        this.keyPriority = keyPriority;
+    }
+
+    public String getKeyAction() {
+        return keyAction;
+    }
+
+    public void setKeyAction(String keyAction) {
+        this.keyAction = keyAction;
+    }
+
+    public String getKeyReference() {
+        return keyReference;
+    }
+
+    public void setKeyReference(String keyReference) {
+        this.keyReference = keyReference;
+    }
+
+    public String getKeyGroup() {
+        return keyGroup;
+    }
+
+    public void setKeyGroup(String keyGroup) {
+        this.keyGroup = keyGroup;
+    }
+
+    public String getKeySubscription() {
+        return keySubscription;
+    }
+
+    public void setKeySubscription(String keySubscription) {
+        this.keySubscription = keySubscription;
+    }
+
+    public String getKeyTiming() {
+        return keyTiming;
+    }
+
+    public void setKeyTiming(String keyTiming) {
+        this.keyTiming = keyTiming;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getPermission() {
+        return permission;
+    }
+
+    public void setPermission(String permission) {
+        this.permission = permission;
+    }
+
+    public String getDescriptor() {
+        return descriptor;
+    }
+
+    public void setDescriptor(String descriptor) {
+        this.descriptor = descriptor;
+    }
+
+    public String getRoundOff() {
+        return roundOff;
+    }
+
+    public void setRoundOff(String roundOff) {
+        this.roundOff = roundOff;
+    }
+
+    public String getSync() {
+        return sync;
+    }
+
+    public void setSync(String sync) {
+        this.sync = sync;
+    }
+
+    public String getColumnPosition() {
+        return columnPosition;
+    }
+
+    public void setColumnPosition(String columnPosition) {
+        this.columnPosition = columnPosition;
+    }
+
+    public String getOperator() {
+        return operator;
+    }
+
+    public void setOperator(String operator) {
+        this.operator = operator;
+    }
+
+    public String getColumnName() {
+        return columnName;
+    }
+
+    public void setColumnName(String columnName) {
+        this.columnName = columnName;
+    }
+
+    public String getOperation() {
+        return operation;
+    }
+
+    public void setOperation(String operation) {
+        this.operation = operation;
+    }
+
+    public String getTableName() {
+        return tableName;
+    }
+
+    public void setTableName(String tableName) {
+        this.tableName = tableName;
+    }
+
+    public String getInputType() {
+        return inputType;
+    }
+
+    public void setInputType(String inputType) {
+        this.inputType = inputType;
+    }
+
+    public String getValueee() {
+        return valueee;
+    }
+
+    public void setValueee(String valueee) {
+        this.valueee = valueee;
+    }
+
+    public String getMenuKey() {
+        return menuKey;
+    }
+
+    public void setMenuKey(String menuKey) {
+        this.menuKey = menuKey;
+    }
+
+    public String getTop_pos() {
+        return top_pos;
+    }
+
+    public void setTop_pos(String top_pos) {
+        this.top_pos = top_pos;
+    }
+
+    public String getWidth_pos() {
+        return width_pos;
+    }
+
+    public void setWidth_pos(String width_pos) {
+        this.width_pos = width_pos;
+    }
+
+    public String getLeft_pos() {
+        return left_pos;
+    }
+
+    public void setLeft_pos(String left_pos) {
+        this.left_pos = left_pos;
+    }
+
+    public String getHeight_pos() {
+        return height_pos;
+    }
+
+    public void setHeight_pos(String height_pos) {
+        this.height_pos = height_pos;
+    }
+
+    public String getPosition_pos() {
+        return position_pos;
+    }
+
+    public void setPosition_pos(String position_pos) {
+        this.position_pos = position_pos;
+    }
+
+    public String getChildKey() {
+        return childKey;
+    }
+
+    public void setChildKey(String childKey) {
+        this.childKey = childKey;
+    }
+
+    public String getChildKeys() {
+        return childKeys;
+    }
+
+    public void setChildKeys(String childKeys) {
+        this.childKeys = childKeys;
+    }
+
+    public String getSearchKey() {
+        return searchKey;
+    }
+
+    public void setSearchKey(String searchKey) {
+        this.searchKey = searchKey;
+    }
+
+    public String getSubMenuKey() {
+        return subMenuKey;
+    }
+
+    public void setSubMenuKey(String subMenuKey) {
+        this.subMenuKey = subMenuKey;
+    }
+
+    public String getDragid() {
+        return dragid;
+    }
+
+    public void setDragid(String dragid) {
+        this.dragid = dragid;
+    }
+}

@@ -1,0 +1,29 @@
+package com.hyva.idm.pkt.pktRelations;
+
+import lombok.Data;
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
+
+/**
+ * krishna
+ */
+@Entity
+@Data
+@Table(name = "PktBuilder")
+public class PktBuilder {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
+    @GenericGenerator(name = "native", strategy = "native")
+    private Long pktBuilderId;
+    @Column(name = "Application_Name")
+    private String applicationName;
+    @Column(name="FooterValue",columnDefinition = "LONGTEXT")
+    private String footerValue;
+    @Column(name = "HeaderValue",columnDefinition = "LONGTEXT")
+    private String headerValue;
+    @Column(name = "builderValue",columnDefinition = "LONGTEXT")
+    private String builderValue;
+    @Column(name="status")
+    private String status;
+}

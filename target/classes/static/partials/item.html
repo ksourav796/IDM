@@ -1,0 +1,356 @@
+<div class="container-fluid">
+    <div class="container cus_main_row" >
+
+        <div class="row">
+            <h2 class="pos-header-new">
+                <div>Item</div>
+            </h2>
+        </div>
+        <div class="row inner_row_bg">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+
+                <div class="panel">
+                    <div class="panel-body">
+                        <div class="panel-body" style="height: 65px;">
+                            <div class="col-md-4 col-lg-3 col-sm-5 col-xs-5">
+                                <form class="form-horizontal ng-pristine ng-valid">
+                                    <div class="form-group">
+                                        <div class="col-sm-12">
+                                            <p class="input-group" style="display: block;">
+                                                <input id="search_customer" name="textinput"  type="text"
+                                                       placeholder="search email" ng-model="SearchText" class="form-control input-md"
+                                                       ng-keyup="$event.keyCode == 13 ? getCustomerList(SearchText) : null" />
+                                            </p>
+
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+
+                            <div class="col-md-9 col-lg-7 col-sm-9 col-xs-7">
+
+                                <div class="form-group">
+                                    <div class="col-sm-2">
+                                        <button type="button" class="btn btn-primary hi_btn"  ng-click="addNewItem()">Add</button>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="fixed-table-container">
+                        <div class="table_wrapfixed-table-container-inner">
+                            <div class="header-background"></div>
+                            <table data-toggle="table" data-cache="false" data-height="299" class="hi_table table table-hover table-bordered table-striped table-fixed-header">
+                                <thead>
+                                <tr>
+                                    <!--<th data-field="state" data-radio="true">-->
+                                    <!--<div class="th-inner"></div>-->
+                                    <!--</th>-->
+                                    <th data-field="item_code">
+                                        <div class="th-inner">Item Code</div>
+                                    </th>
+                                    <th data-field="item_name">
+                                        <div class="th-inner">Item Name</div>
+                                    </th>
+                                    <th data-field="status">
+                                        <div class="th-inner">Status</div>
+                                    </th>
+                                    <th data-field="Item_Desc">
+                                        <div class="th-inner">ItemDesc</div>
+                                    </th>
+                                    <th data-field="Item_Desc">
+                                        <div class="th-inner">Available Stock</div>
+                                    </th>
+                                    <th data-field="Item_Desc">
+                                        <div class="th-inner">Edit</div>
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody id="parentTable">
+                                <tr ng-repeat="icitem in ictemList| filter:searchText">
+                                    <td>{{icitem.itemCode}}</td>
+                                    <td>{{icitem.itemName}}</td>
+                                    <td>{{icitem.itemStatus}}</td>
+                                    <td>{{icitem.itemDesc}}</td>
+                                    <td>{{icitem.stock}}</td>
+                                    <td><a id="edit_{{$index}}" href="javascript:void(0)" ng-click="edititem(icitem)" class="edit"><i class="fa fa-pencil-square-o fa-fw orange"></i></a></td>
+
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade ExchangeRate" tabindex="-1" id="add_new_Item_modal" role="dialog" data-backdrop="static"
+                     aria-labelledby="mySmallModalLabel">
+                    <div class="modal-dialog modal-md">
+                        <div class="modal-content checkout">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                        aria-hidden="true">&times;</span></button>
+                                <h4 id = "Item-title" class="modal-title">Add Item</h4>
+                            </div>
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12">
+                                        <form class="form-horizontal" name="customer">
+                                            <fieldset>
+                                                <div class="form-group">
+                                                    <label class="col-md-4 control-label" for="">Item Code</label>
+                                                    <div class="col-md-6" style="position:relative;">
+                                                        <input id="itemCode" name="itemCode"  maxlength="125"
+                                                               allowpattern="[0-9]"
+                                                               type="text" number
+                                                               placeholder="item Code"
+                                                               ng-model="itemCodeText"
+                                                               class="form-control input-md" required>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-4 control-label" for="">Item Name</label>
+                                                    <div class="col-md-6" style="position:relative;">
+                                                        <input id="itemName" name="itemName"
+                                                               alpha-with-space
+                                                               type="text" placeholder="item Name"
+                                                               ng-model="itemNameText"
+                                                               class="form-control input-md" required>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-4 control-label" for="">Item Desc</label>
+                                                    <div class="col-md-6" style="position:relative;">
+                                                        <input id="ItemDesc" name="Item Desc"
+                                                               alpha-with-space
+                                                               type="text" placeholder="Item Desc"
+                                                               ng-model="itemDescText"
+                                                               class="form-control input-md" required>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-4 control-label" for="">Stock</label>
+                                                    <div class="col-md-6" style="position:relative;">
+                                                        <input id="stock" name="stock"  maxlength="10"
+                                                               allowpattern="[0-9]"
+                                                               type="text" number
+                                                               placeholder="stock"
+                                                               ng-model="stockText"
+                                                               class="form-control input-md" required>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-4 control-label" for="">DiscountAmountRpercent</label>
+                                                    <div class="col-md-6" style="position:relative;">
+                                                        <input id="discountAmountRpercent" name="discountAmountRpercent"  maxlength="25"
+                                                               ng-pattern="text" alphanumWithSpace
+                                                               placeholder="DiscountAmountRpercent"
+                                                               ng-model="discountAmountRpercentText"
+                                                               class="form-control input-md" required>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-4 control-label" for="">DiscountInPercent</label>
+                                                    <div class="col-md-6" style="position:relative;">
+                                                        <input id="isDiscountInPercent" name="DiscountInPercent"  maxlength="25"
+                                                               ng-pattern="text" alphanumWithSpace
+                                                               placeholder="DiscountInPercent %"
+                                                               ng-model="DiscountInPercentText"
+                                                               class="form-control input-md" required>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="col-md-4 control-label" for="">SalesPrice</label>
+                                                    <div class="col-md-6" style="position:relative;">
+                                                    <input id="salesPrice" name="salesPrice"  maxlength="25"
+                                                           allowpattern="[0-9]"
+                                                           type="text" number
+                                                           placeholder="salesPrice"
+                                                           ng-model="salesPriceText"
+                                                           class="form-control input-md" required>
+                                                </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-4 control-label" for="">PurchasePrice</label>
+                                                    <div class="col-md-6" style="position:relative;">
+                                                        <input id="purchasePrice" name="purchasePrice"  maxlength="25"
+                                                               allowpattern="[0-9]"
+                                                               type="text" number
+                                                               placeholder="purchasePrice"
+                                                               ng-model="purchasePriceText"
+                                                               class="form-control input-md" required>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-4 control-label" for="">ItemTypeName</label>
+                                                    <div class="col-md-6" style="position:relative;">
+                                                        <input id="itemTypeName" name="itemTypeName"  maxlength="25"
+                                                               ng-pattern="/[aA-zZ\s]$/" alpha-with-space
+                                                               type="text" placeholder="itemTypeName"
+                                                               ng-model="itemTypeNameText"
+                                                               class="form-control input-md" required>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-4 control-label" for="">ItemCategoryName</label>
+                                                    <div class="col-md-6" style="position:relative;">
+                                                        <input id="itemCategoryName" name="itemCategoryName"  maxlength="25"
+                                                               ng-pattern="/[aA-zZ\s]$/" alpha-with-space
+                                                               type="text" placeholder="itemCategoryName"
+                                                               ng-model="itemCategoryNameText"
+                                                               class="form-control input-md" required>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-4 control-label" for="">BrandName</label>
+                                                    <div class="col-md-6" style="position:relative;">
+                                                        <input id="brandName" name="brandName"  maxlength="25"
+                                                               ng-pattern="/[aA-zZ\s]$/" alpha-with-space
+                                                               type="text" placeholder="brandName"
+                                                               ng-model="brandNameText"
+                                                               class="form-control input-md" required>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-4 col-sm-4 control-label" for="">Status</label>
+                                                    <div class="col-md-6 col-sm-6" >
+                                                        <select name="itemStatus" id="itemStatus" ng-model="status" class="form-control input-md" required>
+                                                            <option value="">Select</option>
+                                                            <option value="Active">Active</option>
+                                                            <option value="InActive">InActive</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-4 control-label" for="">InclusiveJSON</label>
+                                                    <div class="col-md-6">
+                                                        <input id="inclusiveJSON" name="inclusiveJSON"
+                                                               type="text" placeholder="inclusiveJSON"
+                                                               ng-model="inclusiveJSONText"
+                                                               class="form-control input-md" >
+
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-4 control-label" for="">HsnCode</label>
+                                                    <div class="col-md-6">
+                                                        <input id="hsnCode" name="hsnCode"
+                                                               allowpattern="[0-9]"
+                                                               type="text" number
+                                                               placeholder="hsnCode"
+                                                               ng-model="hsnCodeText"
+                                                               class="form-control input-md" required>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="col-md-4 control-label" for="">UnitPrice</label>
+                                                    <div class="col-md-6">
+                                                        <input id="unitPrice" name="unitPrice"
+                                                               allowpattern="[0-9]"
+                                                               type="text" number
+                                                               placeholder="unitPricer"
+                                                               ng-model="unitPriceText"
+                                                               class="form-control input-md" required maxlength="10">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-4 control-label" for="">UnitPriceIn</label>
+                                                    <div class="col-md-6">
+                                                        <input id="unitPriceIn" name="unitPriceIn"
+                                                               allowpattern="[0-9]"
+                                                               type="text" number
+                                                               placeholder="unitPriceIn"
+                                                               ng-model="unitPriceInText"
+                                                               class="form-control input-md" required>
+                                                        </input>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-4 control-label" for="">Qty</label>
+                                                    <div class="col-md-6">
+                                                        <input id="qty" name="qty"
+                                                               allowpattern="[0-9]"
+                                                               type="text" number
+                                                               placeholder="qty"
+                                                               ng-model="qtyText"
+                                                               class="form-control input-md" required>
+                                                        </input>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-4 control-label" for="">Cess</label>
+                                                    <div class="col-md-6">
+                                                        <input id="cess" name="cess"
+                                                               type="text" placeholder="cess %" maxlength="15"
+                                                               ng-model="cessText"
+                                                               class="form-control input-md" required>
+                                                        </input>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-4 control-label" for="">InventoryMovementName</label>
+                                                    <div class="col-md-6">
+                                                        <input id="inventoryMovementName" name="inventoryMovementName"
+                                                               ng-pattern="text" alpha-with-space
+                                                               placeholder="inventoryMovementName"
+                                                               ng-model="inventoryMovementNameText"
+                                                               class="form-control input-md" required>
+                                                        </input>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-4 col-sm-4 control-label" for="">BarCode</label>
+                                                    <div class="col-md-6 col-sm-6">
+                                                        <input id="barCode" name="barCode"
+                                                               allowpattern="[0-9]"
+                                                               type="text" number
+                                                               placeholder="barCode" maxlength="30"
+                                                               ng-model="barCodeText"
+                                                               class="form-control input-md" required>
+                                                        </input>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-4 col-sm-4 control-label" for="">FileName</label>
+                                                    <div class="col-md-6 col-sm-6">
+                                                        <input id="fileName" name="fileName"
+                                                               ng-pattern="text" alpha-with-space
+                                                               placeholder="fileName" maxlength="30"
+                                                               ng-model="fileNameText"
+                                                               class="form-control input-md" required>
+                                                        </input>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-4 col-sm-4 control-label" for="">DiscountAmt</label>
+                                                    <div class="col-md-6 col-sm-6">
+                                                        <input id="discountAmt" name="discountAmt"
+                                                               placeholder="discountAmtinText" maxlength="30"
+                                                               type="text" number
+                                                               ng-model="discountAmtText"
+                                                               class="form-control input-md" required>
+                                                        </input>
+                                                    </div>
+                                                </div>
+                                    </div>
+                                    </fieldset>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-default" data-toggle="modal"
+                                            data-target=".print-me" ng-click="saveItem()">Save
+                                    </button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="removeCustomerDetails()"> Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>

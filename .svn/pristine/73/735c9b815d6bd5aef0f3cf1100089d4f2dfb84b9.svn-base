@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<body>
+<div class="container-fluid">
+    <div class="container cus_main_row" >
+        <div class="row">
+            <h2 class="pos-header-new">
+                <div>Practitioner orders</div>
+            </h2>
+        </div>
+        <div class="row inner_row_bg">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="panel">
+                    <div class="panel-body" style="height: 65px;">
+                        <div class="col-md-4 col-lg-3 col-sm-5 col-xs-5">
+                            <form class="form-horizontal ng-pristine ng-valid">
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-lg-7 col-md-9 col-sm-9">
+
+                            <div class="form-group">
+                                <div class="col-sm-2">
+                                    <button id="" type="button" class="btn btn-default hi_btn"  ng-click="addpractitionerorder()">Add</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="fixed-table-container">
+                                <div class="table_wrap fixed-table-container-inner">
+                                    <div class="header-background"> </div>
+                                    <table data-toggle="table" data-cache="false" data-height="299"  style="margin-bottom: 0px;" class="hi_table table table-hover table-bordered table-striped table-fixed-header">
+                                        <thead>
+                                        <tr>
+                                            <th data-field="cmpnyname"><div class="th-inner">voucher</div></th>
+                                            <th data-field="cmpnyname"><div class="th-inner">Status</div></th>
+                                            <th data-field="deltype"><div class="th-inner">Edit</div></th>
+                                        <tbody id="parentTable">
+                                        <tr ng-repeat="porders in pregisterorderList| filter:searchText">
+                                            <td>{{porders.voucher}}</td>
+                                            <td>{{porders.status}}</td>
+                                            <td><a id="edit_{{$index}}" href="javascript:void(0)" ng-click="editpractitionerorder(porders)" class="edit"><i class="fa fa-pencil-square-o fa-fw orange"></i></a></td>
+
+                                        </tr>
+                                    </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal fade ExchangeRate" tabindex="-1" id="add_new_practitionerorder_modal" role="dialog" data-backdrop="static"
+                             aria-labelledby="mySmallModalLabel">
+                            <div class="modal-dialog modal-md">
+                                <div class="modal-content checkout">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                                aria-hidden="true">&times;</span></button>
+                                        <h4 id = "practitionerorder-title" class="modal-title">Add Practitionerorders</h4>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-md-12 col-sm-12">
+                                                <form class="form-horizontal" name="mail">
+                                                    <fieldset>
+
+                                                        <div class="form-group">
+                                                            <label class="col-md-4 col-sm-4 control-label" for="">voucher</label>
+                                                            <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                                <input id="voucher" name="voucher"
+                                                                       allowpattern="[0-9]"
+                                                                       type="text" number
+                                                                       placeholder="voucher"
+                                                                       ng-model="voucher"
+                                                                       class="form-control input-md" autocomplete="off">
+
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-md-4 control-label" for="">reg name</label>
+                                                            <div class="col-md-6">
+                                                                <select  name="practitionerId" ng-model="practitionerId" ng-options="registration.name as registration.name for registration in pregisterList" class="form-control input-md ng-change='getFirstLevel(practitionerId)"></select>
+
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="col-md-4 control-label" for="">orders name</label>
+                                                            <div class="col-md-6">
+                                                                <select  name="SassOrdersId" ng-model="orderId" ng-options="order.companyName as order.companyName for order in orderList" class="form-control input-md"></select>
+
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="control-label col-sm-4" for="">Date:</label>
+                                                            <div class="col-sm-8">
+                                                                <p class="input-group">
+                                                                    <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="date" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                                                                    <span class="input-group-btn">
+                                     <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+                                </span>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="col-md-4 col-sm-4 control-label" for="">cdkey</label>
+                                                            <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                                <input id="cdkey" name="cdkey"
+                                                                       type="text" placeholder="cdkey"
+                                                                       ng-model="cdkey"
+                                                                       class="form-control input-md" autocomplete="off">
+
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div class="form-group">
+                                                            <label class="col-md-4 col-sm-4 control-label" for="">svkey`</label>
+                                                            <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                                <input id="svkey" name="svkey"
+                                                                       type="text" placeholder="svkey"
+                                                                       ng-model="svkey"
+                                                                       class="form-control input-md" autocomplete="off">
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-md-4 col-sm-4 control-label" for="">registrationKey</label>
+                                                            <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                                <input id="registrationKey" name="registrationKey"
+                                                                       type="text" placeholder="registrationKey"
+                                                                       ng-model="registrationKey"
+                                                                       class="form-control input-md" autocomplete="off">
+
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div class="form-group">
+                                                            <label class="col-md-4 col-sm-4 control-label" for="">activationKey</label>
+                                                            <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                                <input id="activationKey" name="activationKey"
+                                                                       type="text" placeholder="activationKey"
+                                                                       ng-model="activationKey"
+                                                                       class="form-control input-md" autocomplete="off">
+
+                                                            </div>
+                                                        </div>
+
+
+
+                                                        <div class="form-group">
+                                                            <label class="col-md-4 col-sm-4 control-label" for="">Status</label>
+                                                            <div class="col-md-6 col-sm-6" >
+                                                                <select name="paymentMethodText" id="paymentMethodText" ng-model="status"  class="form-control input-md" required>
+                                                                    <option value="Active">Active</option>
+                                                                    <option value="InActive">InActive</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+
+
+                                                    </fieldset>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-default" data-toggle="modal"
+                                                data-target=".print-me"  ng-click="savepractitionerorders()">Save
+                                        </button>
+                                        <button type="button" class="btn btn-default" ng-click="removepayments()" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+</body>
+</html>

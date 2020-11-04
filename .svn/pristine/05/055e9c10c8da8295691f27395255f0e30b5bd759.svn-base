@@ -1,0 +1,459 @@
+package com.hyva.idm.pkt.pktEndPoints;
+
+import com.hyva.idm.constants.EndpointConstants;
+import com.hyva.idm.pkt.pktBeans.*;
+import com.hyva.idm.pkt.pktRelations.*;
+import com.hyva.idm.pkt.pktService.PktService;
+import com.hyva.idm.pojo.IDMResponse;
+import com.hyva.idm.sass.sassentities.PktPermission;
+import com.hyva.idm.sass.sassentities.PktUser;
+import com.hyva.idm.sass.sasspojo.*;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.json.JSONException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.integration.dsl.http.Http;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.persistence.Table;
+import javax.print.attribute.standard.Media;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * krishna
+ */
+@RestController
+@RequestMapping(EndpointConstants.PKT_ENDPOINT)
+public class PktController {
+
+    @Autowired
+    PktService pktService;
+
+
+    @RequestMapping(value = "/savePktPermsissions", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public IDMResponse savePktPermsission(@RequestBody PktPermissionBean pktPermissionBean) {
+        PktPermissions pktPermission = pktService.savePktPermsissionTable(pktPermissionBean);
+        if (pktPermission == null) {
+            return null;
+        } else {
+            return new IDMResponse(HttpStatus.OK.value(), "success", pktPermission);
+        }
+    }
+
+
+    @RequestMapping(value = "/getPaginatedtableLists", method = RequestMethod.POST, produces = "application/json")
+    public ResponseEntity getPaginatedtableList(@RequestParam(value = "searchText") String searchText,
+                                                @RequestParam(value = "searchText1") String searchText1,
+                                                @RequestParam(value = "searchText2") String searchText2,
+                                                @RequestBody BasePojo basePojo) {
+        return ResponseEntity.status(200).body(pktService.getPaginatedTableList(basePojo, searchText, searchText1, searchText2));
+    }
+
+    @RequestMapping(value = "/getApplicationLists",
+            method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public IDMResponse getApplictionList() {
+        List<ApplicationBean> applicationPojoList = pktService.getApplicationList();
+        return new IDMResponse(HttpStatus.OK.value(), "success", applicationPojoList);
+    }
+    @RequestMapping(value = "/getPktuserList", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public IDMResponse getPktuserList() {
+        List<PktUserPojo> pktuserList = pktService.getPktuserList();
+        return new IDMResponse(HttpStatus.OK.value(), "success", pktuserList);
+    }
+
+    @RequestMapping(value = "/saveOperators", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
+    public Operators saveOperator(@RequestBody OperatorBean operatorpojo) {
+        return pktService.saveOperator(operatorpojo);
+    }
+
+    @RequestMapping(value = "/getPaginatedOperatorLists", method = RequestMethod.POST, produces = "application/json")
+    public ResponseEntity getPaginatedOperatorList(@RequestParam(value = "searchText", required = false) String searchText,
+                                                   @RequestBody BasePojo basePojo) {
+        return ResponseEntity.status(200).body(pktService.getPaginatedOperatorList(basePojo, searchText));
+    }
+
+    @RequestMapping(value = "/saveValidators", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
+    public Validator saveValidator(@RequestBody ValidatorBean validatorPojo) {
+        return pktService.saveValidator(validatorPojo);
+    }
+
+    @RequestMapping(value = "/saveActions", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
+    public Actions saveAction(@RequestBody ActionBean actionBean) {
+        return pktService.saveAction(actionBean);
+    }
+
+    @RequestMapping(value = "/getPaginatedActionLists", method = RequestMethod.POST, produces = "application/json")
+    public ResponseEntity getPaginatedActionList(@RequestParam(value = "searchText", required = false) String searchText,
+                                                 @RequestBody BasePojo basePojo) {
+        return ResponseEntity.status(200).body(pktService.getPaginatedActionList(basePojo, searchText));
+    }
+
+    @RequestMapping(value = "/saveColumnTypes", method = RequestMethod.POST, produces = "application/json")
+    public IDMResponse saveColumnType(@RequestBody ColumnTypeBean columnTypePojo) {
+        ColumnTypes columnType = pktService.saveColumnType(columnTypePojo);
+        return new IDMResponse(HttpStatus.OK.value(), "success", columnType);
+    }
+
+    @RequestMapping(value = "/savePositions", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
+    public Position savePosition(@RequestBody PositionBean positionPojo) {
+        return pktService.savePosition(positionPojo);
+    }
+
+    @RequestMapping(value = "/getPositionLists",
+            method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public IDMResponse getPositionList() {
+        List<PositionBean> positionList = pktService.getPositionList();
+        return new IDMResponse(HttpStatus.OK.value(), "success", positionList);
+    }
+
+    @RequestMapping(value = "/savePktFieldsPermissions", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
+    public PktFields savePktFieldsPermission(@RequestBody PktFieldsBean saveNewPktFeilds) {
+        return pktService.SavePktFields(saveNewPktFeilds);
+    }
+
+    @RequestMapping(value = "/pktImportSaves", method = RequestMethod.POST)
+    public ResponseEntity pktImportSave(@RequestParam("myFile") MultipartFile uploadfiles) throws Exception {
+        System.out.println(uploadfiles.getOriginalFilename());
+        try {
+            XSSFWorkbook workbook = new XSSFWorkbook(uploadfiles.getInputStream());
+            XSSFSheet sheet = workbook.getSheetAt(0);
+            for (int i = 1; i < sheet.getLastRowNum() + 1; i++) {
+                org.apache.poi.ss.usermodel.Row row = sheet.getRow(i);
+                if (row != null) {
+                    org.apache.poi.ss.usermodel.Cell tableName = row.getCell(0);
+                    org.apache.poi.ss.usermodel.Cell fieldName = row.getCell(1);
+                    org.apache.poi.ss.usermodel.Cell groupOf = row.getCell(2);
+                    org.apache.poi.ss.usermodel.Cell status = row.getCell(3);
+
+                    PktFieldsBean pktFieldsPojo = new PktFieldsBean();
+                    pktFieldsPojo.setFieldName(tableName == null ? null : tableName.toString());
+                    pktFieldsPojo.setTableName(fieldName == null ? null : fieldName.toString());
+                    pktFieldsPojo.setGroupOf(groupOf == null ? null : groupOf.toString());
+                    pktFieldsPojo.setStatus(status == null ? null : status.toString());
+                    pktService.SavePktFields(pktFieldsPojo);
+                }
+
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+
+    @RequestMapping(value = "/permissionfieldLists",
+            method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public IDMResponse permissionfieldList() {
+        List<PktFieldsBean> pktFieldsPojoList = pktService.permissionfieldList();
+        return new IDMResponse(HttpStatus.OK.value(), "success", pktFieldsPojoList);
+    }
+
+    @RequestMapping(value = "/saveApplications", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
+    public Application saveApplication(@RequestBody ApplicationBean applicationBean) {
+        return pktService.saveApplication(applicationBean);
+    }
+
+    @RequestMapping(value = "/getAllColumnTypeLists",
+            method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public IDMResponse getAllColumnTypeList() {
+        List<ColumnTypeBean> columnTypeList = pktService.getAllColumnTypeList();
+        return new IDMResponse(HttpStatus.OK.value(), "success", columnTypeList);
+    }
+
+    @RequestMapping(value = "/getValidatorLists",
+            method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public IDMResponse getValidatorList() {
+        List<ValidatorBean> validatorPojoList = pktService.getValidatorList();
+        return new IDMResponse(HttpStatus.OK.value(), "success", validatorPojoList);
+    }
+
+    @RequestMapping(value = "/getOperatorLists",
+            method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public IDMResponse getOperatorList() {
+        List<OperatorBean> operatorpojoList = pktService.getOperatorList();
+        return new IDMResponse(HttpStatus.OK.value(), "success", operatorpojoList);
+    }
+
+    @RequestMapping(value = "/getActionLists",
+            method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public IDMResponse getActionList() {
+        List<ActionBean> actionPojoList = pktService.getActionList();
+        return new IDMResponse(HttpStatus.OK.value(), "success", actionPojoList);
+    }
+    @RequestMapping(value = "/gettableslist",
+            method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public IDMResponse gettableslist() {
+        List<PktPermissions> pktPermissionsList = pktService.gettableslist();
+        return new IDMResponse(HttpStatus.OK.value(), "success", pktPermissionsList);
+    }
+
+    @RequestMapping(value = "/getPktPermisssionList",
+            method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public IDMResponse getPktPermisssionList(@RequestParam("subscription") String subscription) {
+        List<PktPermissionBean> pktPermisssionList = pktService.getPktPermisssionList(subscription);
+
+        return new IDMResponse(HttpStatus.OK.value(), "success", pktPermisssionList);
+    }
+    @RequestMapping(value = "/getOperatorListBasedOnApplication",
+            method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public IDMResponse getOperatorListBasedOnApplication(@RequestParam("subscription") String subscription) {
+        List<String> pktPermissionsList = pktService.getOperatorListBasedOnApplication(subscription);
+
+        return new IDMResponse(HttpStatus.OK.value(), "success", pktPermissionsList);
+    }
+    @RequestMapping(value = "/getTablesListBasedOnApplication",
+            method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public IDMResponse getTablesListBasedOnApplication(@RequestParam("name") String subscription) {
+        List<PktPermissions> pktPermissionsList = pktService.getTablesListBasedOnApplication(subscription);
+
+        return new IDMResponse(HttpStatus.OK.value(), "success", pktPermissionsList);
+    }
+
+    @RequestMapping(value = "/savetext",method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity savetext(@RequestBody PktPermissionBean pktPermissionPojo){
+        PktPermissions pktPermissions = pktService.savetext(pktPermissionPojo);
+        return ResponseEntity.status(200).body(pktPermissions);
+     }
+
+    @RequestMapping(value = "/getPaginatedFieldLists", method = RequestMethod.POST, produces = "application/json")
+    public ResponseEntity getPaginatedFieldList(@RequestParam(value = "type", required = false) String status,
+                                                @RequestParam(value = "searchText") String searchText,
+                                                @RequestParam(value = "tablesearchText") String tablesearchText,
+                                                @RequestParam(value = "keysearchText") String keysearchText,
+                                                @RequestParam(value = "columnsearchText") String columnsearchText,
+                                                @RequestParam(value = "operatorsearchText") String operatorsearchText,
+                                                @RequestBody BasePojo basePojo) {
+        return ResponseEntity.status(200).body(pktService.getPaginatedfieldList(status, basePojo, searchText, tablesearchText, keysearchText, columnsearchText, operatorsearchText));
+    }
+
+    //get TableNames in PKTFields
+    @RequestMapping(value = "/getPktTablepermissionMasters",
+            method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public IDMResponse getPktTablepermissionMaster(@RequestParam("subscriptionName") String subscriptionName) {
+        List<PktFieldsBean> level1 = pktService.getPktTablepermissionMaster(subscriptionName);
+        return new IDMResponse(HttpStatus.OK.value(), "success", level1);
+    }
+
+    @RequestMapping(value = "/getPktFieldspermissionMasters",
+            method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public IDMResponse getPktFieldspermissionMaster(@RequestParam("tableName") String tableName) {
+        List<PktFieldsBean> level1 = pktService.getPktFieldspermissionMaster(tableName);
+        return new IDMResponse(HttpStatus.OK.value(), "success", level1);
+    }
+
+
+    @RequestMapping(value = "/savePktUser",method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity savePktUser(@RequestBody PktUserPojo pktUserPojo){
+        PktUser pktUser = pktService.savePktUser(pktUserPojo);
+        return ResponseEntity.status(200).body(pktUser);
+    }
+
+    @RequestMapping(value = "/getPlusKeyList",method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity getPlusKeyList(@RequestParam(value = "name")String name){
+        List<PktFieldsBean> pktFieldsBeanList=pktService.getPlusKeyList(name);
+        return ResponseEntity.status(200).body(pktFieldsBeanList);
+    }
+    @RequestMapping (value = "/saveplus",method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE,consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity saveplus(@RequestParam(value = "id")Long id,
+                                      @RequestBody List<PktPermissionPojo> stringList){
+        return ResponseEntity.status(200).body(pktService.savepluskey(id,stringList));
+    }
+
+    @RequestMapping(value = "/saveCondition",method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity saveCondition(@RequestParam (value = "id")Long id,
+                                        @RequestBody List<ConditionPojo> conditionPojoList){
+        return ResponseEntity.status(200).body(pktService.saveCondition(id,conditionPojoList));
+    }
+    @RequestMapping(value = "/saveSearch",method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public IDMResponse saveSearch(@RequestParam("tablecode") String tablecode,
+                                        @RequestBody List<PktPermissionPojo> searchvalues) {
+        pktService.saveSearch(tablecode,searchvalues);
+        return new IDMResponse(HttpStatus.OK.value(),"success");
+    }
+    @RequestMapping(value = "/saveDropdown",method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public IDMResponse saveDropdown(@RequestParam("id") Long id,
+                                        @RequestBody List<TablePojo> tablecolumn) {
+        pktService.saveDropdown(id,tablecolumn);
+        return new IDMResponse(HttpStatus.OK.value(),"success");
+    }
+    @RequestMapping(value = "/saveCreatedfields",method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public IDMResponse saveCreatedfields(@RequestParam("id") Long id,
+                                         @RequestBody List<CreateTablePojo> createTablePojoList) {
+        pktService.saveCreatedfields(id,createTablePojoList);
+        return new IDMResponse(HttpStatus.OK.value(),"success");
+    }
+    @RequestMapping(value = "/saveUpdateFields",method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public IDMResponse saveUpdateFields(@RequestParam("id") Long id,
+                                         @RequestBody List<UpdateTablePojo> updateTablePojoList) {
+        pktService.saveUpdateFields(id,updateTablePojoList);
+        return new IDMResponse(HttpStatus.OK.value(),"success");
+    }
+    @RequestMapping(value = "/saveCalculation",method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public IDMResponse saveCalculation(@RequestParam("id") Long id,
+                                        @RequestBody List<String> calStringList) {
+        pktService.saveCalculation(id,calStringList);
+        return new IDMResponse(HttpStatus.OK.value(),"success");
+    }
+
+    @RequestMapping(value = "/editSearch", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity editSearch(@RequestParam(value = "id")Long id) {
+        return ResponseEntity.status(200).body( pktService.editSearch(id));
+    }
+    @RequestMapping(value = "/editheadervalue", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity editheadervalue(@RequestParam(value = "id")Long id) {
+        return ResponseEntity.status(200).body( pktService.editheadervalue(id));
+    }
+
+    @RequestMapping(value = "/editFooterValue", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity editFooterValue(@RequestParam(value = "id")Long id) {
+        return ResponseEntity.status(200).body( pktService.editFooterValue(id));
+    }
+
+
+    @RequestMapping(value = "/editDropdown", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity editDropdown(@RequestParam(value = "id")Long id) {
+        return ResponseEntity.status(200).body( pktService.editDropdown(id));
+    }
+    @RequestMapping(value = "/editCalcualtion", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity editCalcualtion(@RequestParam(value = "id")Long id) {
+        return ResponseEntity.status(200).body( pktService.editCalcualtion(id));
+    }
+
+    @RequestMapping(value = "/editCondition", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity editCondition(@RequestParam(value = "id")Long id) {
+        return ResponseEntity.status(200).body( pktService.editCondition(id));
+    }
+
+    @RequestMapping(value = "/editResult",method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity editResult(@RequestParam(value = "id")Long id){
+        return ResponseEntity.status(200).body(pktService.editResult(id));
+    }
+
+    @RequestMapping(value = "/editPlus", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity editPlus(@RequestParam(value = "id")Long id) {
+        return ResponseEntity.status(200).body( pktService.editPlus(id));
+    }
+
+
+    @RequestMapping(value = "/getTableCodeLists", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public IDMResponse getTableCodeList(@RequestParam("keyValue") String keyValue,
+                                        @RequestParam("keySubscription") String keySubscription) throws JSONException {
+        List<PktFieldsBean> pktFieldsPojos = pktService.getTableCodeList(keyValue, keySubscription);
+        return new IDMResponse(HttpStatus.OK.value(), "success", pktFieldsPojos);
+    }
+    @RequestMapping(value = "/getcolumncodesbasedontablename", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public IDMResponse getcolumncodesbasedontablename(@RequestParam("codes") String table) throws JSONException {
+        List<PktFields> pktFieldsPojos = pktService.getcolumncodesbasedontablename(table);
+        return new IDMResponse(HttpStatus.OK.value(), "success", pktFieldsPojos);
+    }
+
+
+    //Save PKT fields####
+    @RequestMapping(value = "/savePktFieldsPermsissions", method = RequestMethod.POST, produces = "application/json")
+    public IDMResponse savePktFieldsPermsission(@RequestBody PktPermissionBean pktPermissionPojo) {
+        PktPermissions pktPermission = pktService.savePktPermsissionTableColumnMapping(pktPermissionPojo);
+        if (pktPermission == null) {
+            return null;
+        } else {
+            return new IDMResponse(HttpStatus.OK.value(), "success", pktPermission);
+        }
+    }
+    @RequestMapping(value = "/saveFieldsWithPositions", method = RequestMethod.POST, produces = "application/json")
+    public IDMResponse saveFieldsWithPositions(@RequestBody List<PktPermissionBean> perms) {
+        PktPermissions pktPermission = null;
+        for(PktPermissionBean pktPermissionPojo:perms) {
+            pktPermission = pktService.savePktPermsissionTableColumnMapping(pktPermissionPojo);
+        }
+            if (pktPermission == null) {
+                return null;
+            } else {
+                return new IDMResponse(HttpStatus.OK.value(), "success", pktPermission);
+            }
+        }
+
+
+    @RequestMapping(value = "/getTableCodeListOperations", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public IDMResponse getTableCodeListOperation(@RequestParam("keyValue") String keyValue,
+                                        @RequestParam("keySubscription") String keySubscription) throws JSONException {
+        List<PktFieldsBean> pktFieldsPojos = pktService.getTableCodeListOperation(keyValue, keySubscription);
+        return new IDMResponse(HttpStatus.OK.value(), "success", pktFieldsPojos);
+    }
+
+    @RequestMapping(value = "/saveOperationJsonDatas", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public IDMResponse saveOperationJsonDatas(@RequestBody PktPermissionBean pktPermissionBean) throws JSONException {
+        PktPermissions pktFieldsPojos = pktService.saveOperationJsonDatas(pktPermissionBean);
+        return new IDMResponse(HttpStatus.OK.value(), "success", pktFieldsPojos);
+    }
+
+
+
+    @RequestMapping(value = "/editMenuBuilder",method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity editMenuBuilder(@RequestParam(value = "id")Long id){
+        PktBuilder pktBuilder = pktService.editMenuBuilder(id);
+        return ResponseEntity.status(200).body(pktBuilder);
+    }
+    @RequestMapping(value = "/getAllPktFieldsLists", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public IDMResponse getAllPktFieldsList() throws JSONException {
+        List<PktFieldsBean> pktFieldsPojos = pktService.getAllPktFieldsList();
+        return new IDMResponse(HttpStatus.OK.value(), "success", pktFieldsPojos);
+    }
+    @RequestMapping(value = "/getAllPktPermissionList", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public IDMResponse getLists() throws JSONException {
+        List<PktPermissions> pktPermissions = pktService.getAllPktPermissionList();
+        return new IDMResponse(HttpStatus.OK.value(), "success", pktPermissions);
+    }
+
+    @RequestMapping(value = "/getTableColumnNamesLists", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public IDMResponse getTableColumnNamesLists(@RequestParam("keyValue") String keyValue,
+                                        @RequestParam("keySubscription") String keySubscription) throws JSONException {
+        List<PktPermissionBean> pktFieldsPojos = pktService.getTableColumnNamesLists(keyValue, keySubscription);
+        return new IDMResponse(HttpStatus.OK.value(), "success", pktFieldsPojos);
+    }
+
+
+    //////JSONFORMAT///////
+    @RequestMapping(value = "/saveMenuBuilderData",method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE,consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity saveMenuBuilderData(@RequestBody PktBuilderBean pktBuilderBean){
+        PktBuilder  pktBuilder =  pktService.saveMenuBuilderData(pktBuilderBean);
+        return  ResponseEntity.status(200).body(pktBuilder);
+    }
+
+
+    //////getMenuBuilderList///////
+    @RequestMapping(value = "/getMenuBuilderList",method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE)
+    public IDMResponse getMenuBuilderList(){
+        List<PktBuilderBean>  pktBuilderBeanList =  pktService.getMenuBuilderList();
+        return new IDMResponse(HttpStatus.OK.value(),"success",pktBuilderBeanList);
+    }
+
+    @RequestMapping(value = "/getMenuListBasedOnApplication",method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE)
+    public IDMResponse getMenuListBasedOnApplication(@RequestParam("name")String name){
+        List<Map<String,String>>  menuPojoList =  pktService.getMenuListBasedOnApplication(name);
+        return new IDMResponse(HttpStatus.OK.value(),"success",menuPojoList);
+    }
+    @RequestMapping(value = "/getMenuSubMenuListBasedOnApp",method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE)
+    public IDMResponse getMenuSubMenuListBasedOnApp(@RequestBody String name){
+        List<MenuPojo>  menuPojoList =  pktService.getMenuSubMenuListBasedOnApp(name);
+        return new IDMResponse(HttpStatus.OK.value(),"success",menuPojoList);
+    }
+
+    //////getMenuBuilderList///////
+    @RequestMapping(value = "/saveHeaderValues",method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE)
+    public IDMResponse saveHeaderValues(@RequestBody PktBuilderBean pktBuilderBean){
+        PktBuilder  pktBuilderBeanList =  pktService.saveHeaderValues(pktBuilderBean);
+        return new IDMResponse(HttpStatus.OK.value(),"success",pktBuilderBeanList);
+    }
+ //////getMenuBuilderList///////
+    @RequestMapping(value = "/saveFooterValues",method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE)
+    public IDMResponse saveFooterValues(@RequestBody PktBuilderBean pktBuilderBean){
+        PktBuilder  pktBuilderBeanList =  pktService.saveFooterValues(pktBuilderBean);
+        return new IDMResponse(HttpStatus.OK.value(),"success",pktBuilderBeanList);
+    }
+
+}

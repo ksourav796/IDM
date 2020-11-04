@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<body>
+<div class="container-fluid">
+<div class="container cus_main_row">
+    <div class="row">
+        <h2 class="pos-header-new">
+            <div>Operator</div>
+        </h2>
+    </div>
+    <div class="row inner_row_bg">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="panel">
+                <div class="panel-body" style="height: 65px;">
+                    <div class="col-md-4 col-lg-3 col-sm-5 col-xs-5">
+                        <form class="form-horizontal ng-pristine ng-valid">
+                            <div class="form-group">
+                                <div class="col-sm-12">
+
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-lg-7 col-md-9 col-sm-9">
+                        <div class="col-sm-6">
+                            <p class="input-group" align="right" style="display: block;">
+                                <input id="searchh" name="textinput"  type="text" autocomplete="off"
+                                       placeholder="search Operator" ng-model="searchText" class="form-control input-md"
+                                       ng-keyup="$event.keyCode == 13 ?getPaginatedOperatorLists(searchText):null"/>
+                            </p>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-2">
+                                <button id="" type="button" class="btn btn-default hi_btn"
+                                        ng-click="addNewOperator()">Add
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="fixed-table-container">
+                        <div class="table_wrap fixed-table-container-inner">
+                            <div class="header-background"></div>
+                            <table data-toggle="table" data-cache="false" data-height="299"
+                                   style="margin-bottom: 0px;"
+                                   class="hi_table table table-hover table-bordered table-striped table-fixed-header">
+                                <thead>
+                                <tr>
+                                    <th data-field="formRegno">
+                                        <div class="th-inner">Name</div>
+                                    </th>
+                                    <th data-field="formRegno">
+                                        <div class="th-inner">Description</div>
+                                    </th>
+                                    <th data-field="formRegno">
+                                        <div class="th-inner">status</div>
+                                    </th>
+                                    <th data-field="formRegno">
+                                        <div class="th-inner">Edit</div>
+                                    </th>
+
+
+                                <tbody id="parentTable">
+                                <tr ng-repeat="type in operatortype">
+                                    <td>{{type.name}}</td>
+                                    <td>{{type.description}}</td>
+                                    <td>{{type.status}}</td>
+                                    <td><a id="edit_{{$index}}" href="javascript:void(0)"
+                                           ng-click="editOperator(type)" class="edit"><i
+                                            class="fa fa-pencil-square-o fa-fw orange"></i></a></td>
+                                    <!--</tr>-->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-5 col-md-7 col-sm-10 pagination_" style="float: right; text-align: right; margin-top: 10px;">
+                    <!--<div class="col-sm-12 pagination_">-->
+
+                        <button type="button" class="btn btn-default hi_btn" ng-class="{'diabled-class': first}"
+                                ng-disabled="first"
+                                ng-click="getPaginatedOperatorLists('firstPage')" ng-model="first">First
+                        </button>
+                        <button type="button" class="btn btn-default hi_btn" ng-class="{'diabled-class': prev}"
+                                ng-disabled="prev"
+                                ng-click="getPaginatedOperatorLists('prevPage')" ng-model="prev">Prev
+                        </button>
+                        <button type="button" class="btn btn-default hi_btn" name="next" ng-disabled="next"
+                                ng-click="getPaginatedOperatorLists('nextPage')" value="next"
+                                ng-class="{'diabled-class': next}" ng-model="next">Next
+                        </button>
+                        <button type="button" class="btn btn-default hi_btn"
+                                ng-click="getPaginatedOperatorLists('lastPage')" ng-class="{'diabled-class': last}"
+                                ng-disabled="last"
+                                ng-model="last">Last
+                        </button>
+                    </div>
+                    <div align="center"><span style="color: red;"></span></div>
+                </div>
+                <div class="modal fade ExchangeRate" tabindex="-1" id="add_new_Operator_modal" role="dialog"
+                     data-backdrop="static"
+                     aria-labelledby="mySmallModalLabel">
+                    <div class="modal-dialog modal-md">
+                        <div class="modal-content checkout">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                        aria-hidden="true">&times;</span></button>
+                                <h4 id="cust-notif" class="modal-title">Add Operator</h4>
+                            </div>
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12">
+                                        <form class="form-horizontal" name="mail">
+                                            <fieldset>
+                                                <div class="form-group">
+                                                    <input type="hidden" ng-model="setupobj.id" value="{{setupobj.id}}"/>
+                                                    <label class="col-md-4 col-sm-4 control-label" for="">Name</label>
+                                                    <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                        <input id="name" name="name"
+                                                               type="text" placeholder="name"
+                                                               ng-model="name"
+                                                               class="form-control input-md" autocomplete="off">
+
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-4 col-sm-4 control-label" for="">Description</label>
+                                                    <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                        <input id="Description" name="Description"
+                                                               type="text" placeholder="Description"
+                                                               ng-model="description"
+                                                               class="form-control input-md" autocomplete="off">
+
+                                                    </div>
+                                                </div>
+
+                                                <!--<div class="form-group">-->
+                                                <!--<label class="col-md-4 col-sm-4 control-label"-->
+                                                <!--for="">DocType</label>-->
+                                                <!--<div class="col-md-6 col-sm-6">-->
+                                                <!--<select name="DocType" id="DocType" ng-model="docType"-->
+                                                <!--class="form-control input-md" required>-->
+                                                <!--<option value="Purchase">Purchase</option>-->
+                                                <!--<option value="Sales">Sales</option>-->
+                                                <!--</select>-->
+                                                <!--</div>-->
+                                                <!--</div>-->
+                                                <div class="form-group">
+                                                    <label class="col-md-4 col-sm-4 control-label"
+                                                           for="">status</label>
+                                                    <div class="col-md-6 col-sm-6">
+                                                        <select name="status" id="status" ng-model="status"
+                                                                class="form-control input-md" required>
+                                                            <option value="Active">Active</option>
+                                                            <option value="InActive">InActive</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+
+
+                                            <div class="modal-footer">
+                                                <button type="submit" class="btn btn-default" data-toggle="modal"
+                                                        data-target=".print-me" ng-click="saveOperator()">save
+                                                </button>
+                                                <button type="button" class="btn btn-default"
+                                                        ng-click="removeOperator()" data-dismiss="modal">close
+                                                </button>
+
+                                            </div>
+
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+</div>
+</body>
+</html>
+

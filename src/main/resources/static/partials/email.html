@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<body>
+<div class="container-fluid">
+    <div class="container cus_main_row" >
+        <div class="row">
+            <h2 class="pos-header-new">
+                <div>Email Reader</div>
+            </h2>
+        </div>
+        <div class="row inner_row_bg">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="panel">
+                    <div class="panel-body" style="height: 65px;">
+                        <div class="col-md-4 col-lg-3 col-sm-5 col-xs-5">
+                            <form class="form-horizontal ng-pristine ng-valid">
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-lg-7 col-md-9 col-sm-9">
+
+                            <div class="form-group">
+                                <div class="col-sm-2">
+                                    <button id="" type="button" class="btn btn-default hi_btn"  ng-click="addemail()">Add</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="fixed-table-container">
+                            <div class="table_wrap fixed-table-container-inner">
+                                <div class="header-background"> </div>
+                                <table data-toggle="table" data-cache="false" data-height="299"  style="margin-bottom: 0px;" class="hi_table table table-hover table-bordered table-striped table-fixed-header">
+                                    <thead>
+                                    <tr>
+                                        <th data-field="formRegno"><div class="th-inner">host</div></th>
+                                        <th data-field="formRegno"><div class="th-inner">port</div></th>
+                                        <th data-field="formRegno"><div class="th-inner">username</div></th>
+                                        <th data-field="formRegno"><div class="th-inner">password</div></th>
+                                        <th data-field="formRegno"><div class="th-inner">Edit</div></th>
+
+
+                                    <tbody id="parentTable">
+                                    <tr ng-repeat="email in emailList| filter:searchText">
+                                        <td>{{email.host}}</td>
+                                        <td>{{email.port}}</td>
+                                        <td>{{email.username}}</td>
+                                        <td>{{email.password}}</td>
+                                        <td><a id="edit_{{$index}}" href="javascript:void(0)" ng-click="editemail(email)" class="edit"><i class="fa fa-pencil-square-o fa-fw orange"></i></a></td>
+
+
+
+                                        <!--</tr>-->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade ExchangeRate" tabindex="-1" id="add_new_email_modal" role="dialog" data-backdrop="static"
+                         aria-labelledby="mySmallModalLabel">
+                        <div class="modal-dialog modal-md">
+                            <div class="modal-content checkout">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                            aria-hidden="true">&times;</span></button>
+                                    <h4 id = "cust-notif" class="modal-title">Email Reader</h4>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-md-12 col-sm-12">
+                                            <form class="form-horizontal" name="mail">
+                                                <fieldset>
+                                                    <div class="form-group">
+                                                        <label class="col-md-4 col-sm-4 control-label" for="">url</label>
+                                                        <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                            <input id="url" name="url"
+                                                                   type="text" placeholder="url"
+                                                                   ng-model="url"
+                                                                   class="form-control input-md" autocomplete="off">
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-4 col-sm-4 control-label" for="">userName</label>
+                                                        <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                            <input id="userName" name="userName"
+                                                                   type="text" placeholder="userName"
+                                                                   ng-model="userName"
+                                                                   class="form-control input-md" autocomplete="off">
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-4 col-sm-4 control-label" for="">emailId</label>
+                                                        <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                            <input id="emailId" name="emailId"
+                                                                   type="text" placeholder="emailId"
+                                                                   ng-model="emailId"
+                                                                   ng-pattern="email"
+                                                                   class="form-control input-md" autocomplete="off">
+                                                            <p class="error"
+                                                               ng-show="mail.emailId.$error.pattern">Enter Valid EmailId</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-4 col-sm-4 control-label" for="">password</label>
+                                                        <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                            <input id="password" name="password"
+                                                                   type="text" placeholder="password"
+                                                                   ng-model="password"
+                                                                   class="form-control input-md" autocomplete="off">
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-4 col-sm-4 control-label" for="">smtp</label>
+                                                        <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                            <input id="smtp" name="smtp"
+                                                                   type="text" placeholder="smtp"
+                                                                   ng-model="smtp"
+                                                                   class="form-control input-md" autocomplete="off">
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-4 col-sm-4 control-label" for="">pop3</label>
+                                                        <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                            <input id="pop3" name="pop3"
+                                                                   type="text" placeholder="pop3"
+                                                                   ng-model="pop3"
+                                                                   class="form-control input-md" autocomplete="off">
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-4 col-sm-4 control-label" for="">imap</label>
+                                                        <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                            <input id="imap" name="imap"
+                                                                   type="text" placeholder="imap"
+                                                                   ng-model="imap"
+                                                                   class="form-control input-md" autocomplete="off">
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-4 col-sm-4 control-label" for="">host</label>
+                                                        <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                            <input id="host" name="host"
+                                                                   type="text" placeholder="host"
+                                                                   ng-model="host"
+                                                                   class="form-control input-md" autocomplete="off">
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-4 col-sm-4 control-label" for="">Folder</label>
+                                                        <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                            <input id="Folder" name="Folder"
+                                                                   type="text" placeholder="Folder"
+                                                                   ng-model="Folder"
+                                                                   class="form-control input-md" autocomplete="off">
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-4 col-sm-4 control-label" for="">Fromemail</label>
+                                                        <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                            <input id="Fromemail" name="Fromemail"
+                                                                   type="text" placeholder="Folder"
+                                                                   ng-model="Fromemail"
+                                                                   class="form-control input-md" autocomplete="off">
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-4 col-sm-4 control-label" for="">visibility</label>
+                                                        <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                            <input id="visibility" name="visibility"
+                                                                   type="text" placeholder="visibility"
+                                                                   ng-model="visibility"
+                                                                   class="form-control input-md" autocomplete="off">
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-4 col-sm-4 control-label" for="">subject</label>
+                                                        <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                            <input id="subject" name="subject"
+                                                                   type="text" placeholder="subject"
+                                                                   ng-model="subject"
+                                                                   class="form-control input-md" autocomplete="off">
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-4 col-sm-4 control-label" for="">Name</label>
+                                                        <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                            <input id="Name" name="Name"
+                                                                   type="text" placeholder="Name"
+                                                                   ng-model="Name"
+                                                                   class="form-control input-md" autocomplete="off">
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-4 col-sm-4 control-label" for="">port</label>
+                                                        <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                            <input id="port" name="port"
+                                                                   type="text" placeholder="port"
+                                                                   ng-model="port"
+                                                                   class="form-control input-md" autocomplete="off">
+
+                                                        </div>
+                                                    </div>
+                                                </fieldset>
+                                                    <div class="modal-footer">
+                                                        <button type="submit" class="btn btn-default" data-toggle="modal"
+                                                                data-target=".print-me" ng-click="saveemail()">save
+                                                        </button>
+                                                        <button type="button" class="btn btn-default"  ng-click="removeemail()"data-dismiss="modal">close</button>
+
+                                                    </div>
+
+                                            </form>
+
+                                        </div>
+                                    </div>
+                                </div>
+</body>
+</body>
+</body>
+</body>
+</html>

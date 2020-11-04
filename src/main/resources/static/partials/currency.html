@@ -1,0 +1,173 @@
+
+<div class="container-fluid">
+    <div class="container cus_main_row" >
+
+        <div class="row">
+            <h2 class="pos-header-new">
+                <div>currency</div>
+            </h2>
+        </div>
+        <div class="row inner_row_bg">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="panel">
+                    <div class="panel-body">
+
+
+                        <div class="col-md-9 col-lg-7 col-sm-9 col-xs-7">
+
+                            <div class="form-group">
+                                <div class="col-sm-2">
+                                    <button type="button" class="btn btn-primary hi_btn"  ng-click="addNewCurrency()">Add</button>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="fixed-table-container">
+                    <div class="table_wrapfixed-table-container-inner">
+                        <div class="header-background"></div>
+                        <table data-toggle="table" data-cache="false" data-height="299" class="hi_table table table-hover table-bordered table-striped table-fixed-header">
+                            <thead>
+                            <tr>
+                                <!--<th data-field="state" data-radio="true">-->
+                                <!--<div class="th-inner"></div>-->
+                                <!--</th>-->
+                                <th data-field="cntryname">
+                                    <div class="th-inner">Currency Code</div>
+                                </th>
+                                <th data-field="edit">
+                                    <div class="th-inner">Currency Word</div>
+                                </th>
+                                <th data-field="edit">
+                                    <div class="th-inner">Currency Symbol</div>
+                                </th>
+                                <th data-field="edit">
+                                    <div class="th-inner">Edit</div>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody id="parentTable">
+                            <tr ng-repeat="currency in currencyList| filter:searchText">
+                                <td>{{currency.currencyCode}}</td>
+                                <td>{{currency.currencyName}}</td>
+                                <td>{{currency.currencySymbol}}</td>
+                                <td><a id="edit_{{$index}}" href="javascript:void(0)" ng-click="editcurrency(currency)" class="edit"><i class="fa fa-pencil-square-o fa-fw orange"></i></a></td>
+
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade ExchangeRate" tabindex="-1" id="add_new_Currency_modal" role="dialog" data-backdrop="static"
+                 aria-labelledby="mySmallModalLabel">
+                <div class="modal-dialog modal-md">
+                    <div class="modal-content checkout">
+                        <div class="modal-header">
+                            <button type="button" class="close" ng-click="removeCurrencyDetails()" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="title">Add Currency</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12">
+                                    <form  class="form-horizontal" name="currency">
+                                        <fieldset>
+
+                                            <input type="hidden" ng-model="currencyeditobj.currencyId" value="{{currencyeditobj.currencyId}}"/>
+                                            <div class="form-group">
+                                                <label class="col-md-4 col-sm-4 control-label" >Currency Code</label>
+                                                <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                    <input id="CurrencyCode" name="CurrencyCode" alphanum-with-space=""
+                                                           ng-disabled="operation === 'Edit'"
+                                                           type="text" placeholder="Currency Code"
+                                                           ng-model="CurrencyCodeText" ng-minlength="3" maxlength="3"
+                                                           class="form-control input-md" >
+                                                    <span ng-show="currency.CurrencyCode.$error.minlength">Currency Code Should be 3 characters</span>
+
+                                                </div>
+                                            </div>
+
+
+                                            <div class="form-group">
+                                                <label class="col-md-4 col-sm-4 control-label" >Currency Word</label>
+                                                <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                    <input id="CurrencyWord" name="CurrencyWord"
+                                                           ng-pattern="text" alpha-with-space
+                                                           ng-disabled="operation === 'Edit'"
+                                                           type="text" placeholder="Currency Word"
+                                                           ng-model="CurrencyWordText"
+                                                           class="form-control input-md" >
+
+
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="col-md-4 col-sm-4 control-label" >Currency Description</label>
+                                                <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                    <input id="CurrencyDescription" name="CurrencyDescription"
+                                                           ng-pattern="text" alpha-with-space
+                                                           type="text" placeholder="Currency Description"
+                                                           ng-model="CurrencyDescriptionText"
+                                                           class="form-control input-md" >
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-4 col-sm-4 control-label" >Currency symbol</label>
+                                                <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                    <input id="Currencysymbol" name="Currencysymbol"
+                                                           allowpattern="[a-z]" maxlength="5"
+                                                           type="text" placeholder="Currency symbol"
+                                                           ng-model="CurrencysymbolText"
+                                                           class="form-control input-md" >
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="col-md-4 col-sm-4 control-label"
+                                                       for="">country</label>
+                                                <div class="col-md-6 col-sm-6">
+                                                    <select id="contacts_country" name="country"
+                                                            ng-model="SelectedCountryObj"
+                                                            ng-options="country.countryName as country.countryName for country in countryPojoList"
+                                                            class="form-control input-md"></select>
+                                                </div>
+                                            </div>
+
+
+
+
+
+                                            <div class="form-group">
+                                                <label class="col-md-4 col-sm-4 control-label" for="">status</label>
+                                                <div class="col-md-6 col-sm-6" >
+                                                    <select name="StatusText" id="status" ng-model="StatusText" ng-init="StatusText='Active'"class="form-control input-md">
+                                                        <option value="Active">Active</option>
+                                                        <option value="InActive">inActive</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                        </fieldset>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" ng-click="saveNewCurrency()">Save</button>
+                            <button type="button" class="btn btn-default" ng-click="removeCurrencyDetails()" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

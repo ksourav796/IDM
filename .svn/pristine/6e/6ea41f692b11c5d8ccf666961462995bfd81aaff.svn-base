@@ -1,0 +1,131 @@
+
+<body>
+<div class="container-fluid">
+    <div class="container cus_main_row" >
+
+        <div class="row" ng-show="userPermission.pkt==true">
+            <h2 class="pos-header-new">
+                <div>PKT</div>
+            </h2>
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-3 rep_list_info" ng-show="userPermission.tableValue==true">
+                <a href="#!/table">
+                    <div class="custom_notif">
+                        <img src="images/icon/controlpanel/openingbalance/yearend.png"  width="100" height="80">
+                        <div class="rep_info"><strong>Table</strong></div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-3 rep_list_info" ng-show="userPermission.tableColoumMapping==true">
+                <a href="#!/fields">
+                    <div class="custom_notif">
+                        <img src="images/icon/controlpanel/openingbalance/monthend.png"  width="100" height="80">
+                        <div class="rep_info"><strong>Table Column Mapping</strong></div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-3 rep_list_info" ng-show="userPermission.operator==true">
+                <a href="#!/operator">
+                    <div class="custom_notif">
+                        <img src="images/icon/controlpanel/configurator/project.png"  width="100" height="80">
+                        <div class="rep_info"><strong>Operator</strong></div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-3 rep_list_info" ng-show="userPermission.validator==true">
+                <a href="#!/validator">
+                    <div class="custom_notif">
+                        <img src="images/icon/controlpanel/openingbalance/openingbalancesalesinvoice.png" width="100" height="80">
+                        <div class="rep_info"><strong>Validator</strong></div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-3 rep_list_info" ng-show="userPermission.action==true">
+                <a href="#!/action">
+                    <div class="custom_notif">
+                        <img src="images/icon/report/Sales/salesinvoicelisting.png" width="100" height="80">
+                        <div class="rep_info"><strong>Action</strong></div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-3 rep_list_info" ng-show="userPermission.Permission==true">
+                <a href="#!/permission">
+                    <div class="custom_notif">
+                        <img src="images/icon/report/reportanalysis/incomecomparisonreport.png" width="100" height="80">
+                        <div class="rep_info"><strong>Permission</strong></div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-3 rep_list_info" ng-show="userPermission.columnType==true">
+                <a href="#!/columnType">
+                    <div class="custom_notif">
+                        <img src="images/icon/report/Sales/salesadjustment.png" width="100" height="80">
+                        <div class="rep_info"><strong>Column Type</strong></div>
+                    </div>
+                </a>
+            </div>
+             <div class="col-md-3 rep_list_info" ng-show="userPermission.columnPosition==true">
+                <a href="#!/position">
+                    <div class="custom_notif">
+                        <img src="images/icon/report/Sales/commissionaging.png" width="100" height="80">
+                        <div class="rep_info"><strong>Column Position</strong></div>
+                    </div>
+                </a>
+            </div>
+
+
+            <div class="col-md-3 rep_list_info" ng-show="userPermission.pktFeilds==true">
+                <a  href="#!/pktFields">
+                    <div class="custom_notif">
+                        <img src="images/icon/report/Inventory/inventorysalesreport.png"  width="100" height="80">
+                        <div class="rep_info"><strong>PktFields</strong></div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-3 rep_list_info" >
+                <a  href="#!/menuBuilders">
+                    <div class="custom_notif">
+                        <img src="images/icon/report/Inventory/inventorysalesreport.png"  width="100" height="80">
+                        <div class="rep_info"><strong>Menu Builders</strong></div>
+                    </div>
+                </a>
+            </div>
+
+ <div class="col-md-3 rep_list_info" ng-show="userPermission.application==true">
+                <a  href="#!/application">
+                    <div class="custom_notif">
+                        <img src="images/icon/report/Inventory/inventorynonmovementreport.png"  width="100" height="80">
+                        <div class="rep_info"><strong>Application</strong></div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-3 rep_list_info">
+                <a  href="#!/pktuser">
+                    <div class="custom_notif">
+                        <img src="images/icon/controlpanel/useraccountsetup/useraccountsetupwithpermissions.png" width="100" height="80">
+                        <div class="rep_info"><strong>PktUser</strong></div>
+                    </div>
+                </a>
+            </div>
+
+
+            <div class="col-md-3 rep_list_info">
+                <a  href="#!/editApp">
+                    <div class="custom_notif">
+                        <img src="images/icon/report/Inventory/inventorynonmovementreport.png"  width="100" height="80">
+                        <div class="rep_info"><strong>Edit Application</strong></div>
+                    </div>
+                </a>
+            </div>
+
+
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

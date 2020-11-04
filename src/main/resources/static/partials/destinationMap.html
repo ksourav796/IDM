@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<body>
+<div class="container-fluid">
+    <div class="container cus_main_row" >
+        <div class="row">
+            <h2 class="pos-header-new">
+                <div>Destination Map</div>
+            </h2>
+        </div>
+        <div class="row inner_row_bg">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="panel">
+                    <div class="panel-body" style="height: 65px;">
+                        <div class="col-md-4 col-lg-3 col-sm-5 col-xs-5">
+                            <form class="form-horizontal ng-pristine ng-valid">
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-lg-7 col-md-9 col-sm-9">
+
+                            <div class="form-group">
+                                <div class="col-sm-2">
+                                    <button id="dest_map" type="button" class="btn btn-default hi_btn"  ng-click="adddestinationmap()">Add</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="fixed-table-container">
+                            <div class="table_wrap fixed-table-container-inner">
+                                <div class="header-background"> </div>
+                                <table data-toggle="table" data-cache="false" data-height="299"  style="margin-bottom: 0px;" class="hi_table table table-hover table-bordered table-striped table-fixed-header">
+                                    <thead>
+                                    <tr>
+                                        <th data-field=""><div class="th-inner">sourceName</div></th>
+                                        <th data-field=""><div class="th-inner">status</div></th>
+                                        <th data-field=""><div class="th-inner">edit</div></th>
+
+
+                                    <tbody id="parentTable">
+                                <input type="hidden" ng-model="id" value="{{descriptionmap.id}}"/>
+                                    <tr ng-repeat="map in descriptionmap| filter:searchText">
+                                        <td>{{map.sourceName}}</td>
+                                        <td>{{map.status}}</td>
+                                        <td><a id="destinationmap_edit_{{$index}}" href="javascript:void(0)" ng-click="editdestMap(map)" class="edit"><i class="fa fa-pencil-square-o fa-fw orange"></i></a></td>
+
+
+
+
+                                        <!--</tr>-->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+                    <div class="modal fade ExchangeRate" tabindex="-1" id="add_new_dest_map_modal" role="dialog" data-backdrop="static"
+                         aria-labelledby="mySmallModalLabel">
+                        <div class="modal-dialog modal-md">
+                            <div class="modal-content checkout">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                            aria-hidden="true">&times;</span></button>
+                                    <h4  class="modal-title" id="title" >Add Desctination Map</h4>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-md-12 col-sm-12">
+                                            <form class="form-horizontal" name="mail">
+                                                <fieldset>
+                                                    <input type="hidden" ng-model="mapobj.id" value="{{mapobj.id}}"/>
+                                                    <div class="form-group">
+                                                        <label class="col-md-4 col-sm-4 control-label" for="">Source Name</label>
+                                                        <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                            <input id="sourceName" name="sourceName"
+                                                                   type="text" placeholder="sourceName"
+                                                                   ng-model="sourceName"
+                                                                   class="form-control input-md" autocomplete="off">
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-4 col-sm-4 control-label" for="">source Type</label>
+                                                        <div class="col-md-6 col-sm-6" >
+                                                            <select name="sourcetype" id="sourcetype" ng-model="sourcetype" ng-value="sourcetype" class="form-control input-md" required>
+                                                                <option value="Purchase">Purchase</option>
+                                                                <option value="Sales">Sales</option>
+                                                                <option value="All">All</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-4 col-sm-4 control-label">Destination Type</label>
+                                                        <div class="col-md-6 col-sm-6" style="position:relative;">
+
+                                                            <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                                <input id="sourceName" name="sourceName"
+                                                                       type="text" placeholder="destination" ng-click="getdestinationList(sourcetype);popUp()"
+                                                                       ng-model="destination">
+
+
+                                                        </div>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-4 col-sm-4 control-label" for="">status</label>
+                                                        <div class="col-md-6 col-sm-6" >
+                                                            <select name="status" id="status" ng-model="status"  class="form-control input-md" required>
+                                                                <option value="Active">Active</option>
+                                                                <option value="InActive">InActive</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </fieldset>
+
+
+                                                <div class="modal-footer">
+                                                    <button type="submit" class="btn btn-default" data-toggle="modal"
+                                                            data-target=".print-me" ng-click="savedestMap()">save
+                                                    </button>
+                                                    <button type="button" class="btn btn-default"  ng-click="removedestMap()"data-dismiss="modal">close</button>
+
+                                                </div>
+
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                                <div class="modal fade selectPermissionMaster" tabindex="-1" id="destinationType" role="dialog" data-backdrop="static"
+                                     aria-labelledby="mySmallModalLabel">
+                                    <div class="modal-dialog modal-md">
+                                        <div class="modal-content checkout">
+                                            <div class="modal-header">
+                                                <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span-->
+                                                        <!--aria-hidden="true" ng-click="remove()">&times;</span></button>-->
+                                                <h4 class="modal-title">Select Destination Type</h4>
+                                            </div>
+                                            <div class="panel-body">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="table-responsive">
+                                                            <table class="table table-striped table_costomize customerList" id="">
+                                                                <thead>
+                                                                <tr>
+                                                                    <th data-field="name" style="width: 33.3% !important"></th>
+                                                                </tr>
+                                                                </thead>
+                                                                <tbody id="parentCustomerTable">
+                                                                <tr ng-repeat="map in descriptiontype">
+                                                                    <td style="width: 33.3% !important;word-break: break-word;">
+                                                                        {{map.destinationName}}
+                                                                    </td> {{map.status}}
+                                                                    <td><input type="radio" ng-change="addData(map.status,map.destinationName)"ng-model="map.status" value="Active" selected />Active</td>
+                                                                    <td><input type="radio" ng-change="addData(map.status,map.destinationName)"ng-model="map.status" value="InActive"/>In Active</td>
+
+                                                                </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                            <button type="button" ng-click="closePopup()" class="btn btn-default" data-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+</body>
+</html>

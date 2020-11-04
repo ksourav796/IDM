@@ -1,0 +1,647 @@
+// var taskManagerModule = angular.module('taskManagerApp', ['ngRoute','ngAnimate']);
+//
+
+var app = angular.module('myApp',['ngRoute', 'ngAnimate',
+    'ngSanitize','ui-notification','ngTable',
+    'ngCookies', 'angular.filter','ui.bootstrap']);
+
+
+app.config(['$routeProvider', function($routeProvider) {
+    $routeProvider
+        .when("/login", {
+            templateUrl: "partials/login.html",
+            controller: "loginController"
+        })
+
+        .when("/orderList", {
+            templateUrl: "partials/orderList.html",
+            controller: "orderListController"
+        })
+        .when("/emailDirectLink", {
+            templateUrl: "partials/emailDirectLink.html",
+            controller: "emailDirectLinkController"
+        })
+        .when("/paymentList", {
+            templateUrl: "partials/payments.html",
+            controller: "paymentListController"
+        })
+
+        .when("/permissionList", {
+            templateUrl: "partials/permissionList.html",
+            controller: "permissionListController"
+        })
+        .when("/countryList", {
+            templateUrl: "partials/countryList.html",
+            controller: "countryListController"
+        })
+        .when("/StateList", {
+            templateUrl: "partials/StateList.html",
+            controller: "StateListController"
+        })
+        .when("/controlPanel", {
+            templateUrl: "partials/controlPanel.html",
+            controller: "controlPanelController"
+        })
+        .when("/currency", {
+            templateUrl: "partials/currency.html",
+            controller: "currencyCtrl as rest"
+        })
+        .when("/paymentmethod", {
+            templateUrl: "partials/paymentmethod.html",
+            controller: "paymentMethodCtrl as rest"
+        })
+        .when("/versioncontrol", {
+            templateUrl: "partials/versioncontrol.html",
+            controller: "versionCtrl as rest"
+        })
+        .when("/subscription", {
+            templateUrl: "partials/subscription.html",
+            controller: "subscriptionCtrl as rest"
+        })
+        .when("/packages", {
+            templateUrl: "partials/packages.html",
+            controller: "packageCtrl as rest"
+        })
+        .when("/customer", {
+            templateUrl: "partials/customer.html",
+            controller: "customerCtrl as rest"
+        })
+        .when("/item", {
+            templateUrl: "partials/item.html",
+            controller: "itemCtrl as rest"
+        })
+        .when("/PractitionerRegistration", {
+            templateUrl: "partials/PractitionerRegister.html",
+            controller: "PractitionerRegistrationCtrl as rest"
+        })
+        .when("/addon", {
+            templateUrl: "partials/addOn.html",
+            controller: "addOnCtrl as rest"
+        })
+        .when("/Practitionerorders", {
+            templateUrl: "partials/Practitionerorders.html",
+            controller: "PractitionerordersCtrl as rest"
+        })
+        .when("/cartRegistration", {
+            templateUrl: "partials/cartRegistration.html",
+            controller: "cartRegCtrl as rest"
+        })
+        .when("/user", {
+            templateUrl: "partials/user.html",
+            controller: "userCtrl as rest"
+        })
+        .when("/cartcustomerlink", {
+            templateUrl: "partials/cartcustomerlink.html",
+            controller: "cartcustomerlinkCtrl as rest"
+        })
+        .when("/Hiconnector", {
+            templateUrl: "partials/Hiconnector.html",
+            controller: "HiconnectorCtrl as rest"
+        })
+        .when("/customernotification", {
+            templateUrl: "partials/customernotif.html",
+            controller: "customernotifCtrl as rest"
+        })
+        .when("/transactionsdata", {
+            templateUrl: "partials/transdata.html",
+            controller: "transdataCtrl as rest"
+        })
+        .when("/destinationType", {
+            templateUrl: "partials/destinationType.html",
+            controller: "destinationTypeCtrl as rest"
+        })
+        .when("/destinationMap", {
+            templateUrl: "partials/destinationMap.html",
+            controller: "destinationMapCtrl as rest"
+        })
+        .when("/rtrSyncSettings",{
+            templateUrl:"partials/rtrSyncSettings.html",
+            controller:"rtrSyncSettingsCtrl as rest"
+        })
+        .when("/email",{
+            templateUrl:"partials/email.html",
+            controller:"emailCtrl as rest"
+        })
+        .when("/permissionMaster",{
+            templateUrl:"partials/permissionMaster.html",
+            controller:"permissionMasterCtrl as rest"
+        })
+        .when("/permissionGroup",{
+            templateUrl:"partials/permissionGroup.html",
+            controller:"permissionGroupCtrl as rest"
+        })
+        .when("/pkt",{
+            templateUrl:"partials/pkt.html",
+            controller:"pktCtrl as rest"
+        })
+        .when("/subscribe",{
+            templateUrl:"partials/subscribe.html",
+            controller:"pktCtrl as rest"
+        })
+        .when("/table",{
+            templateUrl:"partials/table.html",
+            controller:"tableCtrl as rest"
+        })
+        .when("/visible",{
+            templateUrl:"partials/visible.html",
+            controller:"visibilityCtrl as rest"
+        })
+        .when("/pktFields",{
+            templateUrl:"partials/pktFields.html",
+            controller:"pktfieldsCtrl as rest"
+        })
+        .when("/operator",{
+            templateUrl:"partials/operator.html",
+            controller:"operatorCtrl as rest"
+        })
+
+        .when("/fields",{
+            templateUrl:"partials/fields.html",
+            controller:"fieldsCtrl as rest"
+        })
+        .when("/tablefields",{
+            templateUrl:"partials/tablefields.html",
+            controller:"tablefieldsCtrl as rest"
+        })
+        .when("/permission",{
+            templateUrl:"partials/permission.html",
+            controller:"permissionCtrl as rest"
+        })
+
+        .when("/columnType",{
+            templateUrl:"partials/columnType.html",
+            controller:"columnTypeCtrl as rest"
+        })
+        .when("/validator",{
+            templateUrl:"partials/validator.html",
+            controller:"validatorCtrl as rest"
+        })
+        .when("/action",{
+            templateUrl:"partials/action.html",
+            controller:"actionCtrl as rest"
+        })
+        .when("/application",{
+            templateUrl:"partials/application.html",
+            controller:"applicationCtrl as rest"
+        })
+        .when("/devapplication",{
+            templateUrl:"partials/devapplication.html",
+            controller:"devapplicationCtrl as rest"
+        })
+        .when("/position",{
+            templateUrl:"partials/position.html",
+            controller:"positionCtrl as rest"
+        })
+        .when("/renew",{
+            templateUrl:"partials/renew.html",
+            controller:"renewCtrl as rest"
+        })
+        // .when("/user",{
+        //     templateUrl:"partials/user.html",
+        //     controller:"positionCtrl as rest"
+        // })
+        .when("/dashboard",{
+            templateUrl:"partials/dashboard.html",
+            controller:"dashboardCtrl as rest"
+        })
+        .when("/developer",{
+            templateUrl:"partials/devdashboard.html",
+            controller:"devdashboardCtrl as rest"
+        })
+        .when("/apps",{
+            templateUrl:"partials/apps.html",
+            controller:"appsCtrl as rest"
+        })
+        .when("/properties",{
+            templateUrl:"partials/properties.html",
+            controller:"propertiesCtrl as rest"
+        })
+        .when("/nextapp",{
+            templateUrl:"partials/nextApp.html",
+            controller:"nextappsCtrl as rest"
+        })
+        .when("/account",{
+            templateUrl:"partials/account.html",
+            controller:"accountCtrl as rest"
+        })
+        .when("/profile",{
+            templateUrl:"partials/profile.html",
+            controller:"profileCtrl as rest"
+        })
+        // .when("/totalapps",{
+        //     templateUrl:"partials/totalapps.html",
+        //     controller:"appsCtrl as rest"
+        // })
+        .when("/publishapps",{
+            templateUrl:"partials/publish.html",
+            controller:"publishCtrl as rest"
+        })
+        .when("/unpublishapps",{
+            templateUrl:"partials/unpublish.html",
+            controller:"unpublishCtrl as rest"
+        })
+        .when("/invoice",{
+            templateUrl:"partials/invoice.html",
+            controller:"invoiceCtrl as rest"
+        })
+        .when("/tickets",{
+            templateUrl:"partials/tickets.html",
+            controller:"ticketsCtrl as rest"
+        })
+        .when("/personal",{
+            templateUrl:"partials/personal.html",
+            controller:"personalCtrl as rest"
+        })
+        .when("/pktuser",{
+            templateUrl:"partials/pktuser.html",
+            controller:"pktuserCtrl as rest"
+        })
+        .when("/feedback",{
+            templateUrl:"partials/feedback.html",
+            controller:"feedbackCtrl as rest"
+        })
+        .when("/menuBuilders",{
+            templateUrl:"partials/menuBuilders.html",
+            controller:"menuBuildersCtrl as rest"
+        })
+        .when("/emailServer",{
+            templateUrl:"partials/emailServer.html",
+            controller:"emailserverCtrl as rest"
+        })
+        .when("/editApp",{
+            templateUrl:"partials/editApplication.html",
+            controller:"editAppCtrl as rest"
+        })
+        .when("/dragAndDrop",{
+            templateUrl:"partials/dragAndDrop.html",
+            /*controller:"dragCtrl as rest"*/
+        })
+        .otherwise({redirectTo:'/login'});
+}]);
+
+app.directive("limitTo", [function () {
+    return {
+        restrict: "A",
+        link: function (scope, elem, attrs) {
+            var limit = parseInt(attrs.limitTo);
+            angular.element(elem).on("keypress", function (e) {
+                if (this.value.length === limit)
+                    e.preventDefault();
+            });
+        }
+    };
+}]);
+/* for only  Alpha without space function
+ */
+app.directive('alphaWithoutSpace', function() {
+    return {
+        require: '?ngModel',
+        link: function(scope, element, attrs, ngModelCtrl) {
+            if(!ngModelCtrl) {
+                return;
+            }
+
+            ngModelCtrl.$parsers.push(function(val) {
+                var clean = val.replace( /[^a-zA-Z]/g,'');
+                if (val !== clean) {
+                    ngModelCtrl.$setViewValue(clean);
+                    ngModelCtrl.$render();
+                }
+                return clean;
+            });
+
+            element.bind('keypress', function(event) {
+                if(event.keyCode === 32) {
+                    event.preventDefault();
+                }
+            });
+        }
+    };
+});
+/* validation
+ * for only number with space function
+ */
+app.directive('numWithSpace', function() {
+    return {
+        require: '?ngModel',
+        link: function(scope, element, attrs, ngModelCtrl) {
+            if(!ngModelCtrl) {
+                return;
+            }
+
+            ngModelCtrl.$parsers.push(function(val) {
+                var clean = val.replace( /[^\s^0-9]+/g,'');
+                if (val !== clean) {
+                    ngModelCtrl.$setViewValue(clean);
+                    ngModelCtrl.$render();
+                }
+                return clean;
+            });
+        }
+    };
+});
+
+/* validation
+ * It allows number,plus,hypen with space function
+ */
+app.directive('mobileNumWithSpace', function() {
+    return {
+        require: '?ngModel',
+        link: function(scope, element, attrs, ngModelCtrl) {
+            if(!ngModelCtrl) {
+                return;
+            }
+
+            ngModelCtrl.$parsers.push(function(val) {
+                var clean = val.replace( /[^- ^+^0-9]+/g, '');
+                if (val !== clean) {
+                    ngModelCtrl.$setViewValue(clean);
+                    ngModelCtrl.$render();
+                }
+                return clean;
+            });
+        }
+    };
+});
+app.directive('numWithOutSpace', function() {
+    return {
+        require: '?ngModel',
+        link: function(scope, element, attrs, ngModelCtrl) {
+            if(!ngModelCtrl) {
+                return;
+            }
+
+            ngModelCtrl.$parsers.push(function(val) {
+                var clean = val.replace( /[^+0-9]+/g, '');
+                if (val !== clean) {
+                    ngModelCtrl.$setViewValue(clean);
+                    ngModelCtrl.$render();
+                }
+                return clean;
+            });
+        }
+    };
+});
+/* validation
+ * It allows number,plus,hypen with space function
+ */
+app.directive('number', function() {
+    return {
+        require: '?ngModel',
+        link: function(scope, element, attrs, ngModelCtrl) {
+            if(!ngModelCtrl) {
+                return;
+            }
+
+            ngModelCtrl.$parsers.push(function(val) {
+                var clean = val.replace( /[^/.0-9]+/g, '');
+                if (val !== clean) {
+                    ngModelCtrl.$setViewValue(clean);
+                    ngModelCtrl.$render();
+                }
+                return clean;
+            });
+        }
+    };
+});
+
+
+
+/* for only Alpha with space function
+ */
+app.directive('alphaWithSpace', function() {
+    return {
+        require: '?ngModel',
+        link: function(scope, element, attrs, ngModelCtrl) {
+            if(!ngModelCtrl) {
+                return;
+            }
+
+            ngModelCtrl.$parsers.push(function(val) {
+                var clean = val.replace( /[^\s a-zA-Z]/g, '');
+                if (val !== clean) {
+                    ngModelCtrl.$setViewValue(clean);
+                    ngModelCtrl.$render();
+                }
+                return clean;
+            });
+        }
+    };
+});
+
+/* for only Alpha and number with space function
+ */
+app.directive('alphanumWithSpace', function() {
+    return {
+        require: '?ngModel',
+        link: function(scope, element, attrs, ngModelCtrl) {
+            if(!ngModelCtrl) {
+                return;
+            }
+
+            ngModelCtrl.$parsers.push(function(val) {
+                var clean = val.replace( /[^\sa-zA-Z0-9]/g, '');
+                if (val !== clean) {
+                    ngModelCtrl.$setViewValue(clean);
+                    ngModelCtrl.$render();
+                }
+                return clean;
+            });
+        }
+    };
+});
+
+
+/* for only Alpha and number without space function
+ */
+app.directive('alphanumWithoutSpace', function() {
+    return {
+        require: '?ngModel',
+        link: function(scope, element, attrs, ngModelCtrl) {
+            if(!ngModelCtrl) {
+                return;
+            }
+
+            ngModelCtrl.$parsers.push(function(val) {
+                var clean = val.replace( /[^a-zA-Z:0-9]/g, '');
+                if (val !== clean) {
+                    ngModelCtrl.$setViewValue(clean);
+                    ngModelCtrl.$render();
+                }
+                return clean;
+            });
+
+            element.bind('keypress', function(event) {
+                if(event.keyCode === 32) {
+                    event.preventDefault();
+                }
+            });
+        }
+    };
+});
+
+/* for only two digit decimal Function
+ */
+
+app.directive('twoDigitsDec', function() {
+    return {
+        require: '?ngModel',
+        link: function(scope, element, attrs, ngModelCtrl) {
+            if(!ngModelCtrl) {
+                return;
+            }
+
+            ngModelCtrl.$parsers.push(function(val) {
+                if (angular.isUndefined(val)) {
+                    var val = '';
+                }
+
+                var clean = val.replace(/[^-0-9\.]/g, '');
+                var negativeCheck = clean.split('-');
+                var decimalCheck = clean.split('.');
+                if(!angular.isUndefined(negativeCheck[1])) {
+                    negativeCheck[1] = negativeCheck[1].slice(0, negativeCheck[1].length);
+                    clean =negativeCheck[0] + '-' + negativeCheck[1];
+                    if(negativeCheck[0].length > 0) {
+                        clean =negativeCheck[0];
+                    }
+
+                }
+
+                if(!angular.isUndefined(decimalCheck[1])) {
+                    decimalCheck[1] = decimalCheck[1].slice(0,2);
+                    clean =decimalCheck[0] + '.' + decimalCheck[1];
+                }
+
+                if (val !== clean) {
+                    ngModelCtrl.$setViewValue(clean);
+                    ngModelCtrl.$render();
+                }
+                return clean;
+            });
+
+            element.bind('keypress', function(event) {
+                if(event.keyCode === 32) {
+                    event.preventDefault();
+                }
+            });
+        }
+    };
+});
+
+app.directive('noSpace', function() {
+    return {
+        require: '?ngModel',
+        link: function(scope, element, attrs, ngModelCtrl) {
+            element.bind('keypress', function(event) {
+                if(event.keyCode === 32) {
+                    event.preventDefault();
+                }
+            });
+        }
+    };
+});
+
+// Change text to uppercase and add dash every 5 char
+app.directive('capitalizeWithDash', function() {
+    return {
+        require: 'ngModel',
+        link: function(scope, element, attrs, modelCtrl) {
+            var capitalize = function(inputValue) {
+                var number = 5;
+                if (inputValue == undefined) inputValue = '';
+                var inputUpper = inputValue.toUpperCase();
+                var capitalizedArray = [];
+                for(var i=0; i<inputUpper.length; i+= number){
+                    if(inputUpper[i] == "-"){
+                        capitalizedArray.push(inputUpper.substr(i+1,number))
+                        i += 1;
+                    }else {
+                        capitalizedArray.push(inputUpper.substr(i, number))
+                    }
+                }
+                var capitalized = capitalizedArray.join("-");
+                if (capitalized !== inputValue) {
+                    modelCtrl.$setViewValue(capitalized);
+                    modelCtrl.$render();
+                }
+                return capitalized;
+            }
+            modelCtrl.$parsers.push(capitalize);
+            capitalize(scope[attrs.ngModel]);
+        }
+    };
+});
+
+
+
+// $('.main_container').bind('keypress', function(e) {
+//     var code = e.keyCode || e.which;
+//     if(code == 13) { //Enter keycode
+//         //Do something
+//     }
+// });
+
+
+
+
+// angular.module("core").directive('hnEnterKey', function() {
+//     return function(scope, element, attrs) {
+//        ("keydown keypress", function(event) {
+//
+//             var code = e.keyCode || e.which;
+//             if(code == 13) { //Enter keycode
+//                 //Do something
+//             }
+//
+//
+//             var keyCode = event.which || event.keyCode;
+//             if (keyCode === 13) {
+//                 scope.$apply(function() {
+//                     scope.$eval(attrs.hnEnterKey);
+//                 });
+//
+//                 event.preventDefault();
+//             }
+//         });
+//     };
+// });
+
+
+// app.config(['$httpProvider', function ($httpProvider) {
+//     var $cookies;
+//     angular.injector(['ngCookies']).invoke(['$cookies', function (_$cookies_) {
+//         $cookies = _$cookies_;
+//     }]);
+//     $httpProvider.defaults.headers.common['Authorization'] = $cookies.get('accessToken');
+// }]);
+
+
+app.filter('setDecimal', function ($filter) {
+    return function (input, places) {
+        if (isNaN(input))
+            return input;
+        // If we want 1 decimal place, we want to mult/div by 10
+        // If we want 2 decimal places, we want to mult/div by 100, etc
+        // So use the following to create that factor
+        var factor = "1" + Array(+(places > 0 && places + 1)).join("0");
+        return Math.round(input * factor) / factor;
+    };
+});
+
+app.filter('firstLetter', function () {
+    return function (input, key, letter) {
+        input = input || [];
+        var out = [];
+        input.forEach(function (item) {
+            console.log('item: ', item[key][0].toLowerCase());
+            console.log('letter: ', letter);
+            if (item[key][0].toLowerCase() == letter.toLowerCase()) {
+                out.push(item);
+            }
+        });
+        return out;
+    }
+});
+
+

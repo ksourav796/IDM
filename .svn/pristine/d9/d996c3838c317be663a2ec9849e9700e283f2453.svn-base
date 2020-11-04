@@ -1,0 +1,54 @@
+
+<body>
+<div class="container-fluid">
+    <div class="container cus_main_row" >
+
+        <div class="row">
+            <h2 class="pos-header-new">
+                <div>Subscription</div>
+            </h2>
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-3 rep_list_info">
+                <a href="#!/visible">
+                    <div class="custom_notif"><i class="fas fa-eye" aria-hidden="true"></i>
+                        <img src=""  width="150" height="97">
+                        <div class="rep_info">Visibilty</div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-md-3 rep_list_info">
+                <a href="#!/columnPosition">
+                    <div class="custom_notif">
+                        <img src=""  width="150" height="97">
+                        <div class="rep_info">Coloumn Position</div>
+                    </div>
+                </a>
+            </div>
+            <!--<div class="col-md-3 rep_list_info">-->
+            <!--<a href="#!/pktFields">-->
+            <!--<div class="custom_notif">-->
+            <!--<img src=""  width="150" height="97">-->
+            <!--<div class="rep_info">PktFields</div>-->
+            <!--</div>-->
+            <!--</a>-->
+            <!--</div>-->
+
+            <!--<div class="col-md-3 rep_list_info">-->
+            <!--<a href="#!/tablefields">-->
+            <!--<div class="custom_notif">-->
+            <!--<img src=""  width="150" height="97">-->
+            <!--<div class="rep_info">Table Fields</div>-->
+            <!--</div>-->
+            <!--</a>-->
+            <!--</div>-->
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

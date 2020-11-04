@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <div class="container-fluid">
+        <div class="container cus_main_row" style="height: 715px;">
+            <div class="row">
+                <h2 class="pos-header-new">
+                    <div>Tickets Details</div>
+                </h2>
+            </div>
+            <div class="row inner_row_bg">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="panel">
+                        <div class="panel-body" style="height: 65px;">
+                            <div class="col-md-4 col-lg-3 col-sm-5 col-xs-5">
+                                <form class="form-horizontal ng-pristine ng-valid">
+                                    <div class="form-group">
+                                        <div class="col-sm-6">
+                                            <p class="input-group" style="display: block;">
+                                                <input id="search_country" name="textinput"  type="text"
+                                                       placeholder="search" ng-model="countrySearchText" class="form-control input-md"
+                                                       ng-keyup="$event.keyCode == 13 ? getCountryList(countrySearchText) : null" />
+                                            </p>
+                                        </div>
+                                            <div class="col-sm-1">
+                                                <button id="add_country" type="button" class="btn btn-default hi_btn"  ng-click="addNewTickets()">Add New Tickets</button>
+                                            </div>
+
+                            </div>
+                                </form>
+                        </div>
+                    </div>
+                    </div>
+
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="fixed-table-container">
+                            <div class="table_wrapfixed-table-container-inner">
+                                <div class="header-background"></div>
+                                <table data-toggle="table" data-cache="false" data-height="299" class="hi_table table table-hover table-bordered table-striped table-fixed-header">
+                                    <thead>
+                                    <tr>
+
+                                        <th data-field="cntryname">
+                                            <div class="th-inner">Sr.No</div>
+                                        </th>
+                                        <th data-field="cntryname">
+                                            <div class="th-inner">Tracking Id</div>
+                                        </th>
+                                        <th data-field="cntryname">
+                                            <div class="th-inner">Updated</div>
+                                        </th>
+                                        <th data-field="cntryname">
+                                            <div class="th-inner">Message</div>
+                                        </th>
+                                        <th data-field="cntryname">
+                                            <div class="th-inner">Subject</div>
+                                        </th>
+                                        <th data-field="cntryname">
+                                            <div class="th-inner">Status</div>
+                                        </th>
+
+                                    </tr>
+                                    <tbody id="parentTable">
+                                    <!--<tr ng-repeat="dashboard in subscriptionListUser">-->
+                                    <!--<td>{{subscriptionListUser.userAccountId}}</td>-->
+                                    <!--<td>{{subscriptionListUser.email}}</td>-->
+                                    <!--<td>{{subscriptionListUser.key}}</td>-->
+                                    <!--<td>{{subscriptionListUser.orderNumber}}</td>-->
+                                    <!--<td>{{subscriptionListUser.incorpDate|date:'dd/MM/yyyy'}}</td>-->
+                                    <!--<td>{{subscriptionListUser.version}}</td>-->
+                                    <!--<td>{{subscriptionListUser.username}}</td>-->
+                                    <!--<td>{{subscriptionListUser.password}}</td>-->
+                                    <!--<td>{{subscriptionListUser.status}}</td>-->
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade addCustomer" tabindex="-1" id="add_new_tickets_modal" role="dialog"
+         data-backdrop="static"
+         aria-labelledby="mySmallModalLabel">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content checkout">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 id="country-title" class="modal-title">Add Ticket</h4>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12">
+                            <form class="form-horizontal" name="form">
+                                <fieldset>
+                                    <div class="form-group">
+                                        <input type="hidden" ng-model="setupobj.ticketid"
+                                               value="{{setupobj.ticketid}}"/>
+                                        <label class="col-md-4 col-sm-4 control-label" for="">Name
+                                            <span>*</span></label>
+                                        <div class="col-md-6 col-sm-6" style="position:relative;">
+                                            <input id="name" name="name" alpha-with-space
+                                                   ng-pattern="/[aA-zZ\s]$/"
+                                                   type="text" placeholder="Name"
+                                                   ng-model="name" maxlength="125"
+                                                   class="form-control input-md" autocomplete="off" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label" for=""> Email <span>*</span></label>
+                                        <div class="col-md-6" style="position:relative;">
+                                            <input id="Email" name="Email"
+                                                   maxlength="45"
+                                                   ng-pattern="word"
+                                                   type="text" placeholder=" Email"
+                                                   ng-model="email"
+                                                   no-special-char=""
+                                                   class="form-control input-md" required>
+                                            <p class="error" ng-show="mail.email.$error.pattern">Enter Valid MailID</p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-4 col-sm-4 control-label" for="">Priority</label>
+                                        <div class="col-md-6 col-sm-6">
+                                            <select name="Priority" id="Priority" ng-model="priority"
+                                                     class="form-control input-md">
+                                                <option value="">Select</option>
+                                                <option value="Low">Low</option>
+                                                <option value="Medium">Medium</option>
+                                                <option value="High">High</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-4 col-sm-4 control-label" for="">Subject
+                                            <span>*</span></label>
+                                        <div class="col-md-6 col-sm-6" style="position:relative;">
+                                            <input id="subject" name="subject"
+                                                   ng-pattern="/[aA-zZ\s]$/"
+                                                   type="text" placeholder="subject"
+                                                   ng-model="subject" maxlength="125"
+                                                   class="form-control input-md" autocomplete="off" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-4 col-sm-4 control-label" for="">Message
+                                            <span>*</span></label>
+                                        <div class="col-md-6 col-sm-6" style="position:relative;">
+                                            <textarea id="subject" name="subject"
+                                                   ng-pattern="/[aA-zZ\s]$/"
+                                                   type="text" placeholder="subject"
+                                                   ng-model="subject" maxlength="125"
+                                                   class="form-control input-md" autocomplete="off" required>
+                                            </textarea>
+                                        </div>
+                                    </div>
+                                    Before submitting please make sure of the following
+                                    All necessary information has been filled out.
+                                    All information is correct and error-free.
+                                    We have:
+                                    180.151.215.140 recorded as your IP Address
+                                    recorded the time of your submission
+                                </fieldset>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary hi_btn" data-toggle="modal" ng-disabled="isDisabled"
+                            data-target=".print-me" ng-disabled="!form.$valid" id="submit"
+                            ng-click="saveTicket()">Save
+                    </button>
+                    <button type="button" class="btn btn-primary hi_btn" ng-click="removeCountryDetails()"
+                            data-dismiss="modal">Close
+                    </button>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</html>

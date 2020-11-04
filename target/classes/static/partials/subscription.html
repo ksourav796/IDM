@@ -1,0 +1,778 @@
+
+<div class="container-fluid">
+    <div class="container cus_main_row" >
+
+        <div class="row">
+            <h2 class="pos-header-new">
+                <div>Subscription</div>
+            </h2>
+        </div>
+        <div class="row inner_row_bg">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="panel">
+                    <div class="panel-body">
+
+
+                        <div class="col-md-9 col-lg-7 col-sm-9 col-xs-7">
+
+                            <div class="form-group">
+                                <div class="col-sm-2">
+                                    <button type="button" class="btn btn-primary hi_btn"  ng-click="addNewSubscription()">Add</button>
+                                </div>
+
+                                <div class="col-sm-5">
+                                    <p class="input-group" style="display: block;">
+                                        <input id="search_customer" name="textinput"  type="text"
+                                               placeholder="search " ng-model="searchText" class="form-control input-md"
+                                               ng-keyup="$event.keyCode == 13 ? getSubscriptionList() : null" />
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="fixed-table-container">
+                    <div class="table_wrapfixed-table-container-inner">
+                        <div class="header-background"></div>
+                        <table data-toggle="table" data-cache="false" data-height="299" class="hi_table table table-hover table-bordered table-striped table-fixed-header">
+                            <thead>
+                            <tr>
+                                <th data-field="cntryname">
+                                    <div class="th-inner">Subscription Name</div>
+                                </th>
+                                <th data-field="edit">
+                                    <div class="th-inner">Validity</div>
+                                </th>
+                                <th data-field="edit">
+                                    <div class="th-inner">No of Users</div>
+                                </th>
+                                <th data-field="edit">
+                                    <div class="th-inner">No of Company</div>
+                                </th>
+                                <th data-field="edit">
+                                    <div class="th-inner">Subscription For</div>
+                                </th>
+                                <th data-field="edit"><div class="th-inner">edit</div></th>
+                                <th data-field="edit"><div class="th-inner">Email Configuration</div></th>
+                                <!--<th data-field="edit"><div class="th-inner">Renewal</div></th>-->
+                            </tr>
+                            </thead>
+                            <tbody id="parentTable">
+                            <input type="hidden" ng-model="subscriptionId" value="{{subscriptionList.subscriptionId}}"/>
+                            <tr ng-repeat="subscription in subscriptionList| filter:searchText">
+                                <td>{{subscription.subscriptionName}}</td>
+                                <td>{{subscription.validity}}</td>
+                                <td>{{subscription.users}}</td>
+                                <td>{{subscription.companies}}</td>
+                                <td>{{subscription.subscriptionFor}}</td>
+                                <td><a id="subscription_edit_{{$index}}" href="javascript:void(0)" ng-click="editsubscription(subscription.subscriptionId)" class="edit"><i class="fa fa-pencil-square-o fa-fw orange"></i></a></td>
+                                <!--<td ng-if="subscription.flag=='true'"><a id="subscription_edit_{{$index}}" href="javascript:void(0)" ng-click="renewsubscription(subscription)" class="edit">Re-new</a></td>-->
+                                <td><div class="col-sm-2">
+                                    <button type="button" class="btn btn-primary hi_btn"  ng-click="emailconfig(subscription.subscriptionId)">Email configuration</button>
+                                </div>
+                                </td>
+                                <!--<td><a id="subscription_edit_{{$index}}" href="javascript:void(0)" ng-click="editsubscription(subscription.subscriptionName)" class="edit"><i class="fa fa-pencil-square-o fa-fw orange"></i></a></td>-->
+                                <!--<td ng-if="subscription.flag=='true'"><a id="subscription_edit_{{$index}}" href="javascript:void(0)" ng-click="renewsubscription(subscription)" class="edit">Re-new</a></td>-->
+
+                            </tr>
+                            </tbody>
+                        </table>
+                        <!--<div class="form-group">-->
+                            <!--<div class="col-lg-5 col-md-7 col-sm-10 pagination_" style="float: right; text-align: right; margin-top: 10px;">-->
+
+                                <!--<button type="button" class="btn btn-default hi_btn" ng-class="{'diabled-class': first}"-->
+                                        <!--ng-disabled="first"-->
+                                        <!--ng-click="getPaginatedSubscriptionList('firstPage')" ng-model="first">First-->
+                                <!--</button>-->
+                                <!--<button type="button" class="btn btn-default hi_btn" ng-class="{'diabled-class': prev}"-->
+                                        <!--ng-disabled="prev"-->
+                                        <!--ng-click="getPaginatedSubscriptionList('prevPage')" ng-model="prev">Prev-->
+                                <!--</button>-->
+                                <!--<button type="button" class="btn btn-default hi_btn" name="next" ng-disabled="next"-->
+                                        <!--ng-click="getPaginatedSubscriptionList('nextPage')" value="next"-->
+                                        <!--ng-class="{'diabled-class': next}" ng-model="next">Next-->
+                                <!--</button>-->
+                                <!--<button type="button" class="btn btn-default hi_btn"-->
+                                        <!--ng-click="getPaginatedSubscriptionList('lastPage')" ng-class="{'diabled-class': last}"-->
+                                        <!--ng-disabled="last"-->
+                                        <!--ng-model="last">Last-->
+                                <!--</button>-->
+                            <!--</div>-->
+                    <!--</div>-->
+                </div>
+            </div>
+
+            <div class="modal fade ExchangeRate" tabindex="-1" id="add_new_subscription_modal" role="dialog" data-backdrop="static"
+                 aria-labelledby="mySmallModalLabel" style="overflow: auto">
+                <div class="modal-dialog modal-md">
+                    <div class="modal-content checkout">
+                        <div class="modal-header">
+                            <button type="button" class="close" ng-click="removeSubscriptionDetails()" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="title">Add Subscription</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12">
+                                    <form  class="form-horizontal" name="currency">
+                                        <fieldset>
+
+                                            <input type="hidden" ng-model="subscriptionobj.subscriptionId" value="{{subscriptionobj.subscriptionId}}"/>
+                                            <div class="form-group">
+                                                <label class="col-md-4 col-sm-4 control-label" >Subscription Name</label>
+                                                <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                    <input id="subscriptionName" name="subscriptionName"
+                                                          ng-pattern="text" alpha-with-space
+                                                           type="text"  placeholder="Subscription Name"
+                                                           ng-model="subscriptionNameText"
+                                                           class="form-control input-md" required>
+                                                    <p class="error" ng-show="currency.subscriptionNameText.$error.pattern">Enter Valid Subscription
+                                                        Name</p>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="col-md-4 col-sm-4 control-label" >Validity</label>
+                                                <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                    <input id="validity" name="validity"
+                                                           allowpattern="[0-9]"
+                                                           type="text" number
+                                                           placeholder="Validity"
+                                                           ng-model="validityText"
+                                                           class="form-control input-md" >
+
+
+                                                </div>
+                                            </div>
+
+                                            <!--<div class="form-group">-->
+                                                <!--<label class="col-md-4 col-sm-4 control-label" >Validity type</label>-->
+                                                <!--<div class="col-md-6 col-sm-6" style="position:relative;">-->
+                                                    <!--<input id="validityType" name="validityType"-->
+                                                           <!--allowpattern="[a-z]" maxlength="125" alphanum-with-space=""-->
+                                                           <!--ng-disabled="operation === 'Edit'"-->
+                                                           <!--type="text" placeholder="Validity Type"-->
+                                                           <!--ng-model="validityTypeText"-->
+                                                           <!--class="form-control input-md" >-->
+                                                <!--</div>-->
+                                            <!--</div>-->
+                                            <div class="form-group">
+                                                <label class="col-md-4 col-sm-4 control-label" >Subscription For</label>
+                                                <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                    <select name="subscriptionForText" id="subscriptionForText" ng-model="subscriptionForText" class="form-control input-md" required>
+                                                        <option value="HiSync">Hi Sync</option>
+                                                        <option value="HiConnect">Hi Connect</option>
+                                                        <option value="Application">Application</option>
+                                                        <option value="HiAccount">Hi Account</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div ng-show="subscriptionForText=='Application'" class="form-group">
+                                                <label class="col-md-4 col-sm-4 control-label">Select
+                                                    Application<sup>*</sup></label>
+                                            <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                <select name="" ng-model="application"
+                                                        ng-options="application.name as application.name for application in applicationtype | unique: 'keySubscription'"
+                                                        ng-change='getPktPermisssionListPKt(name)'
+                                                        class="form-control input-md">
+                                                </select>
+
+
+                                            </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-4 col-sm-4 control-label" >Subscription Version</label>
+                                                <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                <select name="version" id="version" ng-model="versionText" class="form-control input-md" required>
+                                                    <option value="Desktop">Desktop</option>
+                                                    <option value="Cloud">Cloud</option>
+                                                    <option value="Mobile">Mobile</option>
+                                                </select>
+
+                                                </div>
+                                            </div>
+                                            <div ng-show="versionText=='Cloud'" class="form-group">
+                                                <label class="col-md-4 col-sm-4 control-label" >Application URL</label>
+                                                <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                    <input id="applicationurl" name="applicationurl"
+                                                           ng-pattern="text"
+                                                           type="text"  placeholder="Application URL"
+                                                           ng-model="applicationurl"
+                                                           class="form-control input-md" required>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-4 col-sm-4 control-label" >Permission</label>
+                                                <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                    <input id="permission" name="permission"
+                                                           allowpattern="[a-z]"
+                                                           type="text" placeholder="Permission"
+                                                           ng-model="permissionText"
+                                                           ng-click="getPermissions()"
+                                                           class="form-control input-md" >
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-4 col-sm-4 control-label" >AddOn Permission</label>
+                                                <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                    <input id="addonPer" name="addonPer"
+                                                           ng-pattern="text" alpha-with-space
+                                                           type="text" placeholder="Add on Permission"
+                                                           ng-model="addonPerText"
+                                                           class="form-control input-md" >
+
+                                                    <p class="error" ng-show="currency.addonPerText.$error.pattern">Enter Valid Subscription
+                                                        Name</p>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="form-group">
+                                                <label class="col-md-4 col-sm-4 control-label" >No of Companies</label>
+                                                <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                    <input id="companiesno" name="companiesno"
+                                                           type="text" number
+                                                           placeholder="No of Companies"
+                                                           ng-model="companies"
+                                                           class="form-control input-md" >
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-4 col-sm-4 control-label" >No of Users</label>
+                                                <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                    <input id="Users" name="Users"
+                                                           allowpattern="[0-9]"
+                                                           type="text" number
+                                                           placeholder="No of Users"
+                                                           ng-model="users"
+                                                           class="form-control input-md" >
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="col-md-4 col-sm-4 control-label" for="">Status</label>
+                                                <div class="col-md-6 col-sm-6" >
+                                                    <select name="statusText" id="statusText" ng-model="statusText" class="form-control input-md" required>
+                                                        <option value="Active">Active</option>
+                                                        <option value="InActive">InActive</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="col-md-4 col-sm-4 control-label" >Actual Price<span>*</span></label>
+                                                <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                    <input id="price" name="price"
+                                                           allowpattern="[0-9]"
+                                                           type="text" number
+                                                           placeholder="Actual Price"
+                                                           ng-model="actualPrice"
+                                                           class="form-control input-md" >
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-4 col-sm-4 control-label" >Offer Price<span>*</span></label>
+                                                <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                    <input id="price" name="price"
+                                                           allowpattern="[0-9]"
+                                                           type="text" number
+                                                           placeholder="offer price"
+                                                           ng-model="offerPrice"
+                                                           class="form-control input-md" >
+                                                </div>
+                                            </div>
+                                            <div class="form-group" ng-show="subscriptionForText=='Application'" >
+                                                <div class="col-md-6 col-sm-6" style="position:relative;">
+                                            <form>
+                                                <input type="radio" name="gender" value="fordeveloper" ng-model="type"> Developer<br>
+                                                <input type="radio" name="gender" value="forcustomer" ng-model="type"> Customer<br>
+                                            </form>
+                                            </div>
+                                            </div>
+
+                                        </fieldset>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" ng-click="saveNewSubscription()">Save</button>
+                            <button type="button" class="btn btn-default" ng-click="removeSubscriptionDetails()" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" tabindex="-1" id="Permissions" role="dialog" data-backdrop="static"
+                 aria-labelledby="mySmallModalLabel">
+                <div class="modal-dialog modal-md" style="width: 750px;">
+                    <div class="modal-content checkout" >
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span></button>
+                            <h4 id = "User-title" class="modal-title">User Permissions</h4>
+
+                        </div>
+
+                        <hidden value="{{useraccount_id}}"/>
+
+                        <div class="panel-body">
+                            <div class="row row_ch_per_info" style=" height: 500px; overflow-y: auto;">
+                                <div class="panel-body">
+                                    <div class="row row_ch_per_info" style=" height: 500px; overflow-y: auto;">
+                                        <div id="parent-1"   ng-repeat="(key, list) in permissionList">
+                                            <div class="col-md-12 col-sm-12">
+                                                <input type="checkbox"  ng-click="" ng-model="list.selected"
+                                                       value="option.id">{{key}}
+                                            </div>
+                                            <div id="child-1" ng-repeat="(key1,value1) in list.children" ng-if="list.status === 'Active'">
+                                                <div class="col-md-11 col-md-offset-1 col-sm-11 col-sm-offset-1" ng-show="key">
+                                                    <div class="row margin_0px">
+                                                        <div class="col-md-12 col-sm-4">
+                                                            <input type="checkbox"  ng-click="" ng-model="value1.selected"
+                                                                   value="option1.id">{{key1}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div id="child-2" ng-repeat="(key2,value2) in value1.children" ng-if="value1.status === 'Active'">
+                                                    <div class="col-md-10 col-md-offset-2 col-sm-10 col-sm-offset-2" ng-show="key1">
+                                                        <div class="row margin_0px">
+                                                            <div class="col-md-12 col-sm-4">
+                                                                <input type="checkbox" ng-click="" ng-model="value2.selected"
+                                                                       value="option2.id">{{key2}}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div id="child-3" ng-repeat="(key3,value3) in value2.children" ng-if="value2.status === 'Active'">
+                                                        <div class="col-md-10 col-md-offset-2 col-sm-10 col-sm-offset-2" ng-show="key2">
+                                                            <div class="row margin_0px">
+                                                                <div class="col-md-12 col-sm-4">
+                                                                    <input type="checkbox"  ng-click="" ng-model="value3.selected"
+                                                                           value="option3.id">{{key3}}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div id="child-4" ng-repeat="(key4,value4) in value3.children" ng-if="value3.status === 'Active'">
+                                                            <div class="col-md-10 col-md-offset-2 col-sm-10 col-sm-offset-2" ng-show="key3">
+                                                                <div class="row margin_0px">
+                                                                    <div class="col-md-12 col-sm-4">
+                                                                        <input type="checkbox"  ng-click="" ng-model="value4.selected"
+                                                                               value="option3.id">{{key4}}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div id="child-5" ng-repeat="(key5,value5) in value4.children" ng-if="value4.status === 'Active'">
+                                                                <div class="col-md-10 col-md-offset-2 col-sm-10 col-sm-offset-2" ng-show="key4">
+                                                                    <div class="row margin_0px">
+                                                                        <div class="col-md-12 col-sm-4">
+                                                                            <input type="checkbox"  ng-click="" ng-model="value5.selected"
+                                                                                   value="option3.id">{{key5}}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div id="child-6" ng-repeat="(key6,value6) in value5.children" ng-if="value5.status === 'Active'">
+                                                                    <div class="col-md-10 col-md-offset-2 col-sm-10 col-sm-offset-2" ng-show="key5">
+                                                                        <div class="row margin_0px">
+                                                                            <div class="col-md-12 col-sm-4">
+                                                                                <input type="checkbox"  ng-click="" ng-model="value6.selected"
+                                                                                       value="option3.id">{{key6}}
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div><!-- END CHILD3 -->
+
+                                                </div><!-- END CHILD2 -->
+                                            </div><!-- END CHILD -->
+                                        </div><!--END PARENT -->
+
+
+                                        <div class="modal-footer">
+                                            <div class="col-md-9 col-sm-9 text-right">
+                                                <button type="submit" class="btn btn-default" data-toggle="modal"
+                                                        data-target=".print-me" ng-click="saveNewUserPermissions()">Save
+                                                </button>
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" tabindex="-1" id="userPermission3" role="dialog" data-backdrop="static"
+                 aria-labelledby="mySmallModalLabel">
+                <div class="modal-dialog modal-md" style="width: 1200px;">
+                    <div class="modal-content checkout" >
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span></button>
+                            <h4 id = "User-title12" class="modal-title">Permission</h4>
+
+                        </div>
+
+                        <hidden value="{{useraccount_id}}"/>
+
+                        <div class="panel-body">
+                            <div class="row row_ch_per_info" style=" height: 500px; overflow-y: auto;">
+                                <div class="row"  id="parent-{{key}}" ng-repeat="(key, list) in permissionList" style="margin-bottom: 20px;">
+                                    <div class="col-md-12 col-sm-12" style="margin-bottom: 30px;">
+                                        <div class="col-md-3" ng-init="this['minusHide-'+key]=false; this['plusHide-'+key] =true; this['parentShow-'+key] = true">
+                                        <label for="dashboardID"></label><span class="check_span_info" style="font-size: 20px; font-weight: bold;">
+                                            <button ng-click="this['parentShow-'+key] = true; this['minusHide-'+key]=false; this['plusHide-'+key]=true;" ng-hide="this['plusHide-'+key]"> <i class="fa fa-plus" aria-hidden="true"></i></button>
+                                            <button ng-click="this['parentShow-'+key] = false; this['plusHide-'+key]=false; this['minusHide-'+key]=true;" ng-hide="this['minusHide-'+key]"> <i class="fa fa-minus" aria-hidden="true"></i></button>
+                                            {{key}}</span>
+                                        </div>
+                                        <div class="col-md-3">
+                                        <input type="radio" ng-model="list.status" id="input-{{key}}"  ng-click="permissionEvent('Active',$event)" value="Active"/>Active
+                                        </div>
+                                        <div class="col-md-3">
+                                        <input type="radio" ng-model="list.status" ng-click="permissionEvent('InActive',$event)" value="InActive"/>In Active
+                                        </div>
+                                        <div class="col-md-3">
+                                        <input type="radio" ng-model="list.status" ng-click="permissionEvent('Restrict',$event)" value="Restrict"/>Restrict
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12" ng-show="this['parentShow-'+key]">
+                                    <div id="child-1" class="col-md-12" ng-repeat="(key1,value1) in list.children" >
+                                        <div class="col-md-11 col-md-offset-1 col-sm-11 col-sm-offset-1" ng-show="key">
+                                            <div class="row margin_0px">
+                                                 <div class="col-md-12 col-sm-4">
+                                                    <div class="col-md-3">
+                                                    <label for="datetime"></label><span class="check_span_info">{{key1}}</span>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                    <input type="radio" ng-model="value1.status" id="input-{{key1}}"  ng-click="permissionEvent('Active',$event)" value="Active"/>Active
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                    <input type="radio" ng-model="value1.status" value="InActive"/>In Active
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                    <input type="radio" ng-model="value1.status" value="Restrict"/>Restrict
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div id="child-2" ng-repeat="(key2,value2) in value1.children">
+                                            <div class="col-md-10 col-md-offset-2 col-sm-10 col-sm-offset-2" ng-show="key1">
+                                                <div class="row margin_0px">
+                                                    <div class="col-md-12 col-sm-4">
+                                                        <div class="col-md-3">
+                                                        <label for="datetime"></label><span class="check_span_info">{{key2}}</span>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                        <input type="radio" ng-model="value2.status" id="input-{{key2}}"  ng-click="permissionEvent('Active',$event)" value="Active"/> Active
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                        <input type="radio" ng-model="value2.status" value="InActive"/> In Active
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                        <input type="radio" ng-model="value2.status" value="Restrict"/> Restrict
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div id="child-3" ng-repeat="(key3,value3) in value2.children" ng-if="value2.status != 'InActive'">
+                                                <div class="col-md-10 col-md-offset-2 col-sm-10 col-sm-offset-2" ng-show="key2">
+                                                    <div class="row margin_0px">
+                                                        <div class="col-md-12 col-sm-4">
+                                                            <div class="col-md-3">
+                                                            <label for="datetime"></label><span class="check_span_info">{{key3}}</span>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                            <input type="radio" ng-model="value3.status" id="input-{{key3}}"  ng-click="permissionEvent('Active',$event)" value="Active"/> Active
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                            <input type="radio" ng-model="value3.status" value="InActive"/> In Active
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                            <input type="radio" ng-model="value3.status" value="Restrict"/> Restrict
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div id="child-4" ng-repeat="(key4,value4) in value3.children" ng-if="value3.status === 'Active'">
+                                                    <div class="col-md-10 col-md-offset-2 col-sm-10 col-sm-offset-2" ng-show="key3">
+                                                        <div class="row margin_0px">
+                                                            <div class="col-md-12 col-sm-4">
+                                                                <div class="col-md-3">
+                                                                <label for="datetime"></label><span class="check_span_info">{{key4}}</span>
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                <input type="radio" ng-model="value4.status" id="input-{{key4}}" ng-click="permissionEvent('Active',$event)" value="Active"/> Active
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                <input type="radio" ng-model="value4.status" value="InActive"/> In Active
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                <input type="radio" ng-model="value4.status" value="Restrict"/> Restrict
+                                                                </div>
+                                                             </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div><!-- END CHILD2 -->
+                                    </div><!-- END CHILD -->
+                                    </div>
+                                </div><!--END PARENT -->
+
+
+                                <div class="modal-footer">
+                                    <div class="col-md-9 col-sm-9 text-right">
+                                        <!--<button type="submit" class="btn btn-default" data-toggle="modal"-->
+                                                <!--data-target=".print-me" ng-click="displayJson()">Save-->
+                                        <!--</button>-->
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="modal fade selectPermissionMaster" tabindex="-1" id="selectPermissionMaster" role="dialog" data-backdrop="static"
+                 aria-labelledby="mySmallModalLabel">
+                <div class="modal-dialog modal-md">
+                    <div class="modal-content checkout">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true" ng-click="remove()">&times;</span></button>
+                            <h4 class="modal-title">Select PermissionMaster</h4>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped table_costomize customerList" id="">
+                                            <thead>
+                                            <tr>
+                                                <th data-field="name" style="width: 33.3% !important">Description</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody id="parentCustomerTable">
+                                            <tr ng-repeat="master in permissionMasterList" >
+                                                <td style="width: 33.3% !important;word-break: break-word;" value="{{master.permissionMasterkey}}">
+                                                    {{master.description}}
+                                                </td>
+                                                <td><input type="radio" ng-change="addData(master.saasStatus,master.permissionMasterkey)" ng-model="master.saasStatus" value="Active" />Active</td>
+                                                <td><input type="radio" ng-change="addData(master.saasStatus,master.permissionMasterkey)" ng-model="master.saasStatus" value="InActive"/>In Active</td>
+                                                <td><input type="radio" ng-change="addData(master.saasStatus,master.permissionMasterkey)" ng-model="master.saasStatus" value="Restrict"/>Restrict</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" ng-click="remove()" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+    <div class="modal fade ExchangeRate" tabindex="-1" id="add_new_renew_modal" role="dialog" data-backdrop="static"
+         aria-labelledby="mySmallModalLabel">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content checkout">
+                <div class="modal-header">
+                    <button type="button" class="close" ng-click="removeSubscriptionDetails()" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="title">Renew Subscription</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12">
+                            <form  class="form-horizontal" name="currency">
+                                <fieldset>
+
+                                    <input type="hidden" ng-model="subscriptionobj.subscriptionId" value="{{subscriptionobj.subscriptionId}}"/>
+                                    <div class="form-group">
+                                        <label class="col-md-4 col-sm-4 control-label" >Subscription Name</label>
+                                        <div class="col-md-6 col-sm-6" style="position:relative;">
+                                            <input id="subscriptionName" name="subscriptionName"
+                                                   ng-pattern="text" alpha-with-space
+                                                   type="text"  placeholder="Subscription Name"
+                                                   ng-model="subscriptionNameText" readonly
+                                                   class="form-control input-md" required>
+                                            <p class="error" ng-show="currency.subscriptionNameText.$error.pattern">Enter Valid Subscription
+                                                Name</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-md-4 col-sm-4 control-label" >Validity</label>
+                                        <div class="col-md-6 col-sm-6" style="position:relative;">
+                                            <input id="validity" name="validity"
+                                                   allowpattern="[0-9]"
+                                                   type="text" number
+                                                   placeholder="Validity"
+                                                   ng-model="validityText"
+                                                   class="form-control input-md" >
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-4 col-sm-4 control-label" >No of Companies</label>
+                                        <div class="col-md-6 col-sm-6" style="position:relative;">
+                                            <input id="companiesno" name="companiesno"
+                                                   type="text" number
+                                                   placeholder="No of Companies"
+                                                   ng-model="companies"
+                                                   class="form-control input-md" >
+                                        </div>
+                                    </div>
+
+
+                                    <div class="modal-footer">
+                    <button type="button" class="btn btn-default" ng-click="saverenew()">Save</button>
+                    <button type="button" class="btn btn-default" ng-click="removeSubscriptionDetails()" data-dismiss="modal">Close</button>
+                </div>
+                                </fieldset>
+                            </form>
+            </div>
+        </div>
+    </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade ExchangeRate" tabindex="-1" id="add_new_config_modal" role="dialog" data-backdrop="static"
+     aria-labelledby="mySmallModalLabel" style="overflow: auto">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content checkout">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="removeSubscriptionDetails()" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="title">Add Subscription</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <form  class="form-horizontal" name="currency">
+                            <fieldset>
+                                <div  class="form-group">
+                                    <label class="col-md-4 col-sm-4 control-label">From Email</label>
+                                    <div class="col-md-6 col-sm-6" style="position:relative;">
+                                        <select name="" ng-model="email"
+                                                ng-options="email.userName as email.userName for email in mailList"
+                                                class="form-control input-md">
+                                        </select>
+
+
+                                    </div>
+                                </div>
+                                <label>Email</label>
+
+                                <div class="form-group">
+                                    <label class="col-md-4 col-sm-4 control-label" >Subject</label>
+                                    <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                    <textarea id="price" name="price"
+                                                              type="text"
+                                                              placeholder="Email Content"
+                                                              ng-model="emailContent1subject"
+                                                              class="form-control input-md" >
+                                                    </textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-4 col-sm-4 control-label" >Body</label>
+                                    <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                    <textarea id="price" name="price"
+                                                              type="text"
+                                                              placeholder="Email Content"
+                                                              ng-model="emailContent1body"
+                                                              class="form-control input-md" >
+                                                    </textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-6 col-sm-6" style="position:relative;">
+                                    <input type="checkbox" id="verify" name="verify" value="true" ng-model="verify">
+                                    <label for="verify">Verify Email</label>
+                                    </div>
+                                </div>
+                                <div ng-show="verify==true" class="form-group">
+                                    <label class="col-md-4 col-sm-4 control-label" >Application URL</label>
+                                    <div class="col-md-6 col-sm-6" style="position:relative;">
+                                        <input id="applicationurl" name="applicationurl"
+                                               ng-pattern="text"
+                                               type="text"  placeholder="Application URL"
+                                               ng-model="url"
+                                               class="form-control input-md" required>
+                                    </div>
+                                </div>
+                                <label>Email 2</label>
+                                <div class="form-group">
+                                    <label class="col-md-4 col-sm-4 control-label" >Subject</label>
+                                    <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                    <textarea id="price" name="price"
+                                                              type="text"
+                                                              placeholder="Email Content"
+                                                              ng-model="emailContent2subject"
+                                                              class="form-control input-md" >
+                                                    </textarea>
+                                    </div>
+                                </div>
+                                <div  class="form-group">
+                                    <label class="col-md-4 col-sm-4 control-label" >Body</label>
+                                    <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                    <textarea id="price" name="price"
+                                                              type="text"
+                                                              placeholder="Email Content"
+                                                              ng-model="emailContent2body"
+                                                              class="form-control input-md" >
+                                                    </textarea>
+                                    </div>
+                                </div>
+                                <!--<div class="form-group">-->
+                                    <!--<div class="col-md-6 col-sm-6" style="position:relative;">-->
+                                        <!--<input type="checkbox" id="verify2" name="verify" value="true" ng-model="verify2">-->
+                                        <!--<label for="verify2">Verify Email2</label>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <!--<div class="form-group">-->
+                                    <!--<label class="col-md-4 col-sm-4 control-label" >Application URL</label>-->
+                                    <!--<div class="col-md-6 col-sm-6" style="position:relative;">-->
+                                        <!--<input id="applicationurl" name="applicationurl"-->
+                                               <!--ng-pattern="text"-->
+                                               <!--type="text"  placeholder="Application URL"-->
+                                               <!--ng-model="redirecturl"-->
+                                               <!--class="form-control input-md" required>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+
+
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" ng-click="saveemail()">Save</button>
+                <button type="button" class="btn btn-default" ng-click="removeSubscriptionDetails()" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+

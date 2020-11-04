@@ -1,0 +1,57 @@
+
+<body>
+<div class="container-fluid">
+    <div class="container cus_main_row" >
+
+        <div class="row">
+            <h2 class="pos-header-new">
+                <div>Developer</div>
+            </h2>
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-3 rep_list_info">
+                <a>
+                    <div class="custom_notif">
+                        <img src="images/icon/controlpanel/openingbalance/monthend.png"  width="100" height="80">
+                        <div class="rep_info"><strong>Total Apps</strong></div>
+                        {{subscription.length}}
+
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-3 rep_list_info">
+                <a>
+                    <div class="custom_notif">
+                        <img src="images/icon/controlpanel/openingbalance/monthend.png"  width="100" height="80">
+                        <div class="rep_info"><strong>Publish Apps</strong></div>
+                        {{ActiveList.length}}
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-3 rep_list_info">
+                <a>
+                    <div class="custom_notif">
+                        <img src="images/icon/controlpanel/openingbalance/monthend.png"  width="100" height="80">
+                        <div class="rep_info"><strong>Un Publish Apps</strong></div>
+                        {{InActiveList.length}}
+                    </div>
+                </a>
+            </div>
+            <!--<div class="col-md-3 rep_list_info">-->
+                <!--<a href="#!/devapplication">-->
+                    <!--<div class="custom_notif">-->
+                        <!--<img src="images/icon/controlpanel/openingbalance/monthend.png"  width="100" height="80">-->
+                        <!--<div class="rep_info"><strong>Application</strong></div>-->
+                    <!--</div>-->
+                <!--</a>-->
+            <!--</div>-->
+
+
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,69 @@
+package com.hyva.idm.pkt.pktRelations;
+
+import com.hyva.idm.entity.BaseEntity;
+import lombok.Data;
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
+
+/**
+ * krishna
+ */
+@Entity
+@Data
+public class PktPermissions extends BaseEntity<String> implements Cloneable{
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
+    @GenericGenerator(name = "native", strategy = "native")
+    private Long pktPermissionId;
+    private String keyName;
+    private String keyValue;
+    private String keyPlaceHolder;
+    private String keyVisibility;
+    private String keyValidation;
+    private String keyPriority;
+    private String keyAction;
+    private String keyReference;
+    private String keyGroup;
+    private String keySubscription;
+    private String keyTiming;
+    private String status;
+    private String permission;
+    private String descriptor;
+    private String roundOff;
+    private String sync;
+    private String columnPosition;
+    private String operator;
+    private String columnName;
+    @Column(name="operation" ,columnDefinition = "LONGTEXT")
+    private String operation;
+    private String tableName;
+    private String inputType;
+    private String valueee;
+    @Column(name="childKeys" ,columnDefinition = "LONGTEXT")
+    private String childKeys;
+
+    @Column(name="searchKey" ,columnDefinition = "LONGTEXT")
+    private String searchKey;
+    @Column(name="dropdownKey" ,columnDefinition = "LONGTEXT")
+    private String dropdownKey;
+    @Column(name="calcKey" ,columnDefinition = "LONGTEXT")
+    private String calcKey;
+    private String menuKey;
+    @Column(name="createKeys" ,columnDefinition = "LONGTEXT")
+    private String createKeys;
+    @Column(name="updateKey" ,columnDefinition = "LONGTEXT")
+    private String updateKey;
+    private String top_pos;
+    private String width_pos;
+    private String left_pos;
+    private String height_pos;
+    private String position_pos;
+
+
+    @Override
+    public Object clone() throws CloneNotSupportedException{
+        return super.clone();
+    }
+
+}

@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>EDIT APPLICATION</title>
+    <link href="./css/vendors/images/jquery-ui.min.css" rel="stylesheet" type="text/css">
+    <script src="./css/vendors/images/jquery-1.11.0.min.js"></script>
+    <script src="./css/vendors/images/jquery-ui.min.js"></script>
+</head>
+<body>
+<div class="col-md-6 col-sm-6" style="position:relative;">
+    <label class="col-md-4 col-sm-4 control-label">Select
+        Subscription<sup style="color:red;">*</sup></label>
+    <select name="" id="appid" ng-model="keySubscription"
+            ng-disabled="operation == 'Edit' "
+            ng-options="application.name as application.name for application in applicationtype | unique: 'keySubscription'"
+            ng-change='getPktPermisssionListPKt(keySubscription);getoperatorlistbasedonapplication(keySubscription)'
+            class="form-control input-md">
+        <option value="">-Select-</option>
+    </select>
+</div>
+<div class="form-group">
+    <label class="col-md-4 col-sm-4 control-label">Select
+        Table Name<sup style="color:red;">*</sup></label>
+    <div class="col-md-6 col-sm-6" style="position:relative;">
+        <select name="" id="keyvalue" ng-model="keyValue"
+                ng-disabled="operation === 'Edit' "
+                ng-options="table.keyValue as table.keyValue for table in tableNameListOnPkt"
+                class="form-control input-md"
+                ng-change='getFieldsNameList()'>
+            <option value="">-Select-</option>
+
+        </select>
+
+    </div>
+</div>
+</div>
+
+<!--<div class="modal fade ExchangeRate" tabindex="-1" id="add_new_Text_modal" role="dialog"
+     data-backdrop="static"
+     aria-labelledby="mySmallModalLabel">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content checkout">
+            <div class="modal-header">
+                <button type="button" id="textclose" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 id="cust-notif" class="modal-title">Add </h4>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <form class="form-horizontal" name="mail">
+                            <fieldset>
+                                <div class="form-group">
+                                    <label class="col-md-4 col-sm-4 control-label" for="">Label</label>
+                                    <div class="col-md-6 col-sm-6" style="position:relative;">
+                                        <input id="name" name="name"
+                                               type="text" placeholder="Label"
+                                               ng-model="label"
+                                               class="form-control input-md" autocomplete="off">
+
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-4 col-sm-4 control-label" for="">Place Holder</label>
+                                    <div class="col-md-6 col-sm-6" style="position:relative;">
+                                        <input id="name" name="name"
+                                               type="text" placeholder="name"
+                                               ng-model="placeholder"
+                                               class="form-control input-md" autocomplete="off">
+
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-4 col-sm-4 control-label" for="">Column Codes</label>
+                                    <div class="col-md-6 col-sm-6" style="position:relative;">
+                                        <select name="fieldName" ng-model="columncodes"
+                                                ng-options="field.fieldName as field.fieldName for field in textlist"
+                                                class="form-control input-md">
+                                            <option value="">-Select-</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-4 col-sm-4 control-label"
+                                           for="">Input Type</label>
+                                    <div class="col-md-6 col-sm-6">
+                                        <select name="status" id="status" ng-model="inputtype"
+                                                class="form-control input-md" required>
+                                            <option value="">Select</option>
+                                            <option value="text">Text</option>
+                                            <option value="button">Button</option>
+                                            <option value="select">Select</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </fieldset>
+
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-default" data-toggle="modal"
+                                        data-target=".print-me" ng-click="savetext()">save
+                                </button>
+                                <button type="button" class="btn btn-default"
+                                        ng-click="removeApplication()" data-dismiss="modal">close
+                                </button>
+
+                            </div>
+
+                        </form>
+
+
+
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>-->
+<div class="modal fade ExchangeRate" tabindex="-1" id="add_new_pkt_Table_modal" role="dialog"
+     data-backdrop="static"
+     aria-labelledby="mySmallModalLabel">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content checkout">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 id="cust-notif" class="modal-title">Add Table Column Mapping</h4>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <form class="form-horizontal" name="mail" style="">
+                            <fieldset>
+
+                                <div class="form-group">
+                                    <label class="col-md-4 col-sm-4 control-label">Select operator
+                                        <sup style="color:red;">*</sup></label>
+                                    <input type="checkbox" ng-model="AddOpe" id="AddOpe" style="margin-top: 14px;" ng-disabled="operation=='Edit'"/>Add
+                                    <input type="checkbox" ng-model="saveOpe" id="saveOpe" style="margin-top: 14px;" ng-disabled="operation=='Edit'"/>Save
+                                    <input type="checkbox" ng-model="EditOpe" id="EditOpe"  style="margin-top: 14px;" ng-disabled="operation=='Edit'"/>Edit
+                                    <input type="checkbox" ng-model="ListOpe" id="ListOpe" style="margin-top: 14px;" ng-disabled="operation=='Edit'"/>List
+                                </div>
+
+                                <!--@@@PKtFieldsList@@@@-->
+                                <div class="form-group">
+                                    <label class="col-md-4 col-sm-4 control-label">Select Column
+                                        Code<sup style="color:red;">*</sup></label>
+                                    <div class="col-md-6 col-sm-6" style="position:relative;">
+                                        <select name="fieldName" id="columncode" ng-model="fieldName"
+                                                ng-options="field.fieldName as field.fieldName for field in tableFieldNameList"
+                                                class="form-control input-md">
+                                            <!--<option value="">-Select-</option>-->
+                                        </select>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label class="col-md-4 col-sm-4 control-label" for="">Column
+                                        Name</label>
+                                    <div class="col-md-6 col-sm-6" style="position:relative;">
+                                        <input id="columnName"  name="columnName"
+                                               type="text" placeholder="Column Name"
+                                               ng-model="columnName"
+                                               class="form-control input-md" autocomplete="off">
+
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-4 col-sm-4 control-label" for="">Place
+                                        Holder Name</label>
+                                    <div class="col-md-6 col-sm-6" style="position:relative;">
+                                        <input  id="placeholder" name="Place Holder"
+                                               type="text" placeholder="Place Holder"
+                                               ng-model="placeHolder"
+                                               class="form-control input-md" autocomplete="off">
+
+                                    </div>
+                                </div>
+
+
+
+                                <div class="form-group">
+                                    <label class="col-md-4 col-sm-4 control-label">Type Of
+                                        Validator</label>
+                                    <div class="col-md-6 col-sm-6" style="position:relative;">
+                                        <input type="hidden" id="relativeid" name="relativeinput" class="form-control input-md">
+                                        <input type="text" id="types" name="type" class="form-control input-md">
+                                    </div>
+                                </div>
+
+
+
+                                <div class="form-group" ng-show="typeOfValidator =='Button'|| typeOfValidator =='Select'">
+                                    <label class="col-md-4 col-sm-4 control-label">Reference </label>
+                                    <div class="col-md-6 col-sm-6" style="position:relative;" >
+                                        <select name="" ng-model="keyReference"
+                                                ng-options="input as input for input in operatelist|filter:'List'"
+                                                class="form-control input-md">
+                                            <option value="">-Select-</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+
+
+
+
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-default" data-toggle="modal"
+                                        data-target=".print-me" ng-click="savecss()">save
+                                </button>
+                                <button type="button" class="btn btn-default"
+                                        ng-click="removetableType()" data-dismiss="modal">close
+                                </button>
+
+                            </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<form id="editTemplate" name="editTemplate">
+    <div class="col-md-12">
+        <div style="height: 25px;">Headers</div>
+        <div class="col-md-1 showItems " id="items_draggable_table" style="width: 6%;">
+            <!--  <div  ng-repeat ="perms in permissionResponse" id="itemSerialNumDet{{$index}}" style="top: 0px;"
+                  ng-style="isTrue ? editFormdragable[3{{$index+1}}] : { 'top': '0px', 'left': '0px'}"
+                  class="draggableitem ui-widget-content resizeable ng-scope ui-draggable" ng-mouseup="showelements('snoVal')">
+                 <label>{{perms.name}}</lsabel>
+
+                 <input type="{{perms.type}}" class="form-control" value="" name="{{perms.name}}">
+             </div>  -->
+            <!-- <div ng-repeat ="perms in permissionResponse" id="itemHsnSacCodeDet" style="z-index: 101; top: 0px;"
+                 ng-style="isTrue ? editFormdragable[3{{$index+1}}] : { 'top': '0px', 'left': '0px'}" ng-style="isTrue ? editFormdragable[33] : { 'top': '126px', 'left': '0px'}" class="draggableitem  ui-widget-content resizeable ui-resizable ui-draggable" >
+               <label>{{perms.name}}</lsabel>
+
+                <input type="{{perms.type}}" class="form-control" value="" name="{{perms.name}}">
+            </div> -->
+
+            <!--  <div  ng-repeat ="perms in permissionResponse" id="{{perms.name}}{{$index+1}}"  style="top: 42px;"
+                  ng-style="isTrue ? editFormdragable[31] : { 'top': '42px', 'left': '0px'}"
+                  class="draggableitem ui-widget-content resizeable" ng-mouseup="showelements('itemNameValue')">
+                 <label>{{perms.name}}</label>
+
+                 <input type="{{perms.type}}" class="form-control" value="" name="{{perms.name}}">
+             </div>
+  -->
+
+            <!-- <div id="itemNameDet" style="top: 42px;"
+                 ng-style="isTrue ? editFormdragable[31] : { 'top': '42px', 'left': '0px'}"
+                 class="draggableitem ui-widget-content resizeable" ng-mouseup="showelements('itemNameValue')">
+                <label>EMAIL</label>
+
+                <input type="email" class="form-control" value="" name="email">
+            </div> -->
+
+            <div id="itemNameDet"  style="top: 42px;"
+                 ng-style="isTrue ? editFormdragable[31] : { 'top': '42px', 'left': '0px'}"
+                 class="draggableitem ui-widget-content resizeable" ng-mouseup="showelements('itemNameValue')">
+                <label>TEXT</label>
+
+                <input type="text" class="form-control" value="" id="text" name="text" onclick="enableTxt(this);">
+            </div>
+            <div id="itemNameDet" style="top: 42px;"
+                 ng-style="isTrue ? editFormdragable[31] : { 'top': '42px', 'left': '0px'}"
+                 class="draggableitem ui-widget-content resizeable" ng-mouseup="showelements('itemNameValue')">
+                <label>Date</label>
+
+                <input type="date" class="form-control" id="date" value="" name="text" onclick="enableTxt(this);">
+            </div>
+            <div id="itemNameDet" style="top: 42px;"
+                 ng-style="isTrue ? editFormdragable[31] : { 'top': '42px', 'left': '0px'}"
+                 class="draggableitem ui-widget-content resizeable" ng-mouseup="showelements('itemNameValue')">
+                <label>Number</label>
+
+                <input type="number" class="form-control" id="number" value="" name="text" onclick="enableTxt(this);">
+            </div>
+            <div id="itemNameDet" style="top: 42px;"
+                 ng-style="isTrue ? editFormdragable[31] : { 'top': '42px', 'left': '0px'}"
+                 class="draggableitem ui-widget-content resizeable" ng-mouseup="showelements('itemNameValue')">
+                <label>EMAIL</label>
+
+                <input type="email" class="form-control" id="email" value="" name="email" onclick="enableTxt(this);">
+            </div>
+
+            <!-- <div id="itemDesDet" style="top: 84px;"
+                 ng-style="isTrue ? editFormdragable[32] : { 'top': '84px', 'left': '0px'}"
+                 class="draggableitem ui-widget-content resizeable" ng-mouseup="showelements('desValue')">
+                <span id="itemDes">Item Desc</span>
+                <hr>
+                <span id="desValue" class="hidden">Product Desc</span>
+            </div> -->
+
+            <!--<div id="itemHsnSacCodeDet" style="top: 126px;"-->
+                 <!--ng-style="isTrue ? editFormdragable[33] : { 'top': '126px', 'left': '0px'}"-->
+                 <!--class="draggableitem  ui-widget-content resizeable" ng-mouseup="showelements('itemHsnCodeValue')">-->
+                <!--<label>Password</label>-->
+
+                <!--<input type="password" class="form-control" value="" name="password">-->
+            <!--</div>-->
+
+
+            <div id="itemQuantityDet" style="top: 168px;"
+                 ng-style="isTrue ? editFormdragable[34] : { 'top': '168px', 'left': '0px'}"
+                 class="draggableitem ui-widget-content resizeable" ng-mouseup="showelements('quantityVal')">
+                <label>Checkbox</label>
+
+                <input type="checkbox" class="form-control" value="" name="password" onclick="enableTxt(this);">
+            </div>
+
+            <div id="itemRateDet" style="top: 210px;"
+                 ng-style="isTrue ? editFormdragable[35] : { 'top': '210px', 'left': '0px'}"
+                 class="draggableitem ui-widget-content resizeable" ng-mouseup="showelements('itemRateValue')" >
+                <label>Radio</label>
+
+                <input type="radio" class="form-control" value="" name="radio" onclick="enableTxt(this);">
+            </div>-->
+
+            <!--<div id="itemAmountDet" style="top: 252px;"-->
+                 <!--ng-style="isTrue ? editFormdragable[36] : { 'top': '252px', 'left': '0px'}"-->
+                 <!--class="draggableitem ui-widget-content resizeable" ng-mouseup="showelements('AmountVal')">-->
+                <!--<label>TEXT AREA</label>-->
+
+                <!--<textarea name="textarea" class="form-control" ng-click="addNewPkt()"></textarea>-->
+            <!--</div>-->
+
+            <!-- <div id="itemDiscountDet" style="top: 294px;"
+                 ng-style="isTrue ? editFormdragable[37] : { 'top': '294px', 'left': '0px'}"
+                 class="draggableitem ui-widget-content resizeable" ng-mouseup="showelements('itemDiscountVal')">
+                <span id="itemDiscount">Discount</span>
+                <hr>
+                <span id="itemDiscountVal" class="hidden">3</span>
+            </div>
+
+            <div id="itemTaxDet" style="top: 336px;"
+                 ng-style="isTrue ? editFormdragable[38] : { 'top': '336px', 'left': '0px'}"
+                 class="draggableitem ui-widget-content resizeable" ng-mouseup="showelements('taxVal')">
+                <span id="taxPer">Tax %</span>
+                <hr>
+                <span id="taxVal" class="hidden">0.00</span>
+            </div>
+
+            <div id="itemTaxAmtDet" style="top: 378px;"
+                 ng-style="isTrue ? editFormdragable[39] : { 'top': '378px', 'left': '0px'}"
+                 class="draggableitem ui-widget-content resizeable" ng-mouseup="showelements('taxAmountVal')">
+                <span id="taxAmount">Tax Amount</span>
+                <hr>
+                <span id="taxAmountVal" class="hidden">0.00</span>
+            </div>
+
+            <div id="itemCgstDet" style="top: 420px;"
+                 ng-style="isTrue ? editFormdragable[40] : { 'top': '420px', 'left': '0px'}"
+                 class="draggableitem ui-widget-content resizeable" ng-mouseup="showelements('CgstVal')">
+                <span id="Cgst">CGST</span>
+                <hr>
+                <span id="CgstVal" class="hidden">0.00</span>
+            </div>
+
+            <div id="itemSgstDet" style="top: 464px;"
+                 ng-style="isTrue ? editFormdragable[41] : { 'top': '464px', 'left': '0px'}"
+                 class="draggableitem ui-widget-content resizeable" ng-mouseup="showelements('SgstVal')">
+                <span id="Sgst">SGST</span>
+                <hr>
+                <span id="SgstVal" class="hidden">0.00</span>
+            </div>
+
+            <div id="itemIgstDet" style="top: 506px;"
+                 ng-style="isTrue ? editFormdragable[42] : { 'top': '506px', 'left': '0px'}"
+                 class="draggableitem ui-widget-content resizeable" ng-mouseup="showelements('IgstVal')">
+                <span id="Igst">IGST</span>
+                <hr>
+                <span id="IgstVal" class="hidden">0.00</span>
+            </div>
+
+            <div id="itemCessDet" style="top: 548px;"
+                 ng-style="isTrue ? editFormdragable[43] : { 'top': '548px', 'left': '0px'}"
+                 class="draggableitem ui-widget-content resizeable" ng-mouseup="showelements('cessVal')">
+                <span id="cess">CESS</span>
+                <hr>
+                <span id="cessVal" class="hidden">660.00</span>
+            </div>
+
+            <div id="returnQuantityDet" style="top: 590px;"
+                 ng-style="isTrue ? editFormdragable[44] : { 'top': '590px', 'left': '0px'}"
+                 class="draggableitem ui-widget-content resizeable" ng-mouseup="showelements('returnQuantityVal')">
+                <span id="returnQuantity">Return Quantity</span>
+                <hr>
+                <span id="returnQuantityVal" class="hidden">1.00</span>
+            </div> -->
+        </div>
+
+        <div class="col-md-11" style="margin-left: 7px;">
+            <div class="col-md-4">
+                <span style="font-weight: bold; padding-right: 17px;"> Report border : </span>
+                <span style="vertical-align: top"> yes </span><input type="radio" value="border" ng-model="borderVal"/>
+                <span style="vertical-align: top">  No </span><input type="radio" value="noBorder"
+                                                                     ng-model="borderVal"/>
+            </div>
+            <div class="col-md-4 pull-right">
+                <div class="col-md-8">
+                    <select class="form-control " id="hideSelectBoxId">
+                        <option>Hiden list</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <button class="btn btn-default hi_btn" ng-click="restoreDrag()">Restore</button>
+                </div>
+            </div>
+
+            <div class="col-md-11" style="margin-left: 7px;">
+                <div class="irep_wrap hi_wrap" id="dragcolumn1" class="draggable_latest" style="height:900px; background-color: #e2e2e2;">{{isTrue}}
+
+                </div>
+
+               <div class="printdesign_button_group">
+                    <button class="printdesign_btn" id="saveTemplateBtn" ng-click="saveTemplate()">save</button>
+                    <button id="delete_button" ng-click="resetTemplate(this)" class="printdesign_btn">Reset</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<div class="col-md-2  col-sm-5 col-xs-5">
+
+    <input type="hidden" id="opentext" class="btn btn-info btn-lg" data-toggle="modal" data-target="#add_new_pkt_Table_modal">
+    <!--<div class="col-sm-12">
+        <button id="" type="button" class="btn btn-default hi_btn"
+                ng-click="openText()">Text
+        </button>
+    </div>-->
+</div>
+
+<div class="col-md-2  col-sm-5 col-xs-5">
+    <div class="col-sm-12">
+        <button id="" type="button" class="btn btn-default hi_btn"
+                ng-click="addNewPkt()">Add
+        </button>
+    </div>
+</div>
+<script>
+    function enableTxt(elem) {
+        var id = $(elem).attr("id");
+        var types = $(elem).attr("type");
+        $("#types").val(types);
+        $("#relativeid").val(id);
+
+        $("#opentext").trigger('click');
+       // alert(id);
+    }
+
+
+
+</script>
+
+</body>
+</html>

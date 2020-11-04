@@ -1,0 +1,857 @@
+<body>
+<div class="container-fluid">
+    <div class="container cus_main_row">
+        <div class="row">
+            <h2 class="pos-header-new">
+                <div>Menu Builders</div>
+            </h2>
+        </div>
+        <div class="row inner_row_bg">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="panel">
+                    <div class="panel-body" style="height: 65px;">
+                        <div class="col-md-4 col-lg-3 col-sm-5 col-xs-5">
+                            <form class="form-horizontal ng-pristine ng-valid">
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <!--<div class="col-lg-7 col-md-9 col-sm-9">-->
+                            <div class="form-group">
+                                <div class="col-sm-2">
+                                    <button id="" type="button" class="btn btn-default hi_btn"
+                                            ng-click="addNewMenuBuilder()">Add
+                                    </button>
+                                </div>
+                            <!--</div>-->
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="fixed-table-container">
+                            <div class="table_wrap fixed-table-container-inner">
+                                <div class="header-background"></div>
+                                <table data-toggle="table" data-cache="false" data-height="299"
+                                       style="margin-bottom: 0px;"
+                                       class="hi_table table table-hover table-bordered table-striped table-fixed-header">
+                                    <thead>
+                                    <tr>
+                                        <th data-field="formRegno">
+                                            <div class="th-inner">Company Name</div>
+                                        </th>
+                                        <th data-field="formRegno">
+                                            <div class="th-inner">Active</div>
+                                        </th>
+                                        <th data-field="formRegno">
+                                            <div class="th-inner">Header</div>
+                                        </th>
+                                        <th data-field="formRegno">
+                                            <div class="th-inner">Footer</div>
+                                        </th>
+                                        <th data-field="formRegno">
+                                            <div class="th-inner">Edit</div>
+                                        </th>
+
+                                    </tr>
+                                    <tbody id="parentTable">
+                                    <tr ng-repeat="menu in menuList | unique: 'applicationName'">
+                                        <td>{{menu.applicationName}}</td>
+                                        <td>{{menu.status}}</td>
+                                        <td><a id="operation_{{$index}}" href="javascript:void(0)"
+                                               ng-click="getHeaderValuesList(menu)" class="operation_"><i
+                                                class="fa fa-pencil-square-o fa-fw orange"></i></a></td>
+                                        <td><a id="edit_{{$index}}" href="javascript:void(0)"
+                                               ng-click="getFooterValueList(menu)" class="edit"><i
+                                                class="fa fa-pencil-square-o fa-fw orange"></i></a></td>
+                                        <td><a id="edit_{{$index}}" href="javascript:void(0)"
+                                               ng-click="editMenuList(menu)" class="edit"><i
+                                                class="fa fa-pencil-square-o fa-fw orange"></i></a></td>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="modal fade ExchangeRate" tabindex="-1" id="add_new_MenuBuilder_modal" role="dialog"
+                         data-backdrop="static"
+                         aria-labelledby="mySmallModalLabel">
+                        <div class="modal-dialog modal-md">
+                            <div class="modal-content checkout">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                            aria-hidden="true">&times;</span></button>
+                                    <h4 id="menu-title" class="modal-title">Add Menu Builders</h4>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-md-12 col-sm-12">
+                                            <form ng-submit="addMeneBuilderOperation(menuBuilderList)">
+                                                <table class="table table-striped table-bordered">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>Application</th>
+                                                        <th>Menu Name</th>
+                                                        <th>Sequence Number</th>
+                                                        <th>Parent Id</th>
+                                                        <!--<th>HeaderValue</th>-->
+                                                        <!--<th>FooterValue</th>-->
+                                                        <th>Status</th>
+                                                        <th>Clear Row</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr ng-repeat="operation in menuBuilderList ">
+
+                                                        <td>
+                                                                <select name="" ng-model="operation.keySubscription"
+                                                                        ng-options="application.name as application.name for application in applicationtype | unique: 'keySubscription'"
+                                                                        ng-change='getPktPermisssionListPKts(operation)' ng-disabled="menuBuilderList.length>1 && $index>=1"
+                                                                        class="form-control input-md">
+                                                                    <option value="">-Select-</option>
+                                                                </select>
+
+                                                        </td>
+                                                        <!--menu Name-->
+                                                        <td>
+                                                            <input id="menuName " name="menuName "
+                                                                   type="text" placeholder="menuName"
+                                                                   ng-model="operation.menuName"
+                                                                   class="form-control input-md" autocomplete="off">
+                                                        </td>
+                                                        <!--Sequence No-->
+                                                        <td>
+                                                                    <input id="Sequence No" name="Sequence No"
+                                                                           type="text" placeholder="Sequence No "
+                                                                           ng-model="operation.sequenceno"
+                                                                           class="form-control input-md"
+                                                                           autocomplete="off">
+                                                        </td>
+
+                                                        ParentID
+                                                        <td>
+                                                            <!--<div class="form-group">-->
+                                                                <!--<div class="col-md-6 col-sm-6"-->
+                                                                     <!--style="position:relative;">-->
+                                                                    <input id="ParentID" name="ParentID"
+                                                                           type="text" placeholder="ParentID"
+                                                                           ng-model="operation.parentid"
+                                                                           ng-click="getSubmenuBuilderList($index,operation)"
+                                                                           class="form-control input-md"
+                                                                           autocomplete="off">
+
+                                                                <!--</div>-->
+                                                            <!--</div>-->
+                                                        </td>
+                                                        <!--&lt;!&ndash;HeaderValue&ndash;&gt;-->
+                                                        <!--<td>-->
+                                                            <!--<div class="form-group">-->
+                                                                <!--<div class="col-md-6 col-sm-6"-->
+                                                                     <!--style="position:relative;">-->
+                                                                    <!--<input id="HeaderValue" name="HeaderValue"-->
+                                                                           <!--type="text" placeholder="HeaderValue"-->
+                                                                           <!--ng-model="operation.headerValue"-->
+                                                                           <!--ng-click="getHeaderValuesList($index)"-->
+                                                                           <!--class="form-control input-md"-->
+                                                                           <!--autocomplete="off">-->
+
+                                                                <!--</div>-->
+                                                            <!--</div>-->
+
+                                                        <!--</td>-->
+                                                        <!--&lt;!&ndash;FooterValue&ndash;&gt;-->
+                                                        <!--<td>-->
+                                                            <!--<div class="form-group">-->
+                                                                <!--<div class="col-md-6 col-sm-6"-->
+                                                                     <!--style="position:relative;">-->
+                                                                    <!--<input id="FooterValue" name="FooterValue"-->
+                                                                           <!--type="text" placeholder="FooterValue"-->
+                                                                           <!--ng-model="operation.footerValue"-->
+                                                                           <!--ng-click="getFooterValueList($index,operation)"-->
+                                                                           <!--class="form-control input-md"-->
+                                                                           <!--autocomplete="off">-->
+
+                                                                <!--</div>-->
+                                                            <!--</div>-->
+
+                                                        <!--</td>-->
+                                                        <!--Status-->
+                                                        <td>
+                                                            <select name="status" id="statusq"
+                                                                    ng-model="operation.status"
+                                                                    class="form-control input-md" required>
+                                                                <option value="Active">Active</option>
+                                                                <option value="InActive">InActive</option>
+                                                                <option value="">-Select-</option>
+                                                            </select>
+                                                        </td>
+                                                        <td> <button type="button" class="btn btn-default hi_btn"
+                                                                     ng-click="removeaddnew()">X
+                                                        </button>
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                                <td>
+                                                    <button type="button"
+                                                            class="btn btn-primary hi_btn" ng-disabled="menuBuilderList.length==0"
+                                                            ng-click="saveMenuBuilder(menuBuilderList)">
+                                                        Save
+                                                    </button>
+                                                </td>
+
+                                                <td>
+                                                    <button type="button"
+                                                            class="btn btn-primary"
+                                                            ng-click="removeServices()"
+                                                            data-dismiss="modal">Close
+                                                    </button>
+                                                </td>
+
+                                                <div class="form-group">
+                                                    <!--<input ng-hide="!menuBuilderList.length"-->
+                                                    <!--type="button"-->
+                                                    <!--class="btn btn-danger pull-right"-->
+                                                    <!--ng-click="removefuncOperation()" value="Remove">-->
+                                                    <input type="submit"
+                                                           class="btn btn-primary addnew pull-right"
+                                                           value="Add New">
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="modal fade ExchangeRate" tabindex="-1" id="add_new_MenuBuilder_modal1" role="dialog"
+                         data-backdrop="static"
+                         aria-labelledby="mySmallModalLabel">
+                        <div class="modal-dialog modal-md">
+                            <div class="modal-content checkout">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                            aria-hidden="true">&times;</span></button>
+                                    <h4  class="modal-title">Add Sub Menu Builders</h4>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-md-12 col-sm-12">
+                                            <form ng-submit="addsubMenuBuilderOperation()">
+                                                <table class="table table-striped table-bordered">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>Parent Group</th>
+                                                        <th>Parent Value</th>
+                                                        <th>Sequence Number</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr ng-repeat="operation in subMenuBuilderList ">
+
+                                                        <!--<td>-->
+                                                        <!--<input type="checkbox"-->
+                                                        <!--ng-model="operation.selected" size="10"/>-->
+                                                        <!--</td>-->
+
+
+                                                        <!--menu Name-->
+                                                        <td>
+                                                            <input id="parentGroup" name="menuName "
+                                                                   type="text" placeholder="menuName"
+                                                                   ng-model="operation.parentGroup"
+                                                                   class="form-control input-md" autocomplete="off" readonly>
+                                                        </td>
+                                                        <!--parentvalue-->
+                                                        <td>
+                                                            <input id="parentvalue" name="parentvalue "
+                                                                   type="text" placeholder="parent value"
+                                                                   ng-model="operation.parentvalue"
+                                                                   class="form-control input-md" autocomplete="off">
+
+
+                                                        </td>
+                                                        <!--sequencenumber-->
+                                                        <td>
+                                                            <input id="Sequence Number" name="Sequence Number"
+                                                                   type="text" placeholder="Sequence Number"
+                                                                   ng-model="operation.sequencenumber"
+                                                                   class="form-control input-md" autocomplete="off">
+
+
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                                <td>
+                                                    <button type="button"
+                                                            class="btn btn-primary hi_btn"
+                                                            ng-click="saveSubMenuBuilder(subMenuBuilderList)">
+                                                        Save
+                                                    </button>
+                                                </td>
+
+                                                <td>
+                                                    <button type="button"
+                                                            class="btn btn-primary"
+                                                            ng-click="removeServices()"
+                                                            data-dismiss="modal">Close
+                                                    </button>
+                                                </td>
+
+                                                <div class="form-group">
+                                                    <!--<input ng-hide="!menuBuilderList.length"-->
+                                                    <!--type="button"-->
+                                                    <!--class="btn btn-danger pull-right"-->
+                                                    <!--ng-click="removefuncOperation()" value="Remove">-->
+                                                    <input type="submit"
+                                                           class="btn btn-primary addnew pull-right"
+                                                           value="Add New">
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal fade ExchangeRate" tabindex="-1" id="add_new_HeaderValue_modal1" role="dialog"
+                         data-backdrop="static"
+                         aria-labelledby="mySmallModalLabel">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content checkout">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                            aria-hidden="true">&times;</span></button>
+                                    <h4 id="cust-notif" class="modal-title">Add  Header Value</h4>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-md-12 col-sm-12">
+                                            <form class="form-horizontal" name="mail" style="">
+                                                <fieldset>
+                                                    <div class="form-group">
+                                                        <label class="col-md-4 col-sm-4 control-label" for="">Heading</label>
+                                                        <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                            <input id="columnName" name="columnName"
+                                                                   type="text" placeholder="Heading"
+                                                                   ng-model="heading"
+                                                                   class="form-control input-md" autocomplete="off">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-4 col-sm-4 control-label" for="">Logo</label>
+                                                        <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                            <input id="columnName" name="columnName"
+                                                                   type="text" placeholder="Logo"
+                                                                   ng-model="logo"
+                                                                   ng-click="pktImgae()"
+                                                                   class="form-control input-md" autocomplete="off">
+                                                        </div>
+                                                    </div>
+                                                    <!--<div class="form-group">-->
+                                                        <!--<label class="col-md-4 col-sm-4 control-label" for="">Logout Url</label>-->
+                                                        <!--<div class="col-md-6 col-sm-6" style="position:relative;">-->
+                                                            <!--<input id="columnName" name="columnName"-->
+                                                                   <!--type="text" placeholder="logouturl"-->
+                                                                   <!--ng-model="logouturl"-->
+                                                                   <!--class="form-control input-md" autocomplete="off">-->
+
+                                                        <!--</div>-->
+                                                    <!--</div>-->
+                                                    <div class="form-group">
+                                                        <label class="col-md-4 col-sm-4 control-label" for="">Logout Value</label>
+                                                        <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                            <input id="columnName" name="columnName"
+                                                                   type="text" placeholder="logvalue"
+                                                                   ng-model="logvalue"
+                                                                   class="form-control input-md" autocomplete="off">
+
+                                                        </div>
+                                                    </div>
+
+                                                </fieldset>
+
+
+                                                <div class="modal-footer">
+                                                    <button type="submit" class="btn btn-default" data-toggle="modal"
+                                                            data-target=".print-me" ng-click="saveHeaderValue()">save
+                                                    </button>
+                                                    <button type="button" class="btn btn-default"
+                                                            ng-click="removeServices()" data-dismiss="modal">close
+                                                    </button>
+
+                                                </div>
+
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <!--<div class="modal fade ExchangeRate" tabindex="-1" id="add_new_HeaderValue_modal1" role="dialog"-->
+                         <!--data-backdrop="static"-->
+                         <!--aria-labelledby="mySmallModalLabel">-->
+                        <!--<div class="modal-dialog modal-md">-->
+                            <!--<div class="modal-content checkout">-->
+                                <!--<div class="modal-header">-->
+                                    <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span-->
+                                            <!--aria-hidden="true">&times;</span></button>-->
+                                    <!--<h4  class="modal-title">Add Header Value</h4>-->
+                                <!--</div>-->
+                                <!--<div class="panel-body">-->
+                                    <!--<div class="row">-->
+                                        <!--<div class="col-md-12 col-sm-12">-->
+                                            <!--<form ng-submit="addHeaderValueOperation()">-->
+                                                <!--<table class="table table-striped table-bordered">-->
+                                                    <!--<thead>-->
+                                                    <!--<tr>-->
+                                                        <!--<th>Heading</th>-->
+                                                        <!--<th>logo</th>-->
+                                                        <!--<th>Logout Url</th>-->
+                                                        <!--<th>Logout Value</th>-->
+                                                    <!--</tr>-->
+                                                    <!--</thead>-->
+                                                    <!--<tbody>-->
+                                                    <!--<input type="hidden" ng-model="applicationName">-->
+                                                    <!--<input type="hidden" ng-model="pktBuilderId">-->
+                                                    <!--<tr ng-repeat="header in headerValueList ">-->
+
+                                                        <!--&lt;!&ndash;<td>&ndash;&gt;-->
+                                                        <!--&lt;!&ndash;<input type="checkbox"&ndash;&gt;-->
+                                                        <!--&lt;!&ndash;ng-model="operation.selected" size="10"/>&ndash;&gt;-->
+                                                        <!--&lt;!&ndash;</td>&ndash;&gt;-->
+
+
+                                                        <!--&lt;!&ndash;heading&ndash;&gt;-->
+                                                        <!--<td>-->
+                                                            <!--<input id="heading" name="heading "-->
+                                                                   <!--type="text" placeholder="heading"-->
+                                                                   <!--ng-model="header.heading"-->
+                                                                   <!--class="form-control input-md" autocomplete="off">-->
+                                                        <!--</td>-->
+                                                        <!--&lt;!&ndash;logo&ndash;&gt;-->
+                                                        <!--<td>-->
+                                                            <!--<input id="logo" name="logo "-->
+                                                                   <!--type="text" placeholder="logo"-->
+                                                                   <!--ng-model="header.logo"-->
+                                                                   <!--ng-click="pktImgae()"-->
+                                                                   <!--class="form-control input-md" autocomplete="off">-->
+
+
+                                                        <!--</td>-->
+                                                        <!--&lt;!&ndash;logouturl&ndash;&gt;-->
+                                                        <!--<td>-->
+                                                            <!--<input id="logouturl" name="logouturl"-->
+                                                                   <!--type="text" placeholder="logouturl"-->
+                                                                   <!--ng-model="header.logouturl"-->
+                                                                   <!--class="form-control input-md" autocomplete="off">-->
+
+
+                                                        <!--</td>-->
+                                                        <!--&lt;!&ndash;logvalue&ndash;&gt;-->
+                                                        <!--<td>-->
+                                                            <!--<input id="logvalue" name="logvalue"-->
+                                                                   <!--type="text" placeholder="logvalue"-->
+                                                                   <!--ng-model="header.logvalue"-->
+                                                                   <!--class="form-control input-md" autocomplete="off">-->
+
+
+                                                        <!--</td>-->
+                                                    <!--</tr>-->
+                                                    <!--</tbody>-->
+                                                <!--</table>-->
+                                                <!--<td>-->
+                                                    <!--<button type="button"-->
+                                                            <!--class="btn btn-primary hi_btn"-->
+                                                            <!--ng-click="saveHeaderValue(headerValueList)">-->
+                                                        <!--Save-->
+                                                    <!--</button>-->
+                                                <!--</td>-->
+
+                                                <!--<td>-->
+                                                    <!--<button type="button"-->
+                                                            <!--class="btn btn-primary"-->
+                                                            <!--ng-click="removeServices()"-->
+                                                            <!--data-dismiss="modal">Close-->
+                                                    <!--</button>-->
+                                                <!--</td>-->
+
+                                                <!--<div class="form-group">-->
+                                                    <!--&lt;!&ndash;<input ng-hide="!menuBuilderList.length"&ndash;&gt;-->
+                                                    <!--&lt;!&ndash;type="button"&ndash;&gt;-->
+                                                    <!--&lt;!&ndash;class="btn btn-danger pull-right"&ndash;&gt;-->
+                                                    <!--&lt;!&ndash;ng-click="removefuncOperation()" value="Remove">&ndash;&gt;-->
+                                                    <!--<input type="submit"-->
+                                                           <!--class="btn btn-primary addnew pull-right"-->
+                                                           <!--value="Add New">-->
+                                                <!--</div>-->
+                                            <!--</form>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+
+
+
+                    <div class="modal fade ExchangeRate" tabindex="-1"  id="add_new_FooterValue_modal1" role="dialog"
+                         data-backdrop="static"
+                         aria-labelledby="mySmallModalLabel" style="overflow:auto;z-index: 1055; ">
+                        <div class="modal-dialog modal-md">
+                            <div class="modal-content checkout">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                            aria-hidden="true">&times;</span></button>
+                                    <h4  class="modal-title">Add Footer Value</h4>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-md-12 col-sm-12">
+                                            <form ng-submit="addFooterValueOperation()">
+                                                <table class="table table-striped table-bordered">
+                                                    <thead>
+                                                    <tr>
+                                                        <!--<th>Footer</th>-->
+                                                        <th>ParentValue</th>
+                                                        <th>ChildValue</th>
+                                                        <th>FooterNo</th>
+                                                        <th>Application</th>
+                                                        <th>Clear Row</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr ng-repeat="footervalue in footerValueList ">
+
+                                                        <!--<td>-->
+                                                        <!--<input type="checkbox"-->
+                                                        <!--ng-model="operation.selected" size="10"/>-->
+                                                        <!--</td>-->
+
+
+                                                        <!--footer-->
+                                                        <!--<td>-->
+                                                            <!--<input id="footer" name="footer "-->
+                                                                   <!--type="text" placeholder="footer"-->
+                                                                   <!--ng-model="footervalue.footer"-->
+                                                                   <!--class="form-control input-md" autocomplete="off">-->
+                                                        <!--</td>-->
+                                                        <!--ParentValue-->
+                                                        <td>
+                                                            <input id="footparentValue" name="ParentValue "
+                                                                   type="text" placeholder="ParentValue"
+                                                                   ng-model="footervalue.footParentValue"
+                                                                   class="form-control input-md" autocomplete="off">
+
+
+                                                        </td>
+                                                        <!--value-->
+                                                        <td>
+                                                            <input id="value" name="value"
+                                                                   type="text" placeholder="value"
+                                                                   ng-model="footervalue.value"
+                                                                   ng-click="getSubFooterValue($index,footervalue)"
+                                                                   class="form-control input-md" autocomplete="off">
+
+
+                                                        </td>
+                                                        <!--Footer Number-->
+                                                        <td>
+
+                                                            <input id="footerno" name="footerno"
+                                                                           type="text" placeholder="footerno"
+                                                                           ng-model="footervalue.footerno"
+                                                                           class="form-control input-md"
+                                                                           autocomplete="off">
+
+                                                        </td>
+                                                            <!--companyname-->
+                                                        <td>
+                                                            <input id="companyname" name="companyname"
+                                                                   type="text" placeholder="companyname"
+                                                                   ng-model="footervalue.companyname"
+                                                                   class="form-control input-md" autocomplete="off" readonly>
+                                                        </td>
+
+                                                            <!--<select name="" ng-model="footervalue.companyname"-->
+                                                                    <!--ng-options="application.name as application.name for application in applicationtype | unique: 'keySubscription'"-->
+                                                                    <!--ng-change='getPktPermisssionListPKts(operation)'-->
+                                                                    <!--class="form-control input-md" readonly>-->
+                                                                <!--<option value="">-Select-</option>-->
+                                                            <!--</select>-->
+                                                        <td> <button type="button" class="btn btn-default hi_btn"
+                                                                      ng-click="remove()">X
+                                                        </button>
+                                                        </td>
+
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                                <td>
+                                                    <button type="button"
+                                                            class="btn btn-primary hi_btn"
+                                                            ng-click="saveFooterValue(footerValueList)">
+                                                        Save
+                                                    </button>
+                                                </td>
+
+                                                <td>
+                                                    <button type="button"
+                                                            class="btn btn-primary"
+                                                            ng-click="removeServices()"
+                                                            data-dismiss="modal">Close
+                                                    </button>
+                                                </td>
+
+                                                <div class="form-group">
+                                                    <!--<input ng-hide="!menuBuilderList.length"-->
+                                                    <!--type="button"-->
+                                                    <!--class="btn btn-danger pull-right"-->
+                                                    <!--ng-click="removefuncOperation()" value="Remove">-->
+                                                    <input type="submit"
+                                                           class="btn btn-primary addnew pull-right"
+                                                           value="Add New">
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="modal fade ExchangeRate" tabindex="-1" id="add_new_SubFooterValue_modal" role="dialog"
+                         data-backdrop="static"
+                         aria-labelledby="mySmallModalLabel" style="z-index:1060;">
+                        <div class="modal-dialog modal-md">
+                            <div class="modal-content checkout">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                            aria-hidden="true">&times;</span></button>
+                                    <h4  class="modal-title">Add  Sub Footer  Value</h4>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-md-12 col-sm-12">
+                                            <form ng-submit="addSubFooterValueOperation()">
+                                                <table class="table table-striped table-bordered">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>ParentValue</th>
+                                                        <th>Url</th>
+                                                        <th>Value</th>
+                                                        <th>Application</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr ng-repeat="subfootervalue in subFooterValueList ">
+
+                                                        <!--<td>-->
+                                                        <!--<input type="checkbox"-->
+                                                        <!--ng-model="operation.selected" size="10"/>-->
+                                                        <!--</td>-->
+
+
+                                                        <!--footer-->
+                                                        <td>
+                                                            <input id="subfooter" name="subfooter "
+                                                                   type="text" placeholder="subfooter"
+                                                                   ng-model="subfootervalue.subfooter"
+                                                                   class="form-control input-md" autocomplete="off" readonly>
+                                                        </td>
+                                                        <!--url-->
+                                                        <td>
+                                                            <input id="suburl" name="suburl "
+                                                                   type="text" placeholder="suburl"
+                                                                   ng-model="subfootervalue.suburl"
+                                                                   class="form-control input-md" autocomplete="off">
+
+
+                                                        </td>
+                                                        <!--value-->
+                                                        <td>
+                                                            <input id="subvalue" name="subvalue"
+                                                                   type="text" placeholder="subvalue"
+                                                                   ng-model="subfootervalue.subvalue"
+                                                                   class="form-control input-md" autocomplete="off">
+
+
+                                                        </td>
+                                                        <!--companyname-->
+                                                        <td>
+                                                            <input id="subcompanyname" name="subcompanyname"
+                                                                   type="text" placeholder="subcompanyname"
+                                                                   ng-model="subfootervalue.subcompanyname"
+                                                                   class="form-control input-md" autocomplete="off" readonly>
+
+
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                                <td>
+                                                    <button type="button"
+                                                            class="btn btn-primary hi_btn"
+                                                            ng-click="saveSubFooterValue(subFooterValueList)">
+                                                        Save
+                                                    </button>
+                                                </td>
+
+                                                <td>
+                                                    <button type="button"
+                                                            class="btn btn-primary"
+                                                            ng-click="removeServices()"
+                                                            data-dismiss="modal">Close
+                                                    </button>
+                                                </td>
+
+                                                <div class="form-group">
+                                                    <!--<input ng-hide="!menuBuilderList.length"-->
+                                                    <!--type="button"-->
+                                                    <!--class="btn btn-danger pull-right"-->
+                                                    <!--ng-click="removefuncOperation()" value="Remove">-->
+                                                    <input type="submit"
+                                                           class="btn btn-primary addnew pull-right"
+                                                           value="Add New">
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade ExchangeRate" tabindex="-1"   id="add_new_pkt_Footer_modal" role="dialog"
+                         data-backdrop="static"
+                         aria-labelledby="mySmallModalLabel" style="overflow: auto;">
+                        <div class="modal-dialog modal-md">
+                            <div class="modal-content checkout">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                            aria-hidden="true">&times;</span></button>
+                                    <h4 id="cust-notif" class="modal-title">Add Footer</h4>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-md-12 col-sm-12">
+                                            <form class="form-horizontal" name="table">
+                                                <fieldset>
+
+
+
+                                                    <div class="form-group">
+                                                        <label class="col-md-4 col-sm-4 control-label" for=""> Footer</label>
+                                                        <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                            <input id="footer" name="footer"
+                                                                   type="text" placeholder="Footer"
+                                                                   ng-model="footer"
+                                                                   class="form-control input-md">
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-4 col-sm-4 control-label" for="">Footer Value</label>
+                                                        <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                            <input id=" footervalue" name="footervalue"
+                                                                   type="text" placeholder="Footer Value "
+                                                                   ng-model="footervalue"
+                                                                   ng-click="menubuilderfooterlist()"
+                                                                   class="form-control input-md" autocomplete="off">
+
+                                                        </div>
+                                                    </div>
+
+
+                                                </fieldset>
+                                                <div class="modal-footer">
+                                                    <button type="submit" class="btn btn-default" data-toggle="modal"
+                                                            data-target=".print-me" ng-disabled="isDisabled" ng-click="savefooter()">Save
+                                                    </button>
+                                                    <button type="button" class="btn btn-default"
+                                                            ng-click="removetableType()" data-dismiss="modal">close
+                                                    </button>
+
+                                                </div>
+
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal fade " tabindex="-1" id="add_new_Pkt_Image_modal" role="dialog"
+                         data-backdrop="static"
+                         aria-labelledby="mySmallModalLabel">
+                        <div class="modal-dialog modal-md">
+                            <div class="modal-content checkout">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                            aria-hidden="true">&times;</span></button>
+                                    <h4 id="cust-notif">Add Image</h4>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-md-12 col-sm-12">
+                                            <form class="form-horizontal" name="mail">
+                                                <fieldset>
+                                                    <div class="form-group">
+                                                        <div class="form-group">
+                                                            <div class="col-xs-6 col-xs-offset-2">
+                                                                <input type='file' accept='image/*' id="imageLoad" ng-model-instant
+                                                                       onchange="angular.element(this).scope().imageUpload(event)"><br>
+                                                                <img class="image-preview"
+                                                                     style="width:200px;height:200px; margin-left: 39px;" >
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="col-md-3 col-sm-3 control-label" for="">Description</label>
+                                                            <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                                <textarea id="Description" name="Description"
+                                                                          type="text" placeholder="Description"
+                                                                          ng-model="description"
+                                                                          class="form-control input-md" autocomplete="off"></textarea>
+
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="modal-footer">
+                                                            <button type="submit" class="btn btn-default" data-toggle="modal"
+                                                                    data-target=".print-me" ng-click="saveProperty()">save
+                                                            </button>
+                                                            <button type="button" class="btn btn-default"
+                                                                    ng-click="removeAction()" data-dismiss="modal">close
+                                                            </button>
+
+                                                        </div>
+                                                    </div>
+                                                </fieldset>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>
+

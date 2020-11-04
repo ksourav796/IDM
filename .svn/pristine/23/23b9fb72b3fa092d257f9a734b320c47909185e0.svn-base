@@ -1,0 +1,5 @@
+cd /home/administrator/Downloads/kafka/kafka_2.12-1.1.0
+bin/zookeeper-server-start.sh config/zookeeper.properties
+
+ctrl+Shift+T
+

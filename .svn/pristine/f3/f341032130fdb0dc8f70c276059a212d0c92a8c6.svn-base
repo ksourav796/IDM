@@ -1,0 +1,13 @@
+package com.hyva.idm.sass.sasspojo;
+
+import lombok.Data;
+
+@Data
+public class TablePojo {
+   private String table;
+   private String fromcolumn;
+   private String comparecolumn;
+   private String columnName;
+
+
+}

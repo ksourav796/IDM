@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+
+<body>
+<div class="container-fluid">
+    <div class="container cus_main_row">
+        <div class="row">
+            <h2 class="pos-header-new">
+                <div>Table</div>
+            </h2>
+        </div>
+        <div class="row inner_row_bg">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="panel">
+                    <div class="panel-body" style="height: 65px;">
+                        <form class="form-horizontal ng-pristine ng-valid">
+                        <div class="col-md-3 col-lg-3 col-sm-5 col-xs-5">
+
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <p class="input-group" style="display: block;">
+                                            <input id="search_grade" name="textinput"  type="text" autocomplete="off"
+                                                   placeholder="search Application" ng-model="searchText" class="form-control input-md"
+                                                   ng-keyup="$event.keyCode == 13 ?getpaginatedTableList(searchText):null"/>
+                                        </p>
+                                    </div>
+
+                                </div>
+
+                        </div>
+
+                        <div class="col-md-3 col-lg-3 col-sm-5 col-xs-5">
+                            <div class="col-sm-12">
+                                <p class="input-group" align="right" style="display: block;">
+                                    <input id="searchh" name="textinput"  type="text" autocomplete="off"
+                                           placeholder="search Table Code" ng-model="searchText1" class="form-control input-md"
+                                           ng-keyup="$event.keyCode == 13 ?getpaginatedTableList(searchText1):null"/>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-lg-3 col-sm-5 col-xs-5">
+                            <div class="col-sm-12">
+                                <p class="input-group" align="right" style="display: block;">
+                                    <input id="search" name="textinput"  type="text" autocomplete="off"
+                                           placeholder="search Table Name" ng-model="searchText2" class="form-control input-md"
+                                           ng-keyup="$event.keyCode == 13 ?getpaginatedTableList(searchText2):null"/>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-lg-3 col-sm-5 col-xs-5">
+                                <div class="col-sm-12">
+                                    <button id="" type="button" class="btn btn-default hi_btn"
+                                            ng-click="addNewPkt()">Add
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="fixed-table-container">
+                            <div class="table_wrap fixed-table-container-inner">
+                                <div class="header-background"></div>
+                                <table data-toggle="table" data-cache="false" data-height="299"
+                                       style="margin-bottom: 0px;"
+                                       class="hi_table table table-hover table-bordered table-striped table-fixed-header">
+                                    <thead>
+                                    <tr>
+
+                                        <th data-field="formRegno">
+                                            <div class="th-inner">Application</div>
+                                        </th>
+                                        <th data-field="formRegno">
+                                            <div class="th-inner">Table Code</div>
+                                        </th>
+                                        <th data-field="formRegno">
+                                            <div class="th-inner">Table Name </div>
+                                        </th>
+                                        <th data-field="formRegno">
+                                            <div class="th-inner"> Descriptor</div>
+                                        </th>
+                                        <th data-field="formRegno">
+                                            <div class="th-inner">Status</div>
+                                        </th>
+                                        <th data-field="formRegno">
+                                            <div class="th-inner">Edit</div>
+                                        </th>
+                                        <th data-field="formRegno">
+                                            <div class="th-inner">Search</div>
+                                        </th>
+                                        <th data-field="formRegno">
+                                            <div class="th-inner">Create Table</div>
+                                        </th>
+                                        <th data-field="formRegno">
+                                            <div class="th-inner">Update Table</div>
+                                        </th>
+                                        <th data-field="formRegno">
+                                            <div class="th-inner">Plus Key</div>
+                                        </th>
+
+
+                                    <tbody id="parentTable">
+                                    <tr ng-repeat="type in permissionList">
+                                        <td>{{type.keySubscription}}</td>
+                                        <td>{{type.keyName}}</td>
+                                        <td>{{type.keyValue}}</td>
+                                        <td>{{type.descriptor}}</td>
+                                        <td>{{type.status}}</td>
+                                        <!--<td>{{type.status}}</td>-->
+                                        <td><a id="edit_{{$index}}" href="javascript:void(0)"
+                                               ng-click="editTable(type)" class="edit"><i
+                                                class="fa fa-pencil-square-o fa-fw orange"></i></a></td>
+                                                <td><button id="searchrow" type="button" class="btn btn-default hi_btn"
+                                                            ng-click="searchrow(type)">Search
+                                                </button>
+                                                </td>
+                                        <td><button id="create" type="button" class="btn btn-default hi_btn"
+                                                            ng-click="createtable(type)">Create
+                                                </button>
+                                                </td> <td><button id="update" type="button" class="btn btn-default hi_btn"
+                                                            ng-click="updatetable(type)">Update
+                                                </button>
+                                                </td>
+                                        <td>
+                                            <button id="plus" type="button" class="btn btn-default hi_btn"
+                                                    ng-click="pluskey(type)">Plus Key
+                                            </button>
+                                        </td>
+                                        <!--</tr>-->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-5 col-md-7 col-sm-10 pagination_" style="float: right; text-align: right; margin-top: 10px;">
+
+                        <button type="button" class="btn btn-default hi_btn" ng-class="{'diabled-class': first}" ng-disabled="first"
+                                ng-click="getpaginatedTableList('firstPage')"  ng-model="first">First
+                        </button>
+                        <button type="button" class="btn btn-default hi_btn"  ng-class="{'diabled-class': prev}" ng-disabled="prev"
+                                ng-click="getpaginatedTableList('prevPage')"   ng-model="prev">Prev
+                        </button>
+                        <button type="button" class="btn btn-default hi_btn"  name="next" ng-disabled="next"
+                                ng-click="getpaginatedTableList('nextPage')"  value="next"  ng-class="{'diabled-class': next}" ng-model="next">Next
+                        </button>
+                        <button type="button" class="btn btn-default hi_btn"
+                                ng-click="getpaginatedTableList('lastPage')"   ng-class="{'diabled-class': last}" ng-disabled="last"
+                                ng-model="last">Last
+                        </button>
+                    </div>
+                </div>
+            </div>
+                    <div class="modal fade ExchangeRate" tabindex="-1" id="add_new_pkt_Table_modal" role="dialog"
+                         data-backdrop="static"
+                         aria-labelledby="mySmallModalLabel">
+                        <div class="modal-dialog modal-md">
+                            <div class="modal-content checkout">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                            aria-hidden="true">&times;</span></button>
+                                    <h4 id="cust-notif" class="modal-title">Add Table</h4>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-md-12 col-sm-12">
+                                            <form class="form-horizontal" name="table">
+                                                <fieldset>
+
+                                                    <div class="form-group">
+                                                        <label class="col-md-4 col-sm-4 control-label">Select
+                                                            Application<sup style="color:red;"> *</sup></label>
+                                                        <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                            <select name="countryId" ng-model="subscriptionName"
+                                                                    ng-disabled="operation1=='Edit'"
+                                                                    ng-options="application.name as application.name for application in applicationtype"
+                                                                    ng-change='getTableList(name);getmenulistbasedonapplication(subscriptionName)'
+                                                                    class="form-control input-md">
+                                                                <option value="">-Select-</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="col-md-4 col-sm-4 control-label">Select
+                                                            Table<sup style="color:red;">*</sup></label>
+                                                        <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                            <select name="countryId" ng-model="tableName"
+                                                                    ng-disabled="operation1 === 'Edit' "
+                                                                    ng-options="table.tableName as table.tableName for table in tableNameList"
+                                                                    class="form-control input-md"
+                                                                    ng-change='getFieldsNameList(tableName)'>
+                                                                <option value="">-Select-</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="form-group">
+                                                        <label class="col-md-4 col-sm-4 control-label" for="">Table Name<sup style="color:red;">*</sup></label>
+                                                        <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                            <input id="fieldName" name="fieldName"
+                                                                   type="text" placeholder="Table Name"
+                                                                   ng-model="fieldName"
+                                                                   class="form-control input-md" autocomplete="off">
+
+                                                        </div>
+                                                    </div>
+
+
+
+                                                    <!--<div class="form-group">-->
+                                                        <!--<label class="col-md-4 col-sm-4 control-label"> Select-->
+                                                            <!--Operator</label>-->
+                                                        <!--<div class="col-md-6 col-sm-6" style="position:relative;">-->
+                                                            <!--<select name="" ng-model="nameo"-->
+                                                                    <!--ng-options="operator.name as operator.name for operator in operatortype"-->
+                                                                    <!--class="form-control input-md">-->
+                                                                <!--<option value="">-Select-</option>-->
+                                                            <!--</select>-->
+                                                        <!--</div>-->
+                                                    <!--</div>-->
+
+
+
+                                                    <div class="form-group">
+                                                    <label class="col-md-4 col-sm-4 control-label" for="">Place Holder Name</label>
+                                                    <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                    <input id="Place Holder" name="Place Holder"
+                                                    type="text" placeholder="Place Holder"
+                                                    ng-model="placeHolder"
+                                                    class="form-control input-md" autocomplete="off">
+
+                                                    </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="col-md-4 col-sm-4 control-label" for="">Descriptor</label>
+                                                        <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                            <textarea id="Descriptor" name="Descriptor" maxlength="255"
+                                                                      allowpattern="[a-z]"
+                                                                      type="text" placeholder="Descriptor"
+                                                                      ng-model="descriptor"
+                                                                      class="form-control input-md">
+                                                            </textarea>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="col-md-4 col-sm-4 control-label"
+                                                               for="">status</label>
+                                                        <div class="col-md-6 col-sm-6">
+                                                            <select name="status" id="status" ng-model="status"
+                                                                    class="form-control input-md" required>
+                                                                <option value="Active">Active</option>
+                                                                <option value="InActive">InActive</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group" ng-show="subscriptionName">
+                                                        <label class="col-md-4 col-sm-4 control-label">Select Menu</label>
+                                                        <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                            <select name="menu" ng-model="menu"
+                                                                    ng-options="menu.MenuName as menu.MenuName for menu in menuListbasedonapp"
+                                                                    class="form-control input-md"
+                                                          ng-click="getmenuchildbasedonchild(menu)"  >
+                                                                <option value="">-Select-</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group" ng-show="subscriptionName">
+                                                        <label class="col-md-4 col-sm-4 control-label">Select Child</label>
+                                                        <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                            <select name="menu" ng-model="child"
+                                                                    ng-options="child.ParentValue as child.ParentValue for child in menuListbasedonchild"
+                                                                    class="form-control input-md">
+                                                                <option value="">-Select-</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </fieldset>
+
+
+                                                    <!--<div class="form-group">-->
+                                                        <!--<label class="col-md-4 col-sm-4 control-label">Select-->
+                                                            <!--GroupOf</label>-->
+                                                        <!--<div class="col-md-6 col-sm-6" style="position:relative;">-->
+                                                            <!--<select name="countryId" ng-model="groupOf"-->
+                                                                    <!--ng-options="group.groupOf as group.groupOf for group in groupOffList"-->
+                                                                    <!--class="form-control input-md"-->
+                                                                    <!--ng-change='getFirstLevel(countryId)'></select>-->
+
+
+                                                        <!--</div>-->
+                                                    <!--</div>-->
+
+                                                    <!--<div class="form-group">-->
+                                                        <!--<label class="col-md-4 col-sm-4 control-label"-->
+                                                               <!--for="">Permission</label>-->
+                                                        <!--<div class="col-md-6 col-sm-6" style="position:relative;" ng-model="permission">-->
+                                                            <!--<input ng-model="pktpermission" type="radio" name="permission" ng-value="'Visible'">Visible<br>-->
+                                                            <!--<input ng-model="pktpermission" type="radio" name="permission" ng-value="'Hidden'"> Hidden<br>-->
+                                                            <!--<input ng-model="pktpermission" type="radio" name="permission" ng-value="'Restriction'"> Restriction-->
+
+                                                        <!--</div>-->
+                                                    <!--</div>-->
+
+                                                    <!--<div class="form-group">-->
+                                                        <!--<label class="col-md-4 col-sm-4 control-label"-->
+                                                               <!--for="">Validation</label>-->
+                                                        <!--<div class="col-md-6 col-sm-6" style="position:relative;">-->
+                                                            <!--<input id="Validation" name="Validation"-->
+                                                                   <!--type="text" placeholder="Validation"-->
+                                                                   <!--ng-model="validation"-->
+                                                                   <!--ng-pattern="number"-->
+                                                                   <!--allowpattern="[a-z]"-->
+                                                                   <!--class="form-control input-md" autocomplete="off">-->
+                                                            <!--<p class="error"-->
+                                                               <!--ng-show="table.Validation.$error.pattern">Enter-->
+                                                                <!--Valid  Number</p>-->
+
+                                                        <!--</div>-->
+                                                    <!--</div>-->
+
+
+
+
+
+
+                                                    <!--<div class="form-group">-->
+                                                        <!--<label class="col-md-4 col-sm-4 control-label" for="">Action</label>-->
+                                                        <!--<div class="col-md-6 col-sm-6" style="position:relative;">-->
+                                                            <!--<input id="Action" name="Action"-->
+                                                                   <!--type="text" placeholder="Action"-->
+                                                                   <!--ng-model="action"-->
+                                                                   <!--class="form-control input-md" autocomplete="off">-->
+
+                                                        <!--</div>-->
+                                                    <!--</div>-->
+                                                    <!--<div class="form-group">-->
+                                                        <!--<label class="col-md-4 col-sm-4 control-label" for="">Priority</label>-->
+                                                        <!--<div class="col-md-6 col-sm-6" style="position:relative;">-->
+                                                            <!--<input id="Priority" name="Priority"-->
+                                                                   <!--type="text" placeholder="Priority"-->
+                                                                   <!--ng-model="priority"-->
+                                                                   <!--ng-pattern="number"-->
+                                                                   <!--class="form-control input-md" autocomplete="off">-->
+                                                            <!--<p class="error"-->
+                                                               <!--ng-show="table.Priority.$error.pattern">Enter-->
+                                                                <!--Valid  Number</p>-->
+
+                                                        <!--</div>-->
+                                                    <!--</div>-->
+
+                                                    <!--<div class="form-group" ng-hide="validation">-->
+                                                        <!--<label class="col-md-4 col-sm-4 control-label" for="">Round Off</label>-->
+                                                        <!--<div class="col-md-6 col-sm-6" style="position:relative;">-->
+                                                            <!--<input id="Round_Off" name="Round Off"-->
+                                                                   <!--type="text" placeholder="Round Off"-->
+                                                                   <!--ng-model="roundOff"-->
+                                                                   <!--class="form-control input-md" autocomplete="off">-->
+
+                                                        <!--</div>-->
+                                                    <!--</div>-->
+
+                                                    <!--<div class="form-group">-->
+                                                        <!--<label class="col-md-4 col-sm-4 control-label"-->
+                                                               <!--for="">Sync</label>-->
+                                                        <!--<div class="col-md-6 col-sm-6">-->
+                                                            <!--<select name="empStatus" id="status_employee"-->
+                                                                    <!--ng-model="sync"-->
+                                                                    <!--class="form-control input-md" required>-->
+                                                                <!--<option value="No">No</option>-->
+                                                                <!--<option value="Yes">Yes</option>-->
+                                                            <!--</select>-->
+                                                        <!--</div>-->
+                                                    <!--</div>-->
+
+
+
+
+
+
+
+                                                <div class="modal-footer">
+                                                    <button type="submit" class="btn btn-default" data-toggle="modal"
+                                                            data-target=".print-me" ng-disabled="isDisabled" ng-click="saveTable()">Save
+                                                    </button>
+                                                    <button type="button" class="btn btn-default"
+                                                            ng-click="removetableType()" data-dismiss="modal">close
+                                                    </button>
+
+                                                </div>
+
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+</div>
+<div class="modal fade ExchangeRate" tabindex="-1" id="add_new_Table_fields_modal" role="dialog"
+     data-backdrop="static"
+     aria-labelledby="mySmallModalLabel">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content checkout">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 id="cust-notif" class="modal-title">Search Table</h4>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <form ng-submit="addFooterValueOperation()">
+                            <table class="table table-striped table-bordered">
+                                <thead>
+                                <tr>
+                                    <!--<th>Serial No</th>-->
+                                    <th>Codes</th>
+                                    <th>Clear Row</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="codes in codesList ">
+
+                                    <!--<td>-->
+                                    <!--<input type="checkbox"-->
+                                    <!--ng-model="operation.selected" size="10"/>-->
+                                    <!--</td>-->
+
+
+                                    <!--footer-->
+                                    <!--<td>{{index+1}}</td>-->
+                                    <td>
+                                        <select name="countryId" ng-model="codes.columnName"
+                                                ng-options="pktfields.fieldName as pktfields.fieldName for pktfields in codeslist"
+                                                class="form-control input-md">
+                                            <option value="">-Select-</option>
+                                        </select>
+                                    </td>
+                                    <td> <button type="button" class="btn btn-default hi_btn"
+                                                 ng-click="removeAddNewSearch()">X
+                                    </button>
+                                    </td>
+
+
+                                </tr>
+                                </tbody>
+                            </table>
+                            <td>
+                                <button type="button"
+                                        class="btn btn-primary hi_btn"
+                                        ng-click="saveValue(codesList)">
+                                    Save
+                                </button>
+                            </td>
+
+                            <td>
+                                <button type="button"
+                                        class="btn btn-primary"
+                                        ng-click="removeServices()"
+                                        data-dismiss="modal">Close
+                                </button>
+                            </td>
+
+                            <div class="form-group">
+                                <input type="submit"
+                                       class="btn btn-primary addnew pull-right"
+                                       value="Add New">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade ExchangeRate" tabindex="-1" id="add_new_Table_pluskey_modal" role="dialog"
+     data-backdrop="static"
+     aria-labelledby="mySmallModalLabel">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content checkout">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 id="cust-notif" class="modal-title">Add Plus Key</h4>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <form>
+                            <table class="table table-striped table-bordered">
+                                <thead>
+                                <tr>
+                                    <!--<th>Serial No</th>-->
+                                    <th>Codes</th>
+                                    <th>Clear Row</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="pluskey in pluskeylist ">
+
+                                    <!--<td>-->
+                                    <!--<input type="checkbox"-->
+                                    <!--ng-model="operation.selected" size="10"/>-->
+                                    <!--</td>-->
+
+
+                                    <!--footer-->
+                                    <!--<td>{{index+1}}</td>-->
+                                    <td>
+                                        <select name="countryId" ng-model="pluskey.columnName"
+                                                ng-options="pktfields.fieldName as pktfields.fieldName for pktfields in pluskeylist1"
+                                                class="form-control input-md">
+                                            <option value="">-Select-</option>
+                                        </select>
+                                    </td>
+                                    <td> <button type="button" class="btn btn-default hi_btn">
+                                     </button>
+                                    </td>
+
+
+                                </tr>
+                                </tbody>
+                            </table>
+                            <td>
+                                <button type="button"
+                                        class="btn btn-primary hi_btn"
+                                        ng-click="saveplus(pluskeylist)">
+                                    Save
+                                </button>
+                            </td>
+
+                            <td>
+                                <button type="button"
+                                        class="btn btn-primary"
+                                        ng-click="removeServices()"
+                                        data-dismiss="modal">Close
+                                </button>
+                            </td>
+
+                            <div class="form-group">
+                                <input type="submit"
+                                       class="btn btn-primary addnew pull-right"
+                                       value="Add New" ng-click="adneFwpluskey()">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade ExchangeRate" tabindex="-1" id="add_new_Table_createtable_modal" role="dialog"
+     data-backdrop="static"
+     aria-labelledby="mySmallModalLabel">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content checkout">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 id="cust-notif" class="modal-title">Create Table</h4>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <form>
+                            <table class="table table-striped table-bordered">
+                                <thead>
+                                <tr>
+                                    <!--<th>Serial No</th>-->
+                                    <th>KeyName</th>
+                                    <th>Operation</th>
+                                    <th>Clear Row</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="createtable in createtableslist ">
+                                    <td>
+                                        <select name="countryId" ng-model="createtable.keyname"
+                                                ng-options="table.keyName as table.keyValue for table in tableslist"
+                                                        class="form-control input-md"
+                                                ng-change='getfromcolumnlist(createtable.keyname)'>
+                                                    <option value="">-Select-</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <input name="countryId" ng-model="createtable.operation"
+                                                        class="form-control input-md"
+                                                        ng-click="opentablelist()">
+                                        </input>
+                                    </td>
+                                    <td> <button type="button" class="btn btn-default hi_btn"
+                                                 ng-click="removeaddnew()">X
+                                    </button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <td>
+                                <button type="button"
+                                        class="btn btn-primary hi_btn"
+                                        ng-click="savekeyoperation(createtableslist)">
+                                    Save
+                                </button>
+                            </td>
+
+                            <td>
+                                <button type="button"
+                                        class="btn btn-primary"
+                                        ng-click="removeServices()"
+                                        data-dismiss="modal">Close
+                                </button>
+                            </td>
+
+                            <div class="form-group">
+                                <input type="submit"
+                                       class="btn btn-primary addnew pull-right"
+                                       value="Add New" ng-click="addcreatetable()">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade ExchangeRate" tabindex="-1" id="add_new_Table_createtable1_modal" role="dialog"
+     data-backdrop="static"
+     aria-labelledby="mySmallModalLabel">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content checkout">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 id="cust-notif" class="modal-title"></h4>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <form>
+                            <table class="table table-striped table-bordered">
+                                <thead>
+                                <tr>
+                                    <!--<th>Serial No</th>-->
+                                    <th>From Table Fields</th>
+                                    <th>To Table</th>
+                                    <th>To Table Fields</th>
+                                    <th>Clear Row</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="createtable1 in createtables1list ">
+
+                                    <td>
+                                        <select name="countryId" ng-model="createtable1.fromtablefields"
+                                                ng-options="field.fieldName as field.fieldName for field in fromcolumnlist"
+                                                        class="form-control input-md">
+                                                    <option value="">-Select-</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select name="countryId" ng-model="createtable1.totable"
+                                                ng-options="table.keyName as table.keyValue for table in tableslist"
+                                                        class="form-control input-md"
+                                                        ng-change='getfromcolumnlist(createtable1.totable)'>
+                                                    <option value="">-Select-</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select name="countryId" ng-model="createtable1.totablefields"
+                                                ng-options="field.fieldName as field.fieldName for field in fromcolumnlist"
+                                                        class="form-control input-md">
+                                                    <option value="">-Select-</option>
+                                        </select>
+                                    </td>
+                                    <td> <button type="button" class="btn btn-default hi_btn"
+                                                 ng-click="removeAddNewCreateTable()">X
+                                    </button>
+                                    </td>
+
+                                </tr>
+                                </tbody>
+                            </table>
+                            <td>
+                                <button type="button"
+                                        class="btn btn-primary hi_btn"
+                                        ng-click="saveCreatedFields(createtables1list)">
+                                    Save
+                                </button>
+                            </td>
+
+                            <td>
+                                <button type="button"
+                                        class="btn btn-primary"
+                                        ng-click="removeServices()"
+                                        data-dismiss="modal">Close
+                                </button>
+                            </td>
+
+                            <div class="form-group">
+                                <input type="submit"
+                                       class="btn btn-primary addnew pull-right"
+                                       value="Add New" ng-click="addalltables()">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade ExchangeRate" tabindex="-1" id="add_new_Table_updatetable_modal" role="dialog"
+     data-backdrop="static"
+     aria-labelledby="mySmallModalLabel">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content checkout">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 id="cust-notif" class="modal-title">Update Table</h4>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <form>
+                            <table class="table table-striped table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>From Table</th>
+                                    <th style="word-break: break-word">From Column</th>
+                                    <th style="word-break: break-word">FromCommonColumn</th>
+                                    <th>ToTable</th>
+                                    <th>ToColumn</th>
+                                    <th>ToCommonColumn</th>
+                                    <th>Operation</th>
+                                    <th>Clear Row</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="updatetable in updatetableslist ">
+
+                                    <td>
+                                        <input name="countryId" ng-model="updatetable.fromtable"
+                                                class="form-control input-md" readonly >
+                                        </input>
+                                    </td>
+                                    <td>
+                                        <select name="countryId" ng-model="updatetable.fromcolumn"
+                                                ng-options="field.fieldName as field.fieldName for field in fromcolumnlist"
+                                                        class="form-control input-md">
+                                                    <option value="">-Select-</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select name="countryId" ng-model="updatetable.fromcommoncolumn"
+                                                ng-options="field.fieldName as field.fieldName for field in fromcolumnlist"
+                                                        class="form-control input-md">
+                                                    <option value="">-Select-</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select name="countryId" ng-model="updatetable.totable"
+                                                ng-options="table.keyName as table.keyValue for table in tableslist"
+                                                        class="form-control input-md" ng-change='getfromcolumnlist(updatetable.totable)'>
+                                                    <option value="">-Select-</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select name="countryId" ng-model="updatetable.tocolumn"
+                                                ng-options="field.fieldName as field.fieldName for field in fromcolumnlist"
+                                                        class="form-control input-md">
+                                                    <option value="">-Select-</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select name="countryId" ng-model="updatetable.tocommoncolumn"
+                                                ng-options="field.fieldName as field.fieldName for field in fromcolumnlist"
+                                                        class="form-control input-md">
+                                                    <option value="">-Select-</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select name="operation" ng-model="updatetable.operation"
+                                                class="form-control input-md">
+                                            <option value="">-Select-</option>
+                                            <option value="increase">Increase</option>
+                                            <option value="decrease">Decrease</option>
+                                        </select>
+                                    </td>
+                                    <td> <button type="button" class="btn btn-default hi_btn"
+                                                 ng-click="removeAddNewUpdate()">X
+                                    </button>
+                                    </td>
+
+                                </tr>
+                                </tbody>
+                            </table>
+                            <td>
+                                <button type="button"
+                                        class="btn btn-primary hi_btn"
+                                        ng-click="saveUpdateTable(updatetableslist)">
+                                    Save
+                                </button>
+                            </td>
+
+                            <td>
+                                <button type="button"
+                                        class="btn btn-primary"
+                                        ng-click="removeServices()"
+                                        data-dismiss="modal">Close
+                                </button>
+                            </td>
+
+                            <div class="form-group">
+                                <input type="submit"
+                                       class="btn btn-primary addnew pull-right"
+                                       value="Add New" ng-click="addupdatetable()">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,1259 @@
+<html>
+<head>
+
+    <script src="http://www.google.com/jsapi" type="text/javascript"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+    <!-- jQuery Modal -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+    <script type="text/javascript" >
+        google.load("jquery", "1.6.3");
+        google.load("jqueryui", "1.8.16");
+    </script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <!-- Remember to include jQuery :) -->
+
+
+
+    <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.1/themes/base/jquery-ui.css"/>
+   <!-- <script src="dragndrop.js" type="text/javascript"></script>-->
+    <style type="text/css">
+        /*.col{
+            float:left;
+            padding: 5px 5px 5px 5px;
+            margin: 5px 5px 5px 5px;
+        }*/
+
+        #col1{
+            /*width:16%;
+            height:100%;
+            border:1px solid black;*/
+
+        }
+/*
+        #control{
+            width:16%;
+            height:100%;
+            border:1px solid black;
+
+        }*/
+
+        .editdrag{
+            border:1px solid black;
+        }
+
+        .drag{
+
+            border:1px solid black;
+
+
+        }
+
+        #droppable{
+           /* width:60%;
+            height :100%;
+            border:1px solid black;*/
+        }
+
+    </style>
+</head>
+<body>
+<div class="modal" id="ex11" role="dialog" style="position: absolute;
+    top: 100px;
+    right: 450px;width: 500px;
+    height: 400px;
+    left: 300px">
+
+
+    <div class="row" style="margin-top: 50px;">
+        <a href="#close-modal" rel="modal:close" class="close-modal ">Close</a>
+        <div class="col-md-12">
+
+            <form class="form-horizontal">
+                <fieldset>
+                    <div class="form-group" ng-hide="operation=='Edit'">
+                        <label class="col-md-4 control-label" >Module Name<span>*</span></label>
+                        <div class="col-md-6" style="position:relative;">
+                            <select class="form-control input-md" id="moduleName" name="moduleName" [(ngModel)]="moduleName" (change)="getSubModule()" onclick="getMenuDetails()">
+                                <!-- <option [value]="menu.menuName"  *ngFor="let menu of getMenuDetails">{{menu.menuName}}</option>-->
+                                <option value="createNew">Create New</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-hide="operation=='Edit'">
+                        <label class="col-md-4 control-label" >Sub-Module Name<span>*</span></label>
+                        <div class="col-md-6" style="position:relative;">
+                            <select class="form-control input-md" id="submoduleName" name="submoduleName" [(ngModel)]="submoduleName">
+
+                                <option value="createNew">Create New</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-hide="operation=='Edit'">
+                        <label class="col-md-4 control-label" >Page Name</label>
+                        <div class="col-md-6" style="position:relative;">
+                            <select name="secoundLevelAccountMaster" id="secondLevel" [(ngModel)]="pageName"  ng-options="firstLevel as firstLevel.account_name+':'+firstLevel.stringAccountCode for firstLevel in accountMasterSecoundLevelList"  class="form-control input-md">
+                                <option value="createNew">Create New</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" >Name<span>*</span></label>
+                        <div class="col-md-6" style="position:relative;">
+                            <input id="givenName" name="name"
+                                   type="text" placeholder="Account Name"
+                                   [(ngModel)]="name"
+                                   class="form-control input-md"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Page Required<span>*</span></label>
+                        <div class="col-md-6" style="position:relative;">
+                            <input type="radio"  name="pageRequired" [(ngModel)]="pageRequired" value="true"> Yes
+                            <input type="radio"  name="pageRequired" [(ngModel)]="pageRequired" value="false"> No
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Table Required<span>*</span></label>
+                        <div class="col-md-6" style="position:relative;">
+                            <input type="radio"  name="tableRequired" [(ngModel)]="tableRequired" value="true"> Yes
+                            <input type="radio"  name="tableRequired" [(ngModel)]="tableRequired" value="false"> No
+                        </div>
+                    </div>
+                </fieldset>
+                <div class="modal-footer">
+                    <button id="saveMenu" type="button" class="btn btn-default" ng-disabled="isDisabled" ng-hide="operation=='Edit'"
+                            (click)="saveModule()">Save
+                    </button>
+                    <button type="submit" class="btn btn-default" ng-show="operation=='Edit'"
+                            ng-click="editCreateChartOfAcc()">Update
+                    </button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="ex1" role="dialog" style="position: absolute;
+    top: 100px;
+    right: 450px;width: 500px;
+    height: 400px;
+    left: 300px">
+
+
+                <div class="row" style="margin-top: 50px;">
+                    <a href="#close-modal" rel="modal:close" class="close-modal ">Close</a>
+                    <div class="col-md-12">
+
+                        <form class="form-horizontal">
+                            <fieldset>
+                                <div class="form-group" ng-hide="operation=='Edit'">
+                                    <label class="col-md-4 control-label" >Module Name<span>*</span></label>
+                                    <div class="col-md-6" style="position:relative;">
+                                        <select class="form-control input-md" id="moduleName" name="moduleName" [(ngModel)]="moduleName" (change)="getSubModule()" onclick="getMenuDetails()">
+                                           <!-- <option [value]="menu.menuName"  *ngFor="let menu of getMenuDetails">{{menu.menuName}}</option>-->
+                                            <option value="createNew">Create New</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group" ng-hide="operation=='Edit'">
+                                    <label class="col-md-4 control-label" >Sub-Module Name<span>*</span></label>
+                                    <div class="col-md-6" style="position:relative;">
+                                        <select class="form-control input-md" id="submoduleName" name="submoduleName" [(ngModel)]="submoduleName">
+
+                                            <option value="createNew">Create New</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group" ng-hide="operation=='Edit'">
+                                    <label class="col-md-4 control-label" >Page Name</label>
+                                    <div class="col-md-6" style="position:relative;">
+                                        <select name="secoundLevelAccountMaster" id="secondLevel" [(ngModel)]="pageName"  ng-options="firstLevel as firstLevel.account_name+':'+firstLevel.stringAccountCode for firstLevel in accountMasterSecoundLevelList"  class="form-control input-md">
+                                            <option value="createNew">Create New</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label" >Name<span>*</span></label>
+                                    <div class="col-md-6" style="position:relative;">
+                                        <input id="givenName" name="name"
+                                               type="text" placeholder="Account Name"
+                                               [(ngModel)]="name"
+                                               class="form-control input-md"/>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">Page Required<span>*</span></label>
+                                    <div class="col-md-6" style="position:relative;">
+                                        <input type="radio"  name="pageRequired" [(ngModel)]="pageRequired" value="true"> Yes
+                                        <input type="radio"  name="pageRequired" [(ngModel)]="pageRequired" value="false"> No
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">Table Required<span>*</span></label>
+                                    <div class="col-md-6" style="position:relative;">
+                                        <input type="radio"  name="tableRequired" [(ngModel)]="tableRequired" value="true"> Yes
+                                        <input type="radio"  name="tableRequired" [(ngModel)]="tableRequired" value="false"> No
+                                    </div>
+                                </div>
+                            </fieldset>
+                            <div class="modal-footer">
+                                <button id="saveMenu" type="button" class="btn btn-default" ng-disabled="isDisabled" ng-hide="operation=='Edit'"
+                                        (click)="saveModule()">Save
+                                </button>
+                                <button type="submit" class="btn btn-default" ng-show="operation=='Edit'"
+                                        ng-click="editCreateChartOfAcc()">Update
+                                </button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+<div class="modal" id="searchPopup" role="dialog" style="position: absolute;
+    top: 100px;
+    right: 450px;width: 500px;
+    height: 400px;
+    left: 300px">
+
+
+    <div class="modal fade ExchangeRate" tabindex="-1" id="add_new_Table_fields_modal" role="dialog"
+         data-backdrop="static"
+         aria-labelledby="mySmallModalLabel">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content checkout">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 id="cust-notif" class="modal-title">Search Table</h4>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12">
+                            <form ng-submit="addFooterValueOperation()">
+                                <table class="table table-striped table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <!--<th>Serial No</th>-->
+                                        <th>Codes</th>
+                                        <th>Clear Row</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="codes in codesList ">
+
+                                        <!--<td>-->
+                                        <!--<input type="checkbox"-->
+                                        <!--ng-model="operation.selected" size="10"/>-->
+                                        <!--</td>-->
+
+
+                                        <!--footer-->
+                                        <!--<td>{{index+1}}</td>-->
+                                        <td>
+                                            <select name="countryId" ng-model="codes.columnName"
+                                                    ng-options="pktfields.fieldName as pktfields.fieldName for pktfields in codeslist"
+                                                    class="form-control input-md">
+                                                <option value="">-Select-</option>
+                                            </select>
+                                        </td>
+                                        <td> <button type="button" class="btn btn-default hi_btn"
+                                                     ng-click="removeAddNewSearch()">X
+                                        </button>
+                                        </td>
+
+
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <td>
+                                    <button type="button"
+                                            class="btn btn-primary hi_btn"
+                                            ng-click="saveValue(codesList)">
+                                        Save
+                                    </button>
+                                </td>
+
+                                <td>
+                                    <button type="button"
+                                            class="btn btn-primary"
+                                            ng-click="removeServices()"
+                                            data-dismiss="modal">Close
+                                    </button>
+                                </td>
+
+                                <div class="form-group">
+                                    <input type="submit"
+                                           class="btn btn-primary addnew pull-right"
+                                           value="Add New">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class = "row">
+    <div class="col-md-12" style="background-color: #a8a8a8;">
+        <h6 style="font-size:20px;text-align: center;color: white;">HIPRO
+            <div  ngbDropdown class="d-inline-block pull-right">
+                <h6 class="top" style="font-size:22px;text-align: center;color: black;margin-top: 1px;">
+                   <!-- {{username}}-->
+                    <!--<div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                        <a class="dropdown-item"(click)="submit(username)">Profile</a><br>
+                        <a class="dropdown-item">Logout</a>
+                    </div>-->
+                </h6>
+
+            </div></h6>
+        <hr>
+
+        <h6 style="font-size:20px;text-align: center;color: white;"> <a href="#ex1" id="addMenus"  rel="modal:open" ><button class="btn btn-info pull-left" style="font-size: 30px;">+</button></a>Subscription :
+            <select  style="font-size:15px;text-align: center;color: black;" id="subscription"  name="" ngModel="dropdown">
+
+            </select>
+        </h6>
+
+
+
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+
+        <div class="col-lg-2 col" style="" id="formcontrol">
+            <h3 style="text-align: center; color: white; background-color:#1470e2">Design</h3>
+<div class="col-md-12" style="border: 1px solid black; text-align: center; background-color: powderblue;font-size: 10px;">
+    <div class="col-md-6">
+        <div id="drag1" class="drag">
+            <a href="#" title="Remove Row" class="remove pull-right" style="color: #dc0c0c;font-size: 18px;font-weight: bold;">x</a><a href="#ex11" rel="modal:open">open popup</a>
+            <label>Text</label>
+            <input type="text" class="form-control" onclick="opencontrol(this)" style="background: transparent;">
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div id="drag1" class="drag">
+            <a href="#" title="Remove Row" class="remove pull-right" style="color: #dc0c0c;font-size: 18px;font-weight: bold;">x</a>
+            <label>Select</label>
+            <select class="form-control" onclick="opencontrol(this)" style="background: transparent;"> <option>sdsad</option></select>
+        </div>
+    </div>
+</div>
+
+            <div class="col-md-12" style="border: 1px solid black; text-align: center; background-color: powderblue;font-size: 10px;">
+                <div class="col-md-6">
+                    <div id="drag1" class="drag">
+                        <a href="#" title="Remove Row" class="remove pull-right" style="color: #dc0c0c;font-size: 18px;font-weight: bold;">x</a>
+                        <label>Date</label>
+                        <input type="date" class="form-control" onclick="opencontrol(this)" style="background: transparent;">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div id="drag1" class="drag">
+                        <a href="#" title="Remove Row" class="remove pull-right" style="color: #dc0c0c;font-size: 18px;font-weight: bold;">x</a>
+                        <label>Textarea</label>
+                        <textarea class="form-control" onclick="opencontrol(this)" style="background: transparent;"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12" style="border: 1px solid black;  background-color: powderblue;text-align: center;font-size: 10px;" >
+                <div class="col-md-6" >
+                    <div id="drag1" class="drag">
+                        <a href="#" title="Remove Row" class="remove pull-right" style="color: #dc0c0c;font-size: 18px;font-weight: bold;">x</a>
+                        <label>Checkbox</label>
+                        <input type="checkbox" class="form-control" onclick="opencontrol(this)" style="background: transparent;">
+                    </div>
+                </div>
+                <div class="col-md-6" >
+                    <div id="drag1" class="drag">
+                        <a href="#" title="Remove Row" class="remove pull-right" style="color: #dc0c0c;font-size: 18px;font-weight: bold;">x</a>
+                        <label>Radio</label>
+                        <input type="radio" class="form-control" onclick="opencontrol(this)" style="background: transparent;">
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12" style="border: 1px solid black;  background-color: powderblue;text-align: center;font-size: 10px;" >
+                <div class="col-md-6" >
+                    <div id="drag1" class="drag">
+                        <a href="#" title="Remove Row" class="remove pull-right" style="color: #dc0c0c;font-size: 18px;font-weight: bold;">x</a>
+                        <label>File</label>
+                        <input type="file" class="form-control" onclick="opencontrol(this)" style="background: transparent;">
+                    </div>
+                </div>
+                <div class="col-md-6" >
+                    <div id="drag1" class="drag">
+                        <a href="#" title="Remove Row" class="remove pull-right" style="color: #dc0c0c;font-size: 18px;font-weight: bold;">x</a>
+
+                        <h5 onclick="opencontrol(this)">Header</h5>
+                    </div>
+                </div>
+            </div>
+
+
+            <h3 style="text-align: center; color: white; background-color:#1470e2">Application</h3>
+            <div class="col-md-12" style="border: 1px solid black; text-align: center; background-color: powderblue;font-size: 10px;">
+                <div class="col-md-6" style="height: 50px;width: 50%;">
+                    &nbsp;
+                </div>
+                <div class="col-md-6" style="height: 50px;width: 50%; border-left: 1px solid black;">
+                    &nbsp;
+                </div>
+            </div>
+            <div class="col-md-12" style="border: 1px solid black; text-align: center; background-color: powderblue;font-size: 10px;">
+                <div class="col-md-6" style="height: 50px;width: 50%;">
+                    &nbsp;
+                </div>
+                <div class="col-md-6" style="height: 50px;width: 50%;border-left: 1px solid black;">
+                    &nbsp;
+                </div>
+            </div>
+
+
+            <h3 style="text-align: center; color: white; background-color:#1470e2">Linkage</h3>
+            <div class="col-md-12" style="border: 1px solid black; text-align: center; background-color: powderblue;font-size: 10px;">
+                <div class="col-md-6" style="height: 50px;width: 50%;">
+                    &nbsp;
+                </div>
+                <div class="col-md-6" style="height: 50px;width: 50%; border-left: 1px solid black;">
+                    &nbsp;
+                </div>
+            </div>
+            <div class="col-md-12" style="border: 1px solid black; text-align: center; background-color: powderblue;font-size: 10px;">
+                <div class="col-md-6" style="height: 50px;width: 50%;">
+                    &nbsp;
+                </div>
+                <div class="col-md-6" style="height: 50px;width: 50%;border-left: 1px solid black;">
+                    &nbsp;
+                </div>
+            </div>
+            <h3 style="text-align: center; color: white; background-color:#1470e2">Flow</h3>
+            <div class="col-md-12" style="border: 1px solid black; text-align: center; background-color: powderblue;font-size: 10px;">
+                <div class="col-md-6" style="height: 50px;width: 50%;">
+                    &nbsp;
+                </div>
+                <div class="col-md-6" style="height: 50px;width: 50%; border-left: 1px solid black;">
+                    &nbsp;
+                </div>
+            </div>
+            <div class="col-md-12" style="border: 1px solid black; text-align: center; background-color: powderblue;font-size: 10px;">
+                <div class="col-md-6" style="height: 50px;width: 50%;">
+                    &nbsp;
+                </div>
+                <div class="col-md-6" style="height: 50px;width: 50%;border-left: 1px solid black;">
+                    &nbsp;
+                </div>
+            </div>
+
+        </div>
+        <div class="col-lg-8" style="border:1px solid black;" >
+        <div class="col-lg-12" style="height: 60px; background-color: #1571e2; width: 100% !important; padding: 0px !important;margin: 0px !important;"></div>
+
+            <div class="col-lg-12"  style="height: 800px; width: 100% !important; padding: 0px !important;margin: 0px !important;">
+<div class="col-md-2"><div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+    <div id="nav_side_menu" class="menu_section">
+        <ul class="nav side-menu" id="menuside">
+
+
+
+        </ul>
+    </div>
+</div></div>
+
+                <div class="col-md-10" id="droppable" style="border: 1px solid black;height: 800px; !important; padding: 0px !important;margin: 0px !important;"></div>
+            </div>
+            <div class="col-lg-12" style="height: 60px; background-color: #1571e2; width: 100% !important; padding: 0px !important;margin: 0px !important;"></div>
+
+            <button   type="button" id="saveTemplate" class="btn btn-default hi_btn pull-right">Save Template
+            </button>
+
+
+
+        </div>
+        <div class="col-lg-2 col" style="max-height: 580px !important; overflow: scroll;" id="control">
+        <div  id="form_control">
+            <button   type="button" id="savePerms" class="btn btn-default hi_btn">Save
+            </button>
+            <h6 id="fieldid"></h6>
+            <input type="text" id="dragid" name="keyName" class=form-control">
+            <label>pktPermissionId</label><input type="hidden" id="pktPermissionId" name=pktPermissionId class=form-control">
+            <!--<label>keyName</label><input type="text" id="keyName" name="keyName" class="form-control">-->
+            <label>keyValue</label><input type="text" id="keyValue" name="keyValue" class="form-control">
+            <label>keyPlaceHolder</label><input type="text" id="keyPlaceHolder" name="keyPlaceHolder" class="form-control">
+            <label>keyVisibility</label><input type="text" id="keyVisibility" name="keyVisibility" class=form-control">
+            <label>keyValidation</label><input type="text" id="keyValidation" name="keyValidation" class=form-control">
+            <label>keyPriority</label><input type="text" id="keyPriority" name="keyPriority" class="form-control">
+            <label>keyAction</label><input type="text" id="keyAction" name="keyAction" class="form-control">
+            <label>keyReference</label><input type="text" id="keyReference" name="keyReference" class=form-control">
+            <label>keyGroup</label><input type="text" id="keyGroup" name="keyGroup" class="form-control">
+            <label>keySubscription</label><input type="text" id="keySubscription" name=keySubscription class=form-control">
+            <label>keyTiming</label><input type="text" id="keyTiming" name="keyTiming" class=form-control">
+            <label>status</label><input type="text" id="status" name="status" class="form-control">
+            <label>permission</label><input type="text" id="permission" name="permission" class="form-control">
+            <label>descriptor</label><input type="text" id="descriptor" name="descriptor" class="form-control">
+            <label>roundOff</label><input type="text" id="roundOff" name="roundOff" class="form-control">
+            <label>sync</label><input type="text" id="sync" name="sync" class="form-control">
+            <label>columnPosition</label><input type="text" id="columnPosition" name=columnPosition class="form-control">
+            <label>operator</label>
+            <label>Save</label><input type="checkbox"  name="saveOp" value="true" class="form-control">
+            <label>Edit</label><input type="checkbox"  name="editOp" value="true" class="form-control">
+            <label>List</label><input type="checkbox"  name="listOp" value="true" class="form-control">
+            <label>columnName</label><input type="text" id="columnName" name="columnName" class="form-control">
+            <label>operation</label><input type="text" id="operation" name="operation" class="form-control">
+            <label>tableName</label><input type="text" id="tableName" name="tableName" class="form-control">
+            <label>inputType</label><input type="text" id="inputType" name="inputType" class="form-control">
+            <label>menuKey</label><input type="text" id="menuKey" name="menuKey" class="form-control">
+            <label>childKeys</label><input type="text" id="childKeys" name=childKeys" class=form-control">
+            <label>searchkey</label><input type="text" id="searchkey" name=searchkey" class=form-control">
+            <label>dropdownkey</label><input type="text" id="dropdownkey" name=dropdownkey" class=form-control">
+            <label>calc_key</label><input type="text" id="calc_key" name="calc_key" class="form-control">
+            <label>logicalopKey</label><input type="text" id="logicalopKey" name="logicalopKey" class=form-control">
+            <label>top_pos</label><input type="text" id="top_pos" name="top_pos" class="form-control">
+            <label>width_pos</label><input type="text" id="width_pos" name="width_pos" class="form-control">
+            <label>left_pos</label><input type="text" id="left_pos" name="left_pos" class="form-control">
+            <label>height_pos</label><input type="text" id="height_pos" name="height_pos" class="form-control">
+            <label>position_pos</label><input type="text" id="position_pos" name="position_pos" class="form-control">
+            <label>Alignment</label><input type="text" id="Alignment" name="Alignment" class=form-control">
+            <label>Height</label><input type="text" id="Height" name=Height class="form-control">
+            <label>Max Width</label><input type="text" id="max_Width" name=Max Width class=form-control">
+            <label>Max Height</label><input type="text" id="max_Height" name=Max Height class=form-control">
+            <label>Min Height</label><input type="text" id="min_Height" name=Min Height class=form-control">
+            <label>Min Width</label><input type="text" id="min_Width" name=Min Width class=form-control">
+            <label>Font</label><input type="text" id="Font name=Font class=form-control">
+            <label>Font Size</label><input type="text" id="Font" Size name=Font Size class=form-control">
+            <label>Weight</label><input type="text" id="Weight" name=Weight class=form-control">
+            <label>Letter Spacing</label><input type="text" id="Letter_Spacing" name=Letter Spacing class=form-control">
+            <label>Font Colour</label><input type="text" id="Font_Colour"name=Font Colour class=form-control">
+            <label>Line Height</label><input type="text" id="Line_Height" name=Line Height class=form-control">
+            <label>Decoration</label><input type="text" id="Decoration" name=Decoration class=form-control">
+            <label>Box Shadow</label><input type="text" id="Box_Shadow" name=Box Shadow class=form-control">
+            <label>X-Position</label><input type="text" id="X-Position" name=X-Position class=form-control">
+            <label>Y-Position</label><input type="text" id="Y-Position" name=Y-Position class=form-control">
+            <label>Colour</label><input type="text" id="Colour" name=Colour class=form-control">
+            <label>BackGround Colour</label><input type="text" id="BackGround" Colour name=BackGround Colour class=form-control">
+            <label>Border Width</label><input type="text" id="Border_Width" name=Border Width class=form-control">
+            <label>Border Style</label><input type="text" id="Border_Style" name=Border Style class=form-control">
+            <label>Border Colour</label><input type="text" id="Border_Colour" name=Border Colour class=form-control">
+            <label>Size</label><input type="text" id="Size" name="Size" class=form-control">
+
+
+
+    </div>
+        </div>
+
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#droppable").hide();
+        $("#form_control").hide();
+        var x = null;
+
+        //Make element draggable
+        $(".drag").draggable({
+            helper: 'clone',
+            cursor: 'move',
+            tolerance: 'fit'
+        });
+
+        $(".editdrag").draggable({
+            cursor: 'move',
+            tolerance: 'fit'
+        });
+
+
+
+        $(".drag").draggable({
+            start: function (e, ui) {
+
+                //alert(elemid);
+
+
+
+            },
+        });
+
+        /*$(".drag").resizable({
+
+         start: function (e, ui) {
+         //var resize_id = $(this).closest('div').attr('id');
+         var position = $(this).css("position");
+         var left = ui.position.left + "px";
+         var top = ui.position.top + "px";
+         var width = ui.size.width + "px";
+         var height = ui.size.height + "px";
+
+
+
+         }
+         });*/
+
+        $("#droppable").droppable({
+
+            drop: function (e, ui) {
+
+
+
+
+
+                if ($(ui.draggable)[0].id != "") {
+                    x = ui.helper.clone();
+
+                    ui.helper.remove();
+                    x.draggable({
+                        helper: 'original',
+                        containment: '#droppable',
+                        tolerance: 'fit'
+                    });
+                    x.resizable({
+
+                        maxHeight: 1000,
+                        minHeight: 40,
+                        minWidth: 50
+                    });
+                    x.appendTo('#droppable');
+                }
+
+
+
+                var left = ui.position.left + "px";
+                var top = ui.position.top + "px";
+                var position = "absolute";
+                var width = $(x).css("width");
+                var height = $(x).css("height");
+
+            }
+        });
+
+
+    });
+    var appidreport = getUrlVars1()["developerId"];
+    function getUrlVars1() {
+        var vars = {};
+        var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+            vars[key] = value;
+        });
+        return vars;
+    }
+
+
+    var option='';
+
+    $.ajax({
+        url: 'http://localhost:8888/services/getdevApplicationList?code='+appidreport,
+        type:'POST',
+        data:{},
+        success:function(result){
+
+            var data=result;
+            var opt=data.object;
+            for(index in opt) {
+
+                var ob = opt[index];
+
+                option+='<option value="'+ob.name+'">'+ob.name+'</option>';
+
+
+            }
+
+            $("#subscription").html(option);
+            onloadapp();
+
+        }
+    });
+
+
+$("#formcontrol ")
+    var menulist='';
+
+    function onloadapp() {
+
+        var application = $("#subscription").val();
+        option = '';
+        var menuside = '';
+
+        $.ajax({
+            url: 'http://localhost:8888/services/getpktbuilderByApplication?application=' + application,
+            type: 'POST',
+            data: {},
+            success: function (data) {
+
+                var opt = jQuery.parseJSON(data.object.builderValue);
+                menulist = opt;
+                var i = 0;
+                for (index in opt) {
+                    i++;
+                    var ob = opt[index];
+
+                    option += '<option value="' + ob.menuName + '">' + ob.menuName + '</option>';
+                    if(ob.tableRequired=="true"){
+                        menuside += '<li ><a onclick="getMenuDetails(this,' + ob.tableRequired + ',' + ob.pageRequired + ');" value="' + ob.menuName + '" id="' + i + '" href="#ex11" rel="modal:open"><i  class="fa fa-shopping-bag" style="font-size:20px;color:#f0ad4e;"></i><span>' + ob.menuName + '</span></a><ul id="p' + i + '"></ul></li>';
+                    }else{
+                        menuside += '<li ><a onclick="getMenuDetails(this,' + ob.tableRequired + ',' + ob.pageRequired + ');" value="' + ob.menuName + '" id="' + i + '"><i  class="fa fa-shopping-bag" style="font-size:20px;color:#f0ad4e;"></i><span>' + ob.menuName + '</span></a><ul id="p' + i + '"></ul></li>';
+
+                    }
+                }
+
+               // $("#moduleName").append(option);
+                $("#menuside").html(menuside);
+
+               // console.log(data);
+               // alert(data);
+
+
+            }
+        });
+    }
+    $("#addMenus").click(function(){
+        var application = $("#subscription").val();
+        option='';
+        var menuside='';
+
+        $.ajax({
+            url: 'http://localhost:8888/services/getpktbuilderByApplication?application='+application,
+            type:'POST',
+            data:{},
+            success:function(data){
+
+                var opt=jQuery.parseJSON(data.object.builderValue);
+                menulist=opt;
+                var i=0;
+                for(index in opt) {
+                    i++;
+                    var ob = opt[index];
+
+                    option+='<option value="'+ob.menuName+'">'+ob.menuName+'</option>';
+                    menuside+='<li ><a onclick="subMenu1(this);" value="'+ob.menuName+'" id="'+i+'"><i  class="fa fa-shopping-bag" style="font-size:20px;color:#f0ad4e;"></i><span>'+ob.menuName+'</span></a><ul id="p'+i+'"></ul></li>';
+
+                }
+
+                $("#moduleName").append(option);
+                $("#menuside").html(menuside);
+
+               /* console.log(data);
+                alert(data);*/
+
+
+            }
+        });
+
+    });
+    var i = 0;
+    function getMenuDetails(scope,tablereq,pagereq) {
+        $("#droppable").hide();
+        $("#keyGroup").val('');
+        var application = $("#subscription").val();
+        var menuName = scope.innerText;
+        var id=$(scope).attr('id');
+        var destid='p'+id;
+        option = '';
+        var menuside = '';
+        var flag=0;
+        $.ajax({
+            url: 'http://localhost:8888/services/getpktchildByApplication?application=' +application +"&menuName=" +menuName,
+            type: 'POST',
+            data: {},
+            success: function (data) {
+
+                var opt = data.object;
+                menulist = opt;
+
+
+                for (index in opt) {
+                    i++;
+                    var ob = opt[index];
+                     if(ob.tableRequired=='true'){
+                         flag++;
+                     }
+                    option += '<option value="' + ob.menuName + '">' + ob.menuName + '</option>';
+                    if(ob.tableRequired=="true"){
+                        menuside += '<li ><a onclick="getMenuDetailschild(this,' + ob.tableRequired + ',' + ob.pageRequired + ');" value="' + ob.menuName + '" id="' + i + '" href="#ex11" rel="modal:open"><i  class="fa fa-shopping-bag" style="font-size:20px;color:#f0ad4e;"></i><span>' + ob.menuName + '</span></a><ul id="p' + i + '"></ul></li>';
+                    }else{
+                        menuside += '<li ><a onclick="getMenuDetailschild(this,'+ob.tableRequired+','+ob.pageRequired+');" value="' + ob.menuName + '" id="s' + i + '"><i  class="fa fa-shopping-bag" style="font-size:20px;color:#f0ad4e;"></i><span>' + ob.menuName + '</span></a><ul id="ts' + i + '"></ul></li>';
+
+                    }
+
+
+                }
+                if(tablereq==true){
+                   var htmlss='';
+                    $.ajax({
+                        url:'http://localhost:8888/services/permissionTableNameLists?tableName='+menuName + "&application=" +application,
+                        type:'POST',
+                        data:{},
+                        success:function(result){
+
+                            var subname=result.object;
+
+                            for(index in subname) {
+
+                                var sb = subname[index];
+                                var checkedit=sb.operator;
+                                checkedit=checkedit.split(' ');
+                                if(checkedit[1]=="Save") {
+
+
+                                    htmlss += '<div id="drag1" class="editdrag" style="height: '+sb.height_pos+';width: '+sb.width_pos+';top: '+sb.top_pos+';left: '+sb.left_pos+';position: '+sb.position_pos+'"><a href="#" title="Remove Row" class="remove pull-right" style="color: #dc0c0c;font-size: 18px;font-weight: bold;">x</a><label>' + sb.keyValue + '</label><input type="' + sb.inputType + '" name="' + sb.keyName + '" placeholder="' + sb.keyPlaceHolder + '" class="form-control" onclick="opencontrol(this)" style="background: transparent;"></div>';
+                                }
+
+                            }
+
+
+                            $("#droppable").html(htmlss);
+
+                        }
+                    })
+
+
+
+
+
+
+
+
+
+
+                    $("#droppable").show();
+
+                    var keygroup=scope.innerText;
+                    $("#keyGroup").val(keygroup);
+                }else{
+                    $("#"+destid).html(menuside);
+                }
+
+            }
+        });
+    }
+    function getMenuDetailschild(scope,tablereq,pagereq) {
+        $("#droppable").hide();
+        $("#keyGroup").val('');
+        var application = $("#subscription").val();
+        var menuName = scope.innerText;
+        var id=$(scope).attr('id');
+        var destid='t'+id;
+        option = '';
+        var menuside = '';
+        var flag=0;
+        $.ajax({
+            url: 'http://localhost:8888/services/getpktchildByApplication?application=' +application +"&menuName=" +menuName,
+            type: 'POST',
+            data: {},
+            success: function (data) {
+
+                var opt = data.object;
+                menulist = opt;
+
+                for (index in opt) {
+                    i++;
+                    var ob = opt[index];
+                    if(ob.tableRequired=='true'){
+                        flag++;
+                    }
+
+                    option += '<option value="' + ob.menuName + '">' + ob.menuName + '</option>';
+                    if(ob.tableRequired=="true"){
+                        menuside += '<li ><a onclick="gettabledetail(this,' + ob.tableRequired + ',' + ob.pageRequired + ');" value="' + ob.menuName + '" id="' + i + '" href="#ex11" rel="modal:open"><i  class="fa fa-shopping-bag" style="font-size:20px;color:#f0ad4e;"></i><span>' + ob.menuName + '</span></a><ul id="p' + i + '"></ul></li>';
+                    }else{
+                        menuside += '<li ><a onclick="gettabledetail(this,'+ob.tableRequired+','+ob.pageRequired+');" value="' + ob.menuName + '" id="' + i + '"><i  class="fa fa-shopping-bag" style="font-size:20px;color:#f0ad4e;"></i><span>' + ob.menuName + '</span></a><ul id="p' + i + '"></ul></li>';
+
+                    }
+
+
+                }
+                if(tablereq==true){
+
+                    var htmlss='';
+                    $.ajax({
+                        url:'http://localhost:8888/services/permissionTableNameLists?tableName='+menuName + "&application=" +application,
+                        type:'POST',
+                        data:{},
+                        success:function(result){
+                            var subname=result.object;
+
+                            for(index in subname) {
+
+                                var sb = subname[index];
+                                     var checkedit=sb.operator;
+                                checkedit=checkedit.split(' ');
+                                if(checkedit[1]=="Edit") {
+
+
+                                    htmlss += '<div id="drag1" class="editdrag" style="height: '+sb.height_pos+';width: '+sb.width_pos+';top: '+sb.top_pos+';left: '+sb.left_pos+';position: '+sb.position_pos+'"><a href="#" title="Remove Row" class="remove pull-right" style="color: #dc0c0c;font-size: 18px;font-weight: bold;">x</a><label>' + sb.keyValue + '</label><input type="' + sb.inputType + '" name="' + sb.keyName + '" placeholder="' + sb.keyPlaceHolder + '" class="form-control" onclick="opencontrol(this)" style="background: transparent;"></div>';
+                                }
+
+                            }
+
+
+                            $("#droppable").html(htmlss);
+
+                        }
+                    })
+                    $("#droppable").show();
+
+                    var keygroup=scope.innerText;
+                    $("#keyGroup").val(keygroup);
+                }else{
+                    $("#"+destid).html(menuside);
+                }
+
+            }
+        });
+    }
+   function gettabledetail(scope,tablereq,pagereq) {
+       var application = $("#subscription").val();
+       if(tablereq==true){
+           var menuName = scope.innerText;
+       var htmlss='';
+           $.ajax({
+               url:'http://localhost:8888/services/permissionTableNameLists?tableName='+menuName + "&application=" +application,
+               type:'POST',
+               data:{},
+               success:function(result){
+
+                   var subname=result.object;
+
+                   for(index in subname) {
+
+                       var sb = subname[index];
+                       var checkedit=sb.operator;
+                       checkedit=checkedit.split(' ');
+                       if(checkedit[1]=="Edit") {
+
+
+                           htmlss += '<div id="drag1" class="editdrag" style="height: '+sb.height_pos+';width: '+sb.width_pos+';top: '+sb.top_pos+';left: '+sb.left_pos+';position: '+sb.position_pos+'"><a href="#" title="Remove Row" class="remove pull-right" style="color: #dc0c0c;font-size: 18px;font-weight: bold;">x</a><label>' + sb.keyValue + '</label><input type="' + sb.inputType + '" name="' + sb.keyName + '" placeholder="' + sb.keyPlaceHolder + '" class="form-control" onclick="opencontrol(this)" style="background: transparent;"></div>';
+                       }
+
+                   }
+
+
+                   $("#droppable").html(htmlss);
+
+               }
+           })
+           $("#droppable").show();
+
+           var keygroup=scope.innerText;
+           $("#keyGroup").val(keygroup);
+       }
+   }
+    var subModuleList=[];
+    $("#moduleName").change(function(){
+        subModuleList=[];
+        var suboption='';
+        var menuside='';
+        var val = $(this).val();
+        for (var i = 0; i < menulist.length; i++) {
+            if (val === menulist[i]['menuName']) {
+                subModuleList[0] = jQuery.parseJSON(menulist[i]['ParentId']);
+            }
+        }
+        subModuleList=subModuleList[0];
+        var subname=subModuleList;
+        for(index in subname) {
+
+            var sb = subname[index];
+
+            suboption+='<option value="'+sb.ParentValue+'">'+sb.ParentValue+'</option>';
+
+
+
+        }
+
+        $("#submoduleName").append(suboption);
+
+
+    });
+    var tablesList =[];
+    function subMenu1(objects) {
+
+        var id=$(objects).attr('id');
+        var destid='p'+id;
+        subModuleList=[];
+
+        var suboption='';
+
+        var val = objects.innerText;
+        for (var i = 0; i < menulist.length; i++) {
+            if (val === menulist[i]['menuName']) {
+                subModuleList[0] = jQuery.parseJSON(menulist[i]['ParentId']);
+            }
+        }
+        subModuleList=subModuleList[0];
+        tablesList =subModuleList;
+        var subname=subModuleList;
+        for(index in subname) {
+
+            var sb = subname[index];
+
+            suboption+='<li ><a onclick="subpage(this);"><i  class="fa fa-shopping-bag" style="font-size:20px;color:#f0ad4e;"></i><span>'+sb.ParentValue+'</span></a></li>';
+
+
+
+        }
+        $("#"+destid).html(suboption);
+
+
+    }
+
+
+    $('body').delegate('.remove','click',function()
+    {
+        $(this).parent().remove();
+    });
+
+    function subpage(objects){
+        var id=$(objects).attr('id');
+        var destid='p'+id;
+        subModuleList=[];
+
+        var suboption='';
+
+        var val = objects.innerText;
+        for (var i = 0; i < tablesList.length; i++) {
+            if (val === tablesList[i]['ParentValue']) {
+                subModuleList[0] = jQuery.parseJSON(tablesList[i]['ParentId']);
+            }
+        }
+        subModuleList=subModuleList[0];
+        var subname=subModuleList;
+        for(index in subname) {
+
+            var sb = subname[index];
+
+            suboption+='<li ><a onclick="subpage(this);"><i  class="fa fa-shopping-bag" style="font-size:20px;color:#f0ad4e;"></i><span>'+sb.ParentValue+'</span></a></li>';
+
+
+
+        }
+        $("#"+destid).html(suboption);
+
+
+
+
+
+
+        $("#droppable").show();
+
+var keygroup=objects.innerText;
+        $("#keyGroup").val(keygroup);
+
+    }
+    $("#saveMenu").click(function(){
+
+        var details = { moduleName: $(moduleName).val(), subModule: $(submoduleName).val(), applicationName: $(subscription).val(),
+            pageName: $(secondLevel).val(), name: $(givenName).val(),
+            pageRequired: $("input[name=pageRequired]:checked").val(), tableRequired: $("input[name=tableRequired]:checked").val()};
+        // var application = $(subscription).val();
+        var sendinfo=JSON.stringify(details);
+
+
+        $.ajax({
+            url: 'http://localhost:8888/services/saveModules',
+            headers: {
+                'Content-Type':'application/json'
+            },
+            type:'POST',
+            dataType: 'json',
+            data: sendinfo,
+            success: function(data){
+                console.log(data);
+                alert(data);
+            }
+        });
+
+
+    });
+    function opencontrol(objects){
+
+        $("#form_control").show();
+
+
+        var elemid= $(objects).attr('type');
+
+        if(elemid==undefined){
+            elemid=objects.localName;
+        }
+
+        var id=$(objects).attr('id');
+        if(id==undefined){
+            var currenttime=new Date().getTime();
+
+            var fieldname=elemid+'_'+currenttime;
+            $("#fieldid").text(fieldname);
+            $(objects).attr('id',fieldname);
+
+            $("#dragid").val(fieldname);
+
+        }else{
+            $("#fieldid").text(id);
+            $("#dragid").val(id);
+        }
+
+        $("#inputType").val(elemid);
+
+        var left =$(objects).closest('div').css("left");
+        var top = $(objects).closest('div').css("top");
+        var position = $(objects).closest('div').css("position");
+
+        var width = $(objects).closest('div').css("width");
+        var height = $(objects).closest('div').css("height");
+
+        $("#top_pos").val(top);
+        $("#width_pos").val(width);
+        $("#left_pos").val(left);
+        $("#height_pos").val(height);
+        $("#position_pos").val(position);
+
+    }
+    var permissionList = [];
+    var jsonString='';
+    $("#savePerms").click(function() {
+        var flag = 0;
+        var item={};
+        var dragid=$("#dragid").val();
+        item["dragid"] = dragid;
+        item["pktPermissionId"] = null;
+        item["keySubscription"] = $("#subscription").val();
+        item["keyValue"] = $("#keyValue").val();
+        item["columnName"] = $("#keyValue").val();
+        item["keyName"] = $("#keyValue").val();
+        item["keyPlaceHolder"] =$("#keyPlaceHolder").val();
+        item["inputType"] = $("#inputType").val();
+        item["left_pos"] = $("#left_pos").val();
+        item["top_pos"] = $("#top_pos").val();
+        item["width_pos"] =$("#width_pos").val();
+        item["height_pos"] = $("#height_pos").val();
+        item["position_pos"] = $("#position_pos").val();
+        item["valueee"] = '{\"Add\":"false",\"Edit\":"true",\"List\":"true",\"Save\":"true"}';
+        item["status"] = 'Active';
+        item["permission"] = 'Visible';
+        item["sync"] = 'Yes';
+        item["columnPosition"] = null;
+        item["operator"] = null;
+        item["operation"] = null;
+        item["tableName"] = $("#keyGroup").val();
+        item["menuKey"] = null;
+        item["childKeys"] = null;
+        item["keyVisibility"] = null;
+        item["keyValidation"] = null;
+        item["keyPriority"] = null;
+        item["keyAction"] = null;
+        item["keyReference"] = null;
+        item["keyGroup"] = $("#keyGroup").val();
+        item["keyTiming"] = null;
+        item["descriptor"] = null;
+        item["roundOff"] = null;
+        item["searchKey"] = null;
+        item["dropDownKey"] = null;
+
+        if ((permissionList.length) == 0) {
+            permissionList.push(item);
+        } else {
+            for (var i = 0; i < permissionList.length; i++) {
+                if (permissionList[i].dragid == dragid) {
+
+
+                    var dragid=$("#dragid").val();
+                    item["dragid"] = dragid;
+                    item["pktPermissionId"] = null;
+                    item["keySubscription"] = $("#subscription").val();
+                    item["keyValue"] = $("#keyValue").val();
+                    item["columnName"] = $("#keyValue").val();
+                    item["keyName"] = $("#keyValue").val();
+                    item["keyPlaceHolder"] =$("#keyPlaceHolder").val();
+                    item["inputType"] = $("#inputType").val();
+                    item["left_pos"] = $("#left_pos").val();
+                    item["top_pos"] = $("#top_pos").val();
+                    item["width_pos"] =$("#width_pos").val();
+                    item["height_pos"] = $("#height_pos").val();
+                    item["position_pos"] = $("#position_pos").val();
+                    item["valueee"] = '{\"Add\":"false",\"Edit\":"true",\"List\":"true",\"Save\":"true"}';
+                    item["status"] = 'Active';
+                    item["permission"] = 'Visible';
+                    item["sync"] = 'Yes';
+                    item["columnPosition"] = null;
+                    item["operator"] = null;
+                    item["operation"] = null;
+                    item["tableName"] = $("#keyGroup").val();
+                    item["menuKey"] = null;
+                    item["childKeys"] = null;
+                    item["keyVisibility"] = null;
+                    item["keyValidation"] = null;
+                    item["keyPriority"] = null;
+                    item["keyAction"] = null;
+                    item["keyReference"] = null;
+                    item["keyGroup"] = $("#keyGroup").val();
+                    item["keyTiming"] = null;
+                    item["descriptor"] = null;
+                    item["roundOff"] = null;
+                    item["searchKey"] = null;
+                    item["dropDownKey"] = null;
+
+                    flag = 1;
+                    break;
+
+
+                }
+
+            }
+
+            if (flag == 0) {
+                permissionList.push(item);
+            }
+
+        }
+
+        jsonString = JSON.stringify(permissionList);
+
+
+
+    });
+    $("#keyValue").keyup(function(){
+        var data=$(this).val();
+
+        var destid=$("#dragid").val();
+
+        $("#"+destid).parent().find('label').text(data);
+
+
+    });
+
+    $("#saveTemplate").click(function() {
+
+
+        $.ajax({
+            url: 'http://localhost:8888/pkt/saveFieldsWithPositions',
+            headers: {
+                'Content-Type':'application/json'
+            },
+            type:'POST',
+            dataType: 'json',
+            data: jsonString,
+            success: function(data){
+                console.log(data);
+                alert(data);
+            }
+        });
+
+    });
+
+
+</script>
+
+
+</body>
+</html>

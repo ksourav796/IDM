@@ -1,0 +1,1351 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<body>
+<div class="container-fluid">
+    <div class="container cus_main_row">
+        <div class="row">
+            <h2 class="pos-header-new">
+                <div>Table Column Mapping</div>
+            </h2>
+        </div>
+        <div class="row inner_row_bg">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="panel">
+                    <div class="panel-body" style="height: 65px;">
+
+                        <form class="form-horizontal ng-pristine ng-valid">
+
+                            <div class="row">
+                                <div class="col-md-2  col-sm-5 col-xs-5">
+                                    <div class="col-sm-12">
+                                        <p class="input-group" align="right" style="display: block;">
+                                            <input id="searchTextId" name="textinput" type="text" autocomplete="off"
+                                                   placeholder="search Subscription" ng-model="searchText"
+                                                   class="form-control input-md"
+                                                   ng-keyup="$event.keyCode == 13 ? getpaginatedFieldList() : null"/>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-md-2 col-sm-5 col-xs-5">
+                                    <div class=" col-sm-12">
+                                        <p class="input-group" align="right" style="display: block;">
+                                            <input id="tablesearchTextId" name="textinput" type="text" autocomplete="off"
+                                                   placeholder="search Table" ng-model="tablesearchText"
+                                                   class="form-control input-md"
+                                                   ng-keyup="$event.keyCode == 13 ? getpaginatedFieldList() : null"/>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-md-2  col-sm-5 col-xs-5">
+                                    <div class="col-sm-12">
+                                        <p class="input-group" style="display: block;">
+                                            <input id="keysearchTextId" name="textinput" type="text" autocomplete="off"
+                                                   placeholder="search Column Code" ng-model="keysearchText"
+                                                   class="form-control input-md"
+                                                   ng-keyup="$event.keyCode == 13 ? getpaginatedFieldList() : null"/>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-md-2  col-sm-5 col-xs-5">
+                                    <div class="col-sm-12">
+                                        <p class="input-group" style="display: block;">
+                                            <input id="columnsearchTextId" name="textinput" type="text" autocomplete="off"
+                                                   placeholder="search Column name" ng-model="columnsearchText"
+                                                   class="form-control input-md"
+                                                   ng-keyup="$event.keyCode == 13 ? getpaginatedFieldList() : null"/>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-md-2  col-sm-5 col-xs-5">
+                                    <div class="col-sm-12">
+                                        <p class="input-group" style="display: block;">
+                                            <input id="search_grade" name="textinput" type="text" autocomplete="off"
+                                                   placeholder="search operator" ng-model="operatorsearchText"
+                                                   class="form-control input-md"
+                                                   ng-keyup="$event.keyCode == 13 ? getpaginatedFieldList() : null"/>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-md-2  col-sm-5 col-xs-5">
+                                    <div class="col-sm-12">
+                                        <button id="" type="button" class="btn btn-default hi_btn"
+                                                ng-click="addNewPkt()">Add
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+
+                    <div class="col-md-12 col-sm-12 colsss-xs-12">
+                        <div class="fixed-table-container">
+                            <div class="table_wrap fixed-table-container-inner">
+                                <div class="header-background"></div>
+                                <table data-toggle="table" data-cache="false" data-height="299"
+                                       style="margin-bottom: 0px;"
+                                       class="hi_table table table-hover table-bordered table-striped table-fixed-header">
+                                    <thead>
+                                    <tr>
+                                        <th data-field="formRegno">
+                                            <div class="th-inner">Application</div>
+                                        </th>
+                                        <th data-field="formRegno">
+                                            <div class="th-inner">Table Name</div>
+                                        </th>
+                                        <th data-field="formRegno">
+                                            <div class="th-inner">Column Code</div>
+                                        </th>
+                                        <th data-field="formRegno">
+                                            <div class="th-inner">Column Name</div>
+                                        </th>
+                                        <th data-field="formRegno">
+                                            <div class="th-inner">Operator</div>
+                                        </th>
+                                        <th data-field="formRegno">
+                                            <div class="th-inner">Action</div>
+                                        </th>
+                                        <th data-field="formRegno">
+                                            <div class="th-inner">Operation</div>
+                                        </th>
+                                        <th data-field="formRegno">
+                                            <div class="th-inner">Edit</div>
+                                        </th>
+                                        <th data-field="formRegno">
+                                            <div class="th-inner">Dropdown</div>
+                                        </th>
+                                        <th data-field="formRegno">
+                                            <div class="th-inner">Calculation</div>
+                                        </th>
+                                        <th data-field="formRegno">
+                                            <div class="th-inner">Conditional Calculation</div>
+                                        </th>
+
+
+                                    <tbody id="parentTable">
+                                    <tr ng-repeat="type in tabletype">
+
+                                        <td>{{type.keySubscription}}</td>
+                                        <td>{{type.tableName}}</td>
+                                        <td>{{type.keyName}}</td>
+                                        <td>{{type.columnName}}</td>
+                                        <td>{{type.operator}}</td>
+                                        <td>{{type.keyAction}}</td>
+
+                                        <td><a id="operation_{{$index}}" href="javascript:void(0)"
+                                               ng-click="operationOnPkt(type)" class="operation_"><i
+                                                class="fa fa-pencil-square-o fa-fw orange"></i></a></td>
+                                        <td><a id="edit_{{$index}}" href="javascript:void(0)"
+                                               ng-click="editTable(type)" class="edit"><i
+                                                class="fa fa-pencil-square-o fa-fw orange"></i></a></td>
+                                        <td><button id="dropdown" type="button" class="btn btn-default hi_btn"
+                                                    ng-click="dropdownbutton(type)">Dropdown</button></td>
+                                        <td><button id="calculation" type="button" class="btn btn-default hi_btn"
+                                                    ng-click="calculationbutton(type)">Calculation</button></td>
+                                        <td><button id="calculation" type="button" class="btn btn-default hi_btn"
+                                                    ng-click="conditionalcalculation(type)">Conditional Calculation</button></td>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-lg-5 col-md-7 col-sm-10 pagination_"
+                                 style="float: right; text-align: right; margin-top: 10px;">
+
+                                <button type="button" class="btn btn-default hi_btn" ng-class="{'diabled-class': first}"
+                                        ng-disabled="first"
+                                        ng-click="getpaginatedFieldList('','firstPage')" ng-model="first">First
+                                </button>
+                                <button type="button" class="btn btn-default hi_btn" ng-class="{'diabled-class': prev}"
+                                        ng-disabled="prev"
+                                        ng-click="getpaginatedFieldList('','prevPage')" ng-model="prev">Prev
+                                </button>
+                                <button type="button" class="btn btn-default hi_btn" name="next" ng-disabled="next"
+                                        ng-click="getpaginatedFieldList('','nextPage')" value="next"
+                                        ng-class="{'diabled-class': next}" ng-model="next">Next
+                                </button>
+                                <button type="button" class="btn btn-default hi_btn"
+                                        ng-click="getpaginatedFieldList('','lastPage')"
+                                        ng-class="{'diabled-class': last}" ng-disabled="last"
+                                        ng-model="last">Last
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal fade ExchangeRate" tabindex="-1" id="add_new_pkt_Table_modal" role="dialog"
+                         data-backdrop="static"
+                         aria-labelledby="mySmallModalLabel">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content checkout">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                            aria-hidden="true">&times;</span></button>
+                                    <h4 id="cust-notif" class="modal-title">Add Table Column Mapping</h4>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-md-12 col-sm-12">
+                                            <form class="form-horizontal" name="mail" style="">
+                                                <fieldset>
+                                                    <div class="form-group">
+                                                        <label class="col-md-4 col-sm-4 control-label">Select
+                                                            Application<sup style="color:red;">*</sup></label>
+                                                        <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                            <select name="" ng-model="keySubscription"
+                                                                    ng-disabled="operation == 'Edit' "
+                                                                    ng-options="application.name as application.name for application in applicationtype | unique: 'keySubscription'"
+                                                                    ng-change='getPktPermisssionListPKt(keySubscription);getoperatorlistbasedonapplication(keySubscription)'
+                                                                    class="form-control input-md">
+                                                                <option value="">-Select-</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                    <!--<div class="form-group">-->
+                                                        <!--<label class="col-md-4 col-sm-4 control-label"> Select-->
+                                                            <!--Operator<sup>*</sup></label>-->
+                                                        <!--<div class="col-md-6 col-sm-6" style="position:relative;">-->
+                                                            <!--<select name="" ng-model="nameo"-->
+                                                                    <!--ng-readonly="operation ==='Edit'"-->
+                                                                    <!--ng-options="operator.name as operator.name for operator in operatortype"-->
+                                                                    <!--class="form-control input-md">-->
+                                                                <!--<option value="">-Select-</option>-->
+                                                            <!--</select>-->
+                                                        <!--</div>-->
+                                                    <!--</div>-->
+
+
+
+                                                    <!--<div class="form-group">-->
+                                                        <!--<label class="col-md-4 col-sm-4 control-label"> Select-->
+                                                            <!--Action<sup>*</sup></label>-->
+                                                        <!--<div class="col-md-6 col-sm-6" style="position:relative;">-->
+                                                            <!--<select name="" ng-model="namea"-->
+                                                                    <!--ng-readonly="operation ==='Edit'"-->
+                                                                    <!--ng-options="action.name as action.name for action in actiontype"-->
+                                                                    <!--class="form-control input-md"-->
+                                                                    <!--ng-change='getActionLists(namea)'>-->
+                                                                <!--<option value="">-Select-</option>-->
+                                                            <!--</select>-->
+                                                        <!--</div>-->
+                                                    <!--</div>-->
+
+                                                    <div class="form-group">
+                                                        <label class="col-md-4 col-sm-4 control-label">Select
+                                                            Table Name<sup style="color:red;">*</sup></label>
+                                                        <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                            <select name="" ng-model="keyValue"
+                                                                    ng-disabled="operation === 'Edit' "
+                                                                    ng-options="table.keyValue as table.keyValue for table in tableNameListOnPkt"
+                                                                    class="form-control input-md"
+                                                                    ng-change='getFieldsNameList()'>
+                                                                <option value="">-Select-</option>
+
+                                                            </select>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-4 col-sm-4 control-label">Select operator
+                                                           <sup style="color:red;">*</sup></label>
+                                                       <input type="checkbox" ng-model="AddOpe" style="margin-top: 14px;" ng-disabled="operation=='Edit'"/>Add
+                                                        <input type="checkbox" ng-model="saveOpe" style="margin-top: 14px;" ng-disabled="operation=='Edit'"/>Save
+                                                        <input type="checkbox" ng-model="EditOpe" style="margin-top: 14px;" ng-disabled="operation=='Edit'"/>Edit
+                                                        <input type="checkbox" ng-model="ListOpe" style="margin-top: 14px;" ng-disabled="operation=='Edit'"/>List
+                                                    </div>
+
+                                                        <!--@@@PKtFieldsList@@@@-->
+                                                    <div class="form-group">
+                                                        <label class="col-md-4 col-sm-4 control-label">Select Column
+                                                            Code<sup style="color:red;">*</sup></label>
+                                                        <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                            <select name="fieldName" ng-model="fieldName"
+                                                                    ng-options="field.fieldName as field.fieldName for field in tableFieldNameList"
+                                                                    class="form-control input-md">
+                                                                <option value="">-Select-</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="form-group">
+                                                        <label class="col-md-4 col-sm-4 control-label" for="">Column
+                                                            Name</label>
+                                                        <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                            <input id="columnName" name="columnName"
+                                                                   type="text" placeholder="Column Name"
+                                                                   ng-model="columnName"
+                                                                   class="form-control input-md" autocomplete="off">
+
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="col-md-4 col-sm-4 control-label" for="">Place
+                                                            Holder Name</label>
+                                                        <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                            <input id="Place Holder" name="Place Holder"
+                                                                   type="text" placeholder="Place Holder"
+                                                                   ng-model="placeHolder"
+                                                                   class="form-control input-md" autocomplete="off">
+
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="form-group">
+                                                        <label class="col-md-4 col-sm-4 control-label" for="">Column
+                                                            Position</label>
+                                                        <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                            <select name="" ng-model="namep"
+                                                                    ng-readonly="operation ==='Edit'"
+                                                                    ng-options="position.name as position.name for position in positiontype"
+                                                                    class="form-control input-md">
+                                                                <option value="">-Select-</option>
+                                                            </select>
+
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="col-md-4 col-sm-4 control-label">Type Of
+                                                            Validator</label>
+                                                        <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                            <select name="" ng-model="namev"
+                                                                    ng-options="validator.name as validator.name for validator in validatortype"
+                                                                    class="form-control input-md">
+                                                                <option value="">-Select-</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="form-group">
+                                                        <label class="col-md-4 col-sm-4 control-label">Input
+                                                            Type </label>
+
+                                                        <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                            <select name="" ng-model="inputypes"
+                                                                    ng-options="input.name as input.name for input in columnTypeList"
+                                                                    class="form-control input-md">
+                                                                <option value="">-Select-</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group" ng-show="inputypes =='Button'|| inputypes =='Select'">
+                                                        <label class="col-md-4 col-sm-4 control-label">Reference </label>
+                                                        <div class="col-md-6 col-sm-6" style="position:relative;" >
+                                                            <select name="" ng-model="keyReference"
+                                                                    ng-options="input as input for input in operatelist|filter:'List'"
+                                                                    class="form-control input-md">
+                                                                <option value="">-Select-</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+
+
+                                                    <div class="form-group" ng-show="inputypes =='Button'">
+                                                        <label class="col-md-4 col-sm-4 control-label" for="">Visibility</label>
+                                                        <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                            <input id="keyVisibility" name="keyVisibility"
+                                                                   type="text" placeholder="keyVisibility"
+                                                                   ng-model="keyVisibility"
+                                                                   class="form-control input-md" autocomplete="off">
+
+                                                        </div>
+                                                    </div>
+
+
+
+                                                    <div class="form-group">
+                                                        <label class="col-md-4 col-sm-4 control-label"
+                                                               for="">Permission Level</label>
+                                                        <div class="col-md-6 col-sm-6" style="position:relative;"
+                                                             ng-model="permission">
+                                                            <input ng-model="pktpermission" type="radio"
+                                                                   name="permission" ng-value="'Visible'">Visible<br>
+                                                            <input ng-model="pktpermission" type="radio"
+                                                                   name="permission" ng-value="'Hidden'"> Hidden<br>
+                                                            <input ng-model="pktpermission" type="radio"
+                                                                   name="permission" ng-value="'Restriction'">
+                                                            Restriction
+
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="form-group">
+                                                        <label class="col-md-4 col-sm-4 control-label"
+                                                               for="">Priority</label>
+                                                        <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                            <input id="Priority" name="Priority"
+                                                                   type="text" placeholder="Priority"
+                                                                   ng-model="priority"
+                                                                   ng-pattern="number"
+                                                                   class="form-control input-md" autocomplete="off">
+                                                            <p class="error"
+                                                               ng-show="table.Priority.$error.pattern">Enter
+                                                                Valid Number</p>
+
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="form-group">
+                                                        <label class="col-md-4 col-sm-4 control-label"
+                                                               for="">Sync</label>
+                                                        <div class="col-md-6 col-sm-6">
+                                                            <select name="" id="sync"
+                                                                    ng-model="sync"
+                                                                    class="form-control input-md" required>
+                                                                <option value="No">No</option>
+                                                                <option value="Yes">Yes</option>
+                                                                <option value="">-Select-</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="col-md-4 col-sm-4 control-label" for="">Round
+                                                            Off</label>
+                                                        <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                            <input id="Round_Off" name="Round Off"
+                                                                   type="text" placeholder="Round Off"
+                                                                   ng-model="roundOff"
+                                                                   class="form-control input-md" autocomplete="off">
+
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="col-md-4 col-sm-4 control-label"
+                                                               for="">status</label>
+                                                        <div class="col-md-6 col-sm-6">
+                                                            <select name="status" id="status" ng-model="status"
+                                                                    class="form-control input-md" required>
+                                                                <option value="Active">Active</option>
+                                                                <option value="InActive">InActive</option>
+                                                                <option value="">-Select-</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                </fieldset>
+
+
+                                                <div class="modal-footer">
+                                                    <button type="submit" class="btn btn-default" data-toggle="modal"
+                                                            data-target=".print-me" ng-click="saveTable()">save
+                                                    </button>
+                                                    <button type="button" class="btn btn-default"
+                                                            ng-click="removetableType()" data-dismiss="modal">close
+                                                    </button>
+
+                                                </div>
+
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<div class="modal fade Student" tabindex="-1" id="add_new_pkt_Table_modalq"
+     style="z-index: 1070 !important; display: none" role="dialog" data-backdrop="static"
+     aria-labelledby="mySmallModalLabel">
+    <div class="modal-dialog modal-lg" style="width: 90% !important;">
+        <div class="modal-content checkout">
+            <div class="modal-header">
+                <h4 class="modal-title"
+                    style="color:black;font-size: 20px;padding-left:20px!important;align-content: left">
+                    Operation List:</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <!--<h4 id = "visit-title" class="modal-title">Add Appointments</h4>-->
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="form-horizontal" name="pkt">
+                            <div>
+
+                                <style>
+                                    table, th, td {
+                                        border: 1px solid black;
+                                    }
+
+                                    /*.modal-content {*/
+                                        /*width: 1000px;*/
+                                    /*}*/
+
+                                    .form-control {
+                                        display: block;
+                                    + width: 1000 px;
+                                        height: 34px;
+                                        padding: 8px 12px;
+                                        font-size: 10px;
+                                        line-height: 1.42857143;
+                                        color: #555;
+                                        background-color: #fff;
+                                        background-image: none;
+                                        border: 1px solid #ccc;
+                                        border-radius: 4px;
+                                        -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+                                        box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+                                        -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+                                        -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+                                        transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+                                    }
+                                </style>
+                                <body ng-app="myapp" ng-controller="ListController">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="panel panel-default">
+                                                <div class="panel-body">
+                                                    <form ng-submit="addNew()">
+                                                        <table class="table table-striped table-bordered">
+                                                            <thead>
+                                                            <tr>
+                                                                <th>Application</th>
+                                                                <th ng-if="inputType == 'Button' || inputType == 'Select'">Reference</th>
+                                                                <th ng-if="inputType == 'Button'">Visibility</th>
+                                                                <th>Operator</th>
+                                                                <th>Action</th>
+                                                                <th>TableName</th>
+                                                                <th>keyName</th>
+                                                                <th>keyValue</th>
+                                                                <th>PlaceHolderName</th>
+                                                                <th>ColumnPosition</th>
+                                                                <th>TypeOfValidator</th>
+                                                                <th>InputType</th>
+                                                                <th>Permission</th>
+                                                                <th>Operation</th>
+                                                                <th>Priority</th>
+                                                                <th>Sync</th>
+                                                                <th>From Key</th>
+                                                                <th>status</th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            <tr ng-repeat="operation in tableFieldList ">
+
+                                                                <!--<td>-->
+                                                                    <!--<input type="checkbox"-->
+                                                                           <!--ng-model="operation.selected" size="10"/>-->
+                                                                <!--</td>-->
+                                                                <!--Application-->
+
+                                                                <td>
+                                                                    <select name="" ng-model="operation.keySubscription"
+                                                                            ng-options="application.name as application.name for application in applicationtype | unique: 'keySubscription'"
+                                                                            ng-change='getPktPermisssionListPKts(operation)'
+                                                                            class="form-control input-md">
+                                                                        <option value="">-Select-</option>
+                                                                    </select>
+                                                                </td>
+                                                                <!--keyReference-->
+                                                                <td ng-if="inputType == 'Button' || inputType == 'Select'">
+                                                                    <div>
+                                                                        <select name="" ng-model="operation.namero"
+                                                                                ng-options="input.name as input.name for input in operatortype|filter:'List'"
+                                                                                class="form-control input-md">
+                                                                            <option value="">-Select-</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </td>
+
+                                                                <!--keyVisibility-->
+                                                                <td ng-if="inputType == 'Button'">
+                                                                    <div class="form-group">
+                                                                            <input id="keyVisibilitya" name="keyVisibility"
+                                                                                   type="text" placeholder="keyVisibility"
+                                                                                   ng-model="operation.keyVisibilitya"
+                                                                                   class="form-control input-md"
+                                                                                   autocomplete="off">
+                                                                    </div>
+                                                                </td>
+                                                                <!--Operator-->
+                                                                <td>
+                                                                    <select name="" ng-model="operation.nameo"
+                                                                            ng-options="input as input for input in operatorList"
+                                                                            class="form-control input-md">
+                                                                        <option value="">-Select-</option>
+                                                                    </select>
+
+                                                                </td>
+                                                                <!--Action-->
+                                                                <td>
+                                                                    <select name="" ng-model="operation.namea"
+                                                                            ng-options="input as input for input in actionlist"
+                                                                            class="form-control input-md"
+                                                                            ng-change='getActionLists(namea)'>
+                                                                        <option value="">-Select-</option>
+                                                                    </select>
+                                                                </td>
+                                                                <!--TableName-->
+                                                                <td>
+                                                                    <select name="" ng-model="operation.keyValue"
+                                                                            ng-options="table.keyValue as table.keyValue for table in operation.tableNameListOnPkts"
+                                                                            ng-change='getFieldsNameLists(operation)'
+                                                                            class="form-control input-md">
+                                                                        <option value="">-Select-</option>
+                                                                    </select>
+                                                                </td>
+                                                                <!--ColumnCode-->
+                                                                <td>
+                                                                    <select name="fieldName"
+                                                                            ng-model="operation.fieldName"
+                                                                            ng-options="field.fieldName as field.fieldName for field in operation.tableFieldNameLists"
+                                                                            class="form-control input-md">
+                                                                        <option value="">-Select-</option>
+                                                                    </select>
+                                                                </td>
+                                                                <!--ColumnName-->
+                                                                <td>
+                                                                    <div class="form-group">
+                                                                        <div class="col-md-12 col-sm-12"
+                                                                             style="position:relative;">
+                                                                            <input id="columnName1a" name="columnName"
+                                                                                   type="text" placeholder="Column Name"
+                                                                                   ng-model="operation.columnName"
+                                                                                   class="form-control input-md"
+                                                                                   autocomplete="off">
+
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                                <!--PlaceHolderName-->
+                                                                <td>
+                                                                        <input id="Place_Holder" name="Place Holder"
+                                                                               type="text" placeholder="Place Holder"
+                                                                               ng-model="operation.placeHolder"
+                                                                               class="form-control input-md"
+                                                                               autocomplete="off">
+                                                                </td>
+                                                                <!--ColumnPosition-->
+                                                                <td>
+                                                                    <select name="" ng-model="operation.namep"
+                                                                            ng-options="position.name as position.name for position in positiontype"
+                                                                            class="form-control input-md">
+                                                                        <option value="">-Select-</option>
+                                                                    </select>
+
+                                                                </td>
+                                                                <!--TypeOfValidator-->
+                                                                <td>
+                                                                    <select name="" ng-model="operation.namev"
+                                                                            ng-options="validator.name as validator.name for validator in validatortype"
+                                                                            class="form-control input-md">
+                                                                        <option value="">-Select-</option>
+                                                                    </select>
+                                                                </td>
+                                                                <!--InputType-->
+                                                                <td>
+                                                                    <select name="" ng-model="operation.input"
+                                                                            ng-options="input.name as input.name for input in columnTypeList"
+                                                                            class="form-control input-md">
+                                                                        <option value="">-Select-</option>
+                                                                    </select>
+
+                                                                </td>
+                                                                <!--Permission -->
+                                                                <td>
+                                                                        <div class="col-md-6 col-sm-6" style="position:relative;width:90%">
+                                                                            <select name="status" id="statusaal"
+                                                                                    ng-model="operation.pktpermission"
+                                                                                    class="form-control input-md">
+                                                                                <option value="Visible">Visible
+                                                                                </option>
+                                                                                <option value="Hidden">Hidden
+                                                                                </option>
+                                                                                <option value="Restriction">Restriction
+                                                                                </option>
+                                                                                <option value="">-Select-</option>
+                                                                            </select>
+
+                                                                        </div>
+                                                                </td>
+
+                                                                <!--Operation-->
+                                                                <td>
+                                                                    <div class="form-group">
+                                                                        <div class="col-md-12 col-sm-12"
+                                                                             style="position:relative;">
+                                                                            <input id="Operation" name="Operation"
+                                                                                   type="text" placeholder="Operation"
+                                                                                   maxlength="50"
+                                                                                   ng-model="operation.operation"
+                                                                                   ng-click="getOperationList($index,operation)"
+                                                                                   class="form-control input-md"
+                                                                                   autocomplete="off">
+
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                                <!--Priority-->
+                                                                <td>
+                                                                    <div class="col-md-12 col-sm-12"
+                                                                         style="position:relative; padding: 0;">
+                                                                        <input id="Priority1" name="Priority"
+                                                                               type="text" placeholder="Priority"
+                                                                               ng-model="operation.priority"
+                                                                               ng-pattern="number"
+                                                                               class="form-control input-md"
+                                                                               autocomplete="off">
+                                                                        <p class="error"
+                                                                           ng-show="table.Priority.$error.pattern">Enter
+                                                                            Valid Number</p>
+
+                                                                    </div>
+
+
+                                                                </td>
+                                                                <!--Sync-->
+                                                                <td>
+                                                                    <select name="" id="sync1"
+                                                                            ng-model="operation.sync"
+                                                                            class="form-control input-md" required>
+                                                                        <option value="No">No</option>
+                                                                        <option value="Yes">Yes</option>
+                                                                        <option value="">-Select-</option>
+                                                                    </select>
+
+
+                                                                </td>
+                                                                <!--RoundOff-->
+                                                                <td>
+                                                                    <!--<div class="col-md-12 col-sm-12"-->
+                                                                         <!--style="position:relative; padding: 0;">-->
+                                                                        <!--<input id="Round_Offq" name="Round Off"-->
+                                                                               <!--type="text" placeholder="Round Off"-->
+                                                                               <!--ng-model="operation.roundOff"-->
+                                                                               <!--class="form-control input-md"-->
+                                                                               <!--autocomplete="off">-->
+
+                                                                    <!--</div>-->
+                                                                    <select name="fieldName"
+                                                                            ng-model="operation.fieldName"
+                                                                            ng-options="field.fieldName as field.fieldName for field in operation.tableFieldNameLists"
+                                                                            class="form-control input-md">
+                                                                        <option value="">-Select-</option>
+                                                                    </select>
+                                                                </td>
+                                                                <!--Status-->
+                                                                <td>
+                                                                    <select name="status" id="statusq" ng-model="operation.status"
+                                                                            class="form-control input-md" required>
+                                                                        <option value="Active">Active</option>
+                                                                        <option value="InActive">InActive</option>
+                                                                        <option value="">-Select-</option>
+                                                                    </select>
+
+
+                                                                </td>
+
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                        <td>
+                                                            <button type="button"
+                                                                    class="btn btn-primary hi_btn"
+                                                                    ng-click="serialize(tableFieldList)">
+                                                                Save
+                                                            </button>
+                                                        </td>
+
+                                                        <td>
+                                                            <button type="button"
+                                                                    class="btn btn-primary"
+                                                                    ng-click="removeServices()"
+                                                                    data-dismiss="modal">Close
+                                                            </button>
+                                                        </td>
+
+                                                        <div class="form-group">
+                                                            <input ng-hide="!tableFieldList.length"
+                                                                   type="button"
+                                                                   class="btn btn-danger pull-right"
+                                                                   ng-click="removefunc()" value="Remove">
+                                                            <input type="submit"
+                                                                   class="btn btn-primary addnew pull-right"
+                                                                   value="Add New">
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                </body>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade Student" tabindex="-1" id="add_new_pkt_Table_modal_Operation"
+     style="z-index: 1070 !important; display: none" role="dialog" data-backdrop="static"
+     aria-labelledby="mySmallModalLabel">
+    <div class="modal-dialog modal-lg" style="width:100% !important;">
+        <div class="modal-content checkout">
+            <div class="modal-header">
+                <h4 class="modal-title"
+                    style="color:black;font-size: 20px;padding-left:20px!important;align-content: left">
+                    In-Operation List:</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <!--<h4 id = "visit-title" class="modal-title">Add Appointments</h4>-->
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="form-horizontal" name="student">
+                            <div>
+
+                                <style>
+                                    table, th, td {
+                                        border: 1px solid black;
+                                    }
+
+                                     /*.modal-content {*/
+                                        /*width: 1000px;*/
+                                    /*}*/
+
+                                    .form-control {
+                                        display: block;
+                                    + width: 740 px;
+                                        height: 34px;
+                                        padding: 6px 12px;
+                                        font-size: 14px;
+                                        line-height: 1.42857143;
+                                        color: #555;
+                                        background-color: #fff;
+                                        background-image: none;
+                                        border: 1px solid #ccc;
+                                        border-radius: 4px;
+                                        -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+                                        box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+                                        -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+                                        -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+                                        transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+                                    }
+                                </style>
+                                <body ng-app="myapp" ng-controller="ListController">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="panel panel-default">
+                                                <div class="panel-body">
+                                                    <form ng-submit="addNewOperation()">
+                                                        <table class="table table-striped table-bordered">
+                                                            <thead>
+                                                            <tr>
+                                                                <th> Remove</th>
+                                                                <th> Table Name</th>
+                                                                <th> In-Operation</th>
+                                                                <!--<th>keyName</th>-->
+                                                                <!--<th>Operation</th>-->
+                                                                <!--<th>keyValue</th>-->
+                                                                <!--<th>OUTPUT</th>-->
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            <tr ng-repeat="operation in tableFieldLista ">
+                                                                <td>
+                                                                    <input type="checkbox"
+                                                                           ng-model="operation.selected" size="10"/>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="col-md-12 col-sm-12"
+                                                                         style="position:relative; padding: 0;">
+                                                                        <input id=fieldName" name="fieldName"
+                                                                               type="text" placeholder="fieldName"
+                                                                               ng-model="operation.fieldName11"
+                                                                               class="form-control input-md"
+                                                                               autocomplete="off" readonly>
+
+                                                                    </div>
+
+                                                                </td>
+                                                                <td>
+                                                                    <div class="col-md-12 col-sm-12"
+                                                                         style="position:relative; padding: 0;">
+                                                                        <input id="fieldName1" name="fieldName1"
+                                                                               type="text" placeholder="Operation"
+                                                                               ng-model="operation.fieldName1"
+                                                                               class="form-control input-md"
+                                                                               autocomplete="off">
+
+                                                                    </div>
+
+
+                                                                </td>
+                                                                <!--<td>-->
+                                                                    <!--<select name="fieldName"-->
+                                                                            <!--ng-model="operation.fieldName1"-->
+                                                                            <!--ng-options="field.fieldName as field.fieldName for field in tableFieldNameLists"-->
+                                                                            <!--class="form-control input-md">-->
+                                                                        <!--<option value="">-Select-</option>-->
+                                                                    <!--</select>-->
+                                                                <!--</td>-->
+                                                                <!--<td>-->
+
+                                                                    <!--<div class="form-group">-->
+                                                                        <!--<div class="col-md-6 col-sm-6"-->
+                                                                             <!--style="position:relative;">-->
+                                                                            <!--<select name="status" id="statusaa"-->
+                                                                                    <!--ng-model="operation.status"-->
+                                                                                    <!--class="form-control input-md"-->
+                                                                                    <!--required>-->
+                                                                                <!--<option value="Addition">ADDITION-->
+                                                                                <!--</option>-->
+                                                                                <!--<option value="Multiplay">MULTIPLAY-->
+                                                                                <!--</option>-->
+                                                                                <!--<option value="Substraction">SUBSTRACTION-->
+                                                                                <!--</option>-->
+                                                                                <!--<option value="Divion">DIVION</option>-->
+                                                                                <!--<option value="sum">SUM</option>-->
+                                                                                <!--<option value="">-Select-</option>-->
+                                                                            <!--</select>-->
+
+                                                                        <!--</div>-->
+                                                                    <!--</div>-->
+
+
+
+                                                                <!--</td>-->
+                                                                <!--<td>-->
+                                                                    <!--<select name="fieldName"-->
+                                                                            <!--ng-model="operation.fieldName2"-->
+                                                                            <!--ng-options="field.fieldName as field.fieldName for field in tableFieldNameLists"-->
+                                                                            <!--class="form-control input-md">-->
+                                                                        <!--<option value="">-Select-</option>-->
+                                                                    <!--</select>-->
+                                                                <!--</td>-->
+                                                                <!--<td>-->
+                                                                    <!--<select name="fieldName"-->
+                                                                            <!--ng-model="operation.fieldName3"-->
+                                                                            <!--ng-options="field.fieldName as field.fieldName for field in tableFieldNameLists"-->
+                                                                            <!--class="form-control input-md">-->
+                                                                        <!--<option value="">-Select-</option>-->
+                                                                    <!--</select>-->
+
+                                                                <!--</td>-->
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                        <td>
+                                                            <button type="button"
+                                                                    class="btn btn-primary hi_btn"
+                                                                    ng-click="serializeOperation(tableFieldLista)">
+                                                                Save
+                                                            </button>
+                                                        </td>
+
+                                                        <td>
+                                                            <button type="button"
+                                                                    class="btn btn-primary"
+                                                                    ng-click="removeServices()"
+                                                                    data-dismiss="modal">Close
+                                                            </button>
+                                                        </td>
+
+                                                        <div class="form-group">
+                                                            <input ng-hide="!tableFieldLista.length"
+                                                                   type="button"
+                                                                   class="btn btn-danger pull-right"
+                                                                   ng-click="removefuncOperation()" value="Remove">
+                                                            <input type="submit"
+                                                                   class="btn btn-primary addnew pull-right"
+                                                                   value="Add New">
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                </body>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade ExchangeRate" tabindex="-1" id="add_new_pkt_dropdown_modal" role="dialog"
+     data-backdrop="static"
+     aria-labelledby="mySmallModalLabel">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content checkout">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 id="cust-notif" class="modal-title">Dropdown</h4>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <form ng-submit="addFooterValueOperation()">
+                            <table class="table table-striped table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Table</th>
+                                    <th>From Column</th>
+                                    <th>Compare Column</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="dropdown in dropdownlist ">
+                                    <td>
+                                        <select name="countryId" ng-model="dropdown.table"
+                                                ng-options="table.keyName as table.keyValue for table in tableslist"
+                                                class="form-control input-md"
+                                               ng-change='getfromcolumnlist(dropdown.table)'>
+                                            <option value="">-Select-</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select name="countryId" ng-model="dropdown.fromcolumn"
+                                                ng-options="field.fieldName as field.fieldName for field in fromcolumnlist"
+                                                class="form-control input-md"
+                                        ng-change='gettocolumnlist()'>
+                                            <option value="">-Select-</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select name="countryId" ng-model="dropdown.comparecolumn"
+                                                ng-options="pktfields.fieldName as pktfields.fieldName for pktfields in tocolumnlist"
+                                                class="form-control input-md">
+                                            <option value="">-Select-</option>
+                                        </select>
+                                    </td>
+                                    <td> <button type="button" class="btn btn-default hi_btn"
+                                                 ng-click="removeAddNewDropdown()">X
+                                    </button>
+                                    </td>
+
+                                </tr>
+                                </tbody>
+                            </table>
+                            <td>
+                                <button type="button"
+                                        class="btn btn-primary hi_btn"
+                                        ng-click="savedropdown(dropdownlist)">
+                                    Save
+                                </button>
+                            </td>
+
+                            <td>
+                                <button type="button"
+                                        class="btn btn-primary"
+                                        ng-click="removeServices()"
+                                        data-dismiss="modal">Close
+                                </button>
+                            </td>
+
+                            <div class="form-group">
+                                <input type="submit"
+                                       class="btn btn-primary addnew pull-right"
+                                       value="Add New">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade ExchangeRate" tabindex="-1" id="add_new_pkt_calculation_modal" role="dialog"
+     data-backdrop="static"
+     aria-labelledby="mySmallModalLabel" style="z-index: 1070">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content checkout">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 id="cust-notif" class="modal-title">Calculation</h4>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <form>
+                            <table class="table table-striped table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Operand1</th>
+                                    <th>Operation</th>
+                                    <th>Operand2</th>
+                                    <th>Result</th>
+                                    <th>Clear Row</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="calculation in calculationlist ">
+                                    <td>
+                                        <select name="operand1" ng-model="calculation.operand1"
+                                                ng-options="field.fieldName as field.fieldName for field in operand1list"
+                                                class="form-control input-md">
+                                            <option value="">-Select-</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select name="operation" ng-model="calculation.operation"
+                                                class="form-control input-md">
+                                            <option value="">-Select-</option>
+                                            <option value="+">Addition</option>
+                                            <option value="-">Substraction</option>
+                                            <option value="*">Multiplication</option>
+                                            <option value="/">Division</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select name="operand2" ng-model="calculation.operand2"
+                                                ng-options="field.fieldName as field.fieldName for field in operand1list"
+                                                class="form-control input-md">
+                                            <option value="">-Select-</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select name="result" ng-model="calculation.result"
+                                                ng-options="field.fieldName as field.fieldName for field in operand1list"
+                                                class="form-control input-md">
+                                            <option value="">-Select-</option>
+                                        </select>
+                                    </td>
+                                    <td> <button type="button" class="btn btn-default hi_btn"
+                                                 ng-click="removeAddNewCalculation()">X
+                                    </button>
+                                    </td>
+
+                                </tr>
+                                </tbody>
+                            </table>
+                            <td>
+                                <button type="button"
+                                        class="btn btn-primary hi_btn"
+                                        ng-click="savecalculation(calculationlist)">
+                                    Save
+                                </button>
+                            </td>
+
+                            <td>
+                                <button type="button"
+                                        class="btn btn-primary"
+                                        ng-click="removeServices()"
+                                        data-dismiss="modal">Close
+                                </button>
+                            </td>
+
+                            <div class="form-group">
+                                <input type="submit"
+                                       class="btn btn-primary addnew pull-right"
+                                       value="Add New" ng-click="addnewcalculation()">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade ExchangeRate" tabindex="-1" id="add_new_pkt_calculation1_modal" role="dialog"
+     data-backdrop="static"
+     aria-labelledby="mySmallModalLabel" style="z-index: 1070">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content checkout">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 id="cust-notif" class="modal-title">Calculation</h4>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <form>
+                            <table class="table table-striped table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Operand1</th>
+                                    <th>Operation</th>
+                                    <th>Operand2</th>
+                                    <th>Result</th>
+                                    <th>Clear Row</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="calculation in calculationlist ">
+                                    <td>
+                                        <select name="operand1" ng-model="calculation.operand1"
+                                                ng-options="field.fieldName as field.fieldName for field in operand1list"
+                                                class="form-control input-md">
+                                            <option value="">-Select-</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select name="operation" ng-model="calculation.operation"
+                                                class="form-control input-md">
+                                            <option value="">-Select-</option>
+                                            <option value="+">Addition</option>
+                                            <option value="-">Substraction</option>
+                                            <option value="*">Multiplication</option>
+                                            <option value="/">Division</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select name="operand2" ng-model="calculation.operand2"
+                                                ng-options="field.fieldName as field.fieldName for field in operand1list"
+                                                class="form-control input-md">
+                                            <option value="">-Select-</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select name="result" ng-model="calculation.result"
+                                                ng-options="field.fieldName as field.fieldName for field in operand1list"
+                                                class="form-control input-md">
+                                            <option value="">-Select-</option>
+                                        </select>
+                                    </td>
+                                    <td> <button type="button" class="btn btn-default hi_btn"
+                                                 ng-click="removeAddNewCalculation1()">X
+                                    </button>
+                                    </td>
+
+                                </tr>
+                                </tbody>
+                            </table>
+                            <td>
+                                <button type="button"
+                                        class="btn btn-primary hi_btn"
+                                        ng-click="savecalculation1()">
+                                    Save
+                                </button>
+                            </td>
+
+                            <td>
+                                <button type="button"
+                                        class="btn btn-primary"
+                                        ng-click="removeServices()"
+                                        data-dismiss="modal">Close
+                                </button>
+                            </td>
+
+                            <div class="form-group">
+                                <input type="submit"
+                                       class="btn btn-primary addnew pull-right"
+                                       value="Add New" ng-click="addnewcalculation()">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade ExchangeRate" tabindex="-1" id="add_new_pkt_conditional_calculation_modal" role="dialog"
+     data-backdrop="static"
+     aria-labelledby="mySmallModalLabel">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content checkout">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 id="cust-notif" class="modal-title">Conditional Calculation</h4>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <form>
+                            <table class="table table-striped table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Operand1</th>
+                                    <th>Operation</th>
+                                    <th>Operand2</th>
+                                    <th>Result</th>
+                                    <th>Clear Row</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="condition in conditionalList ">
+                                    <td>
+                                        <select name="operand1" ng-model="condition.operand1"
+                                                ng-options="field.fieldName as field.fieldName for field in operand1list"
+                                                class="form-control input-md">
+                                            <option value="">-Select-</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select name="operation" ng-model="condition.operation"
+                                                class="form-control input-md">
+                                            <option value="">-Select-</option>
+                                            <option value=">">Greater Than</option>
+                                            <option value="<">Less Than</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select name="operand2" ng-model="condition.operand2"
+                                                ng-options="field.fieldName as field.fieldName for field in operand1list"
+                                                class="form-control input-md">
+                                            <option value="">-Select-</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <input name="operand2" ng-model="condition.result"
+                                                class="form-control input-md"
+                                        ng-click="Calculation($index)">
+                                        </input>
+                                    </td>
+                                    <td> <button type="button" class="btn btn-default hi_btn"
+                                                 ng-click="removeAddNewCondition()">X
+                                    </button>
+                                    </td>
+
+                                </tr>
+                                </tbody>
+                            </table>
+                            <td>
+                                <button type="button"
+                                        class="btn btn-primary hi_btn"
+                                        ng-click="saveCondition()">
+                                    Save
+                                </button>
+                            </td>
+
+                            <td>
+                                <button type="button"
+                                        class="btn btn-primary"
+                                        ng-click="removeServices()"
+                                        data-dismiss="modal">Close
+                                </button>
+                            </td>
+
+                            <div class="form-group">
+                                <input type="submit"
+                                       class="btn btn-primary addnew pull-right"
+                                       value="Add New" ng-click="addnewCondition($index)">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</html>

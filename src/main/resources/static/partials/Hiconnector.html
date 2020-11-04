@@ -1,0 +1,83 @@
+<body>
+<div class="container-fluid">
+    <div class="container cus_main_row">
+
+        <div class="row" ng-show="userPermission.hiconnect==true">
+            <h2 class="pos-header-new">
+                <div>Hi Connect</div>
+            </h2>
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-3 rep_list_info" ng-show="userPermission.customerNotification==true">
+                <a href="#!/customernotification">
+                    <div class="custom_notif">
+                        <img src="images/icon/inventory/uominv.png" width="100" height="80">
+                        <div class="rep_info"><strong>customer notification</strong></div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-md-3 rep_list_info" ng-show="userPermission.transactionsData==true">
+                <a href="#!/transactionsdata">
+                    <div class="trans_data">
+                        <img src="images/icon/inventory/categoryinv.png" width="100" height="80">
+                        <div class="rep_info"><strong>Transactions Data</strong></div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-3 rep_list_info" ng-show="userPermission.destinationType==true">
+                <a href="#!/destinationType">
+                    <div class="trans_data">
+                        <img src="images/icon/inventory/inventorycounttype.jpg" width="100" height="80">
+                        <div class="rep_info"><strong>Destination Type</strong></div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-3 rep_list_info" ng-show="userPermission.destinationMap==true">
+                <a href="#!/destinationMap">
+                    <div class="trans_data">
+                        <img src="images/icon/inventory/inventorylocationinv.png" width="100" height="80">
+                        <div class="rep_info"><strong>Destination Map</strong></div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-3 rep_list_info" ng-show="userPermission.email==true">
+                <a href="#!/email">
+                    <div class="trans_data">
+                        <img src="images/icon/controlpanel/configurator/emailserver.png" width="100" height="80">
+                        <div class="rep_info"><strong>Email Reader</strong></div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-3 rep_list_info" ng-show="userPermission.permissionMaster==true">
+                <a href="#!/permissionMaster">
+                    <div class="trans_data">
+                        <img src="images/icon/inventory/salespricinginv.png" width="100" height="80">
+                        <div class="rep_info"><strong>PermissionMaster</strong></div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-3 rep_list_info" ng-show="userPermission.permissionGroup==true">
+                <a href="#!/permissionGroup">
+                    <div class="trans_data">
+                        <img src="images/icon/inventory/purchasepricinginv.png" width="100" height="80">
+                        <div class="rep_info"><strong>PermissionGroup</strong></div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-3 rep_list_info" ng-show="userPermission.permissionMaster==true">
+                <a href="#!/emailServer">
+                    <div class="trans_data">
+                        <img src="images/icon/inventory/salespricinginv.png" width="100" height="80">
+                        <div class="rep_info"><strong>EmailServer</strong></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

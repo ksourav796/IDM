@@ -1,0 +1,17 @@
+spring.datasource.url = jdbc:mysql://localhost:3306/SASSCHECKING?useSSL=false
+
+spring.datasource.username = root
+spring.datasource.password = myserver
+spring.jpa.show-sql = true
+spring.jpa.hibernate.ddl-auto = update
+spring.jpa.hibernate.naming-strategy = org.hibernate.cfg.ImprovedNamingStrategy
+spring.jpa.properties.hibernate.dialect = org.hibernate.dialect.MySQL5Dialect
+
+server.port = 8096
+#Scrypt
+#A factor to control the overall CPU/Memory cost
+scrypt.N=16384
+#A factor to control the blocksize for each mixing loop (memory usage)
+scrypt.r=8
+#A factor to control the number of independent mixing loops (parallelism)
+scrypt.p=1

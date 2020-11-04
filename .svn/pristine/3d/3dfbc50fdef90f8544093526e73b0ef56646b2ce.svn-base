@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <div class="container-fluid">
+        <div class="container cus_main_row" style="height: 715px;">
+            <div class="row">
+                <h2 class="pos-header-new">
+                    <div>Dashboard</div>
+                </h2>
+            </div>
+            <div class="row inner_row_bg">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="panel">
+                        <div class="panel-body" style="height: 65px;">
+                            <div class="col-md-4 col-lg-3 col-sm-5 col-xs-5">
+                                <form class="form-horizontal ng-pristine ng-valid">
+                                    <div class="form-group">
+                                        <div class="col-sm-12">
+                                            <p class="input-group" style="display: block;">
+                                                <input id="search_country" name="textinput"  type="text"
+                                                       placeholder="search" ng-model="countrySearchText" class="form-control input-md"
+                                                       ng-keyup="$event.keyCode == 13 ? getCountryList(countrySearchText) : null" />
+                                            </p>
+                                        </div>
+                                    </div>
+                                </form>
+                                <!--<div class="col-lg-7 col-md-9 col-sm-9">-->
+                                    <!--<div class="form-group">-->
+                                        <!--<div class="col-sm-2">-->
+                                            <!--<button id="add_country" type="button" class="btn btn-default hi_btn"  ng-click="addNewcountryPopulate()">Add country</button>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="fixed-table-container">
+                            <div class="table_wrapfixed-table-container-inner">
+                                <div class="header-background"></div>
+                                <table data-toggle="table" data-cache="false" data-height="299" class="hi_table table table-hover table-bordered table-striped table-fixed-header">
+                                    <thead>
+                                    <tr>
+
+                                        <th data-field="cntryname">
+                                            <div class="th-inner">Sr.No</div>
+                                        </th>
+                                        <th data-field="cntryname">
+                                            <div class="th-inner">Plan</div>
+                                        </th>
+                                        <th data-field="cntryname">
+                                            <div class="th-inner">Access URL</div>
+                                        </th>
+                                        <th data-field="cntryname">
+                                            <div class="th-inner">Key</div>
+                                        </th>
+                                        <th data-field="cntryname">
+                                            <div class="th-inner">Order No</div>
+                                        </th>
+                                        <th data-field="cntryname">
+                                            <div class="th-inner">Order Date</div>
+                                        </th>
+                                        <th data-field="cntryname">
+                                            <div class="th-inner">Software Version</div>
+                                        </th>
+                                        <th data-field="cntryname">
+                                            <div class="th-inner">UserName</div>
+                                        </th>
+                                        <th data-field="cntryname">
+                                            <div class="th-inner">Password</div>
+                                        </th>
+                                        <th data-field="cntryname">
+                                            <div class="th-inner">Login</div>
+                                        </th>
+
+                                    </tr>
+                                    <tbody id="parentTable">
+                                    <tr ng-repeat="dashboard in subscriptionListUser">
+                                        <td>{{dashboard.userAccountId}}</td>
+                                        <td>{{dashboard.subscriptionFor}}</td>
+                                            <td><a href={{dashboard.appUrl}}?username={{userName}}&password={{password}}&email={{email}} target="_blank">
+                                                <div style="height:100%;width:100%">
+                                                    Access Application
+                                                </div>
+                                            </a></td>
+                                        <!--<td ng-if="dashboard.subscriptionFor!='Application'"></td>-->
+                                        <td>{{dashboard.key}}</td>
+                                        <td>{{dashboard.orderNumber}}</td>
+                                        <td>{{dashboard.incorpDate|date:'yyyy/MM/dd hh:mm:ss	'}}</td>
+                                        <td>{{dashboard.version}}</td>
+                                        <td>{{dashboard.username}}</td>
+                                        <td>{{dashboard.password}}</td>
+                                        <td>{{dashboard.status}}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+</div>
+            </div>
+        </div>
+    </div>
+</html>

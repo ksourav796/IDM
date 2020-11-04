@@ -1,0 +1,229 @@
+
+
+
+<html ng-app="myApp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<title>Hi Account Sass Manager</title>
+<link href='./css/style.css' rel="stylesheet" type="text/css" />
+<link href='./css/css/font-awesome.css' rel="stylesheet" type="text/css" />
+	<link href='./css/vendors/bootstrap-datetimepicker.min.css' rel="stylesheet" type="text/css" />
+	<link rel="stylesheet" href= './css/css/angular-ui-notification.min.css' type="text/css" />
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+	<link href="css/login.css" rel="stylesheet" type="text/css" />
+	<link href='./css/vendors/bootstrap.min.css' rel="stylesheet" type="text/css" />
+<!--<title>HiAccounts</title>-->
+	</head>
+<body>
+<div class="generic-container">
+	<h2 ng-hide="userStatus">HI Next (Begin The Journey Of Application Development)
+        <a  id="logoutButton" ng-click= "logout()" ng-show="userStatus" style="font-size:15px;color:white;float:right;">LOGOUT <i class="fa fa-sign-out"></i></a>
+		<!--<ul class="nav navbar-nav navbar-right hidden-xs">-->
+			<!--<li>-->
+				<!--<a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false" tabindex="-1">-->
+					<!--<span class="white">{{userName}}</span>-->
+					<!--<i class="fa fa-angle-down white" style="font-size: inherit;"></i>-->
+				<!--</a>-->
+
+				<!--<ul>-->
+					<!--<li><a href="#!/login" id="logoutButton"  tabindex="-1"><i class="fa fa-sign-out pull-right"></i> LogOut</a></li>-->
+				<!--</ul>-->
+			<!--</li>-->
+		<!--</ul>-->
+    </h2>
+	<h2 ng-show="userStatus">Welcome {{userName}}
+        <a   id="logoutButton" ng-show="userStatus" ng-click= "logout()" style="font-size:15px;color:white;float:right;">LOGOUT <i class="fa fa-sign-out"></i></a>
+    </h2>
+	<div id="sidebar-menu" class="main_menu_side hidden-print main_menu" ng-controller="headerCtrl">
+		<div id="nav_side_menu" class="menu_section">
+			<ul class="nav side-menu">
+				<!--<li id="users"  ng-show="userStatus=='order'">-->
+					<!--<a id="userLink"  href="#!/users"  tabindex="-1"> <i  class="fa fa-users" aria-hidden="true"></i><span> <b> {{userName}} </b> </span></a>-->
+				<!--</li>-->
+				<li id="dashboard" ng-if="userStatus=='order'" >
+					<a id="dashboardLink"  href="#!/dashboard"  tabindex="-1"> <i  class="fa fa-dashboard" aria-hidden="true"></i><span> <b> Dashboard </b> </span></a>
+
+				</li>
+				<li id="invoice" ng-show="userStatus=='order'">
+					<a id="invoiceLink"  href="#!/invoice"  tabindex="-1"> <i  class="fa fa-book" aria-hidden="true"></i><span> <b> Invoice </b> </span></a>
+				</li>
+				<li id="tickets" ng-show="userStatus=='order'">
+					<a id="ticketsLink"  href="#!/tickets"  tabindex="-1"> <i  class="fa fa-edit" aria-hidden="true"></i><span> <b> Tickets </b> </span></a>
+				</li>
+				<li id="personal" ng-show="userStatus=='order'">
+					<a id="personalLink"  href="#!/personal"  tabindex="-1"> <i  class="fa fa-th" aria-hidden="true"></i><span> <b> Personal Information </b> </span></a>
+				</li>
+				<li id="feedback" ng-show="userStatus=='order'">
+					<a id="feedbackLink"  href="#!/feedback"  tabindex="-1"> <i  class="fa fa-envelope" aria-hidden="true"></i><span> <b> Feedback </b> </span></a>
+				</li>
+
+
+
+				<li id="sales" ng-show="userStatus=='user'" ng-if="userPermission.orderList==true">
+					<a id="salesLink"  href="#!/orderList" tabindex="-1"> <i  class="fa fa-users" aria-hidden="true"></i><span> <b> Order List </b> </span></a>
+				</li>
+				<li id="payments" ng-show="userStatus=='user'" ng-if="userPermission.paymentList==true">
+					<a id="paymentsLink" href="#!/paymentList" tabindex="-1"> <i class="fa fa-money" aria-hidden="true"></i><span><b>Payments</b>    </span></a>
+				</li>
+				<li id="developer" ng-if="userStatus=='Application'" >
+					<a id="developerLink" href="#!/developer" tabindex="-1"> <i class="fa fa-money" aria-hidden="true"></i><span><b>Dashboard</b></span></a>
+				</li>
+				<li id="profile" ng-if="userStatus=='Application'" >
+					<a id="profileLink" href="#!/profile" tabindex="-1"> <i class="fa fa-money" aria-hidden="true"></i><span><b>Profile</b></span></a>
+				</li>
+				<li id="apps" ng-if="userStatus=='Application'" >
+					<a id="appsLink" href="#!/apps" tabindex="-1"> <i class="fa fa-money" aria-hidden="true"></i><span><b>Apps</b></span></a>
+				</li>
+				<li id="account" ng-if="userStatus=='Application'" >
+					<a id="accountLink" href="#!/account" tabindex="-1"> <i class="fa fa-money" aria-hidden="true"></i><span><b>Account</b></span></a>
+				</li>
+				<li id="nextapp" ng-if="userStatus=='Application'" >
+					<a id="nextappLink" href="#!/nextapp" tabindex="-1"> <i class="fa fa-money" aria-hidden="true"></i><span><b>MyApps</b></span></a>
+				</li>
+				<!--<li id="purchase">-->
+					<!--<a id="purchaseLink" href="#!/permissionList"  tabindex="-1"> <i class="fa fa-shopping-cart" aria-hidden="true"></i><span>  Permission  </span></a>-->
+				<!--</li>-->
+				<!--<li>-->
+					<!--<a href="">Menu 1</a>-->
+				<!--</li>-->
+				<!--<li>-->
+					<!--<a href="">Menu 2</a>-->
+				<!--</li>-->
+				<li id="controlpanel" ng-show="userStatus=='user'" ng-if="userPermission.controlPannel==true">
+					<a id="controlpanelLink" href="#!/controlPanel"  tabindex="-1"> <i class="fa fa-cog" aria-hidden="true"></i> <span><b>Control Panel</b> </span></a>
+				</li>
+				<li id="Hi connector" ng-show="userStatus=='user'" ng-if="userPermission.hiconnect==true">
+					<a id="Hi connector" href="#!/Hiconnector"  tabindex="-1"> <i class="fa fa-info" aria-hidden="true"></i> <span><b> Hi Connect</b> </span></a>
+				</li>
+				<li id="pkt" ng-show="userStatus=='user' || userStatus=='Application'" ng-if="userPermission.pkt==true">
+					<a id="pkt" href="#!/pkt"  tabindex="-1"> <i  class="fa fa-tachometer" aria-hidden="true"></i> <span><b>PKT</b></span></a>
+				</li>
+				<!--<li id="raj" ng-show="userStatus=='Application'">-->
+					<!--<a id="raj" href="#!/raj"  tabindex="-1"> <i  class="fa fa-tachometer" aria-hidden="true"></i> <span><b>raj</b></span></a>-->
+				<!--</li>-->
+			</ul>
+		</div>
+	</div>
+
+
+</div>
+
+
+
+<div ng-view="true"></div>
+<!--<script>-->
+    <!--var PAGE_NAME = '<%out.print(request.getAttribute("pageName"));%>'-->
+<!--</script>-->
+<!-- JQuery -->
+<script src="./js/vendors/jquery.min.js"></script>
+<!-- Jquery UI Scripts -->
+<script src="./js/vendors/jquery-ui.js"></script>
+<script src="./js/jspdf.min.js"></script>
+<script src="./js/base64.js"></script>
+<script src="./js/jquery-base64.js"></script>
+<script src="./js/sprintf.js"></script>
+<!-- Bootstrap -->
+<script src="./js/vendors/bootstrap.min.js"></script>
+<!-- JQuery -->
+<script src="./js/vendors/jquery.min.js"></script>
+<!-- Jquery UI Scripts -->
+<script src="./js/vendors/jquery-ui.js"></script>
+<script src="./js/jspdf.min.js"></script>
+<script src="./js/base64.js"></script>
+<script src="./js/jquery-base64.js"></script>
+<script src="./js/sprintf.js"></script>
+<!-- Bootstrap -->
+<script src="./js/vendors/bootstrap.min.js"></script>
+
+
+<!-- Angular js -->
+<script src="./js/vendors/angular.min.js"></script>
+<script src="./js/vendors/angular-route.js"></script>
+<script src="./js/vendors/angular-animate.min.js"></script>
+<script src="./js/vendors/angular-sanitize.min.js"></script>
+<script src="./js/vendors/select2.min.js"></script>
+<script src="./js/vendors/angular-ui-notification.min.js"></script>
+<script src="./js/vendors/angular-cookies.min.js"></script>
+<script type="text/javascript" src="./js/vendors/moment.js"></script>
+<script src="./js/vendors/bootstrap-datetimepicker.min.js"></script>
+<script src="./js/vendors/ng-table.min.js"></script>
+<script src="./js/vendors/Chart.min.js"></script>
+<script src="./js/vendors/angular-chart.js"></script>
+<script src="./js/vendors/bootbox.min.js"></script>
+<script src="./js/vendors/ui-bootstrap-tpls.min.js"></script>
+<script src="./js/vendors/angular-filter.js"></script>
+
+<!-- Custom Theme Scripts -->
+<script src="./js/main.js"></script>
+<script  src="./js/custom.js"></script>
+<script src="./js/bootstrap-wysiwyg.js"></script>
+<script src="./js/jquery.hotkeys.js"></script>
+<script src="./js/controller/login.js"></script>
+<script src="./js/controller/orderList.js"></script>
+<script src="./js/controller/emailDirectLink.js"></script>
+
+<script src="./js/controller/permissionList.js"></script>
+<script src="./js/controller/countryList.js"></script>
+<script src="./js/controller/StateList.js"></script>
+<script src="./js/controller/Payments.js"></script>
+<script src="./js/controller/currency.js"></script>
+<script src="./js/controller/paymentmethod.js"></script>
+<script src="./js/controller/versioncontrol.js"></script>
+<script src="./js/controller/subscription.js"></script>
+<script src="./js/controller/packages.js"></script>
+<script src="./js/controller/customer.js"></script>
+<script src="./js/controller/item.js"></script>
+<script src="./js/controller/PractitionerRegister.js"></script>
+<script src="./js/controller/addOn.js"></script>
+<script src="./js/controller/cartRegistration.js"></script>
+<script src="./js/controller/Practitionerorders.js"></script>
+<script src="./js/controller/user.js"></script>
+<script src="./js/controller/cartcustomerlink.js"></script>
+<script src="./js/controller/customernotif.js"></script>
+<script src="./js/controller/transdata.js"></script>
+<script src="./js/controller/destinationType.js"></script>
+<script src="./js/controller/destinationMap.js"></script>
+<script src="./js/controller/rtrSyncSettings.js"></script>
+<script src="./js/controller/email.js"></script>
+<script src="./js/controller/permissionMaster.js"></script>
+<script src="./js/controller/permissionGroup.js"></script>
+<script src="./js/controller/table.js"></script>
+<script src="./js/controller/pkt.js"></script>
+<script src="./js/controller/pktFields.js"></script>
+<script src="./js/controller/pktuser.js"></script>
+<script src="./js/controller/header.js"></script>
+<script src="./js/controller/fields.js"></script>
+<script src="./js/controller/tablefields.js"></script>
+<script src="./js/controller/visible.js"></script>
+<script src="./js/controller/dashboard.js"></script>
+<script src="./js/controller/invoice.js"></script>
+<script src="./js/controller/tickets.js"></script>
+<script src="./js/image-compressor.js"></script>
+<script src="./js/controller/personal.js"></script>
+<script src="./js/controller/feedback.js"></script>
+<script src="./js/controller/operator.js"></script>
+<script src="./js/controller/validator.js"></script>
+<script src="./js/controller/action.js"></script>
+<script src="./js/controller/hiConnect.js"></script>
+<script src="./js/controller/application.js"></script>
+<script src="./js/controller/position.js"></script>
+<script src="./js/controller/permission.js"></script>
+<script src="./js/controller/controlPanel.js"></script>
+<script src="./js/controller/devdashboard.js"></script>
+<script src="./js/controller/properties.js"></script>
+<script src="./js/controller/renew.js"></script>
+<!--<script src="./js/controller/addDescriptionModal.js"></script>-->
+<script src="./js/controller/profile.js"></script>
+<script src="./js/controller/apps.js"></script>
+<script src="./js/controller/devapplication.js"></script>
+<script src="./js/controller/nextApp.js"></script>
+<script src="./js/controller/account.js"></script>
+<script src="./js/controller/publish.js"></script>
+<script src="./js/controller/unpublish.js"></script>
+<script src="./js/controller/pkt.js"></script>
+<script src="./js/controller/columnType.js"></script>
+<Script src="./js/controller/emailServer.js"></Script>
+<Script src="./js/controller/menuBuilders.js"></Script>
+<Script src="./js/controller/editApplication.js"></Script>
+</body>
+</html>

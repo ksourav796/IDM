@@ -1,0 +1,15 @@
+package com.hyva.idm.sass.sasspojo;
+
+import lombok.Data;
+
+@Data
+public class UpdateTablePojo {
+
+    private String fromtable;
+    private String fromcolumn;
+    private String fromcommoncolumn;
+    private String totable;
+    private String tocolumn;
+    private String tocommoncolumn;
+    private String operation;
+}

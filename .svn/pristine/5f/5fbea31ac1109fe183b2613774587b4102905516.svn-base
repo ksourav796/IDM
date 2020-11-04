@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<body>
+<div class="container-fluid">
+    <div class="container cus_main_row">
+        <div class="row">
+            <h2 class="pos-header-new">
+                <div>Properties</div>
+            </h2>
+        </div>
+        <div class="row inner_row_bg">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="panel">
+                    <div class="panel-body" style="height: 65px;">
+                        <div class="col-md-4 col-lg-3 col-sm-5 col-xs-5">
+                            <form class="form-horizontal ng-pristine ng-valid">
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-lg-7 col-md-9 col-sm-9">
+
+                            <div class="col-sm-6">
+                                <p class="input-group" align="right" style="display: block;">
+                                    <input id="searchh" name="textinput"  type="text" autocomplete="off"
+                                           placeholder="search Action" ng-model="searchText" class="form-control input-md"
+                                           ng-keyup="$event.keyCode == 13 ?getPropertyList(searchText):null"/>
+                                </p>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-sm-2">
+                                    <button id="" type="button" class="btn btn-default hi_btn"
+                                            ng-click="addNewProperty()">Add
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="fixed-table-container">
+                            <div class="table_wrap fixed-table-container-inner">
+                                <div class="header-background"></div>
+                                <table data-toggle="table" data-cache="false" data-height="299"
+                                       style="margin-bottom: 0px;"
+                                       class="hi_table table table-hover table-bordered table-striped table-fixed-header">
+                                    <thead>
+                                    <tr>
+                                        <!--<th data-field="formRegno">-->
+                                            <!--<div class="th-inner">Name</div>-->
+                                        <!--</th>-->
+                                        <th data-field="formRegno">
+                                            <div class="th-inner" ALIGN="center">Description</div>
+                                        </th>
+                                        <!--<th data-field="formRegno">-->
+                                            <!--<div class="th-inner">Edit</div>-->
+                                        <!--</th>-->
+
+
+                                    <tbody id="parentTable">
+                                    <tr ng-repeat="type in propertytype| filter:searchText">
+                                        <!--<td>{{type.file}}</td>-->
+                                        <td>{{type.description}}</td>
+                                        <!--<td>{{type.status}}</td>-->
+                                        <!--<td><a id="edit_{{$index}}" href="javascript:void(0)"-->
+                                               <!--ng-click="editProperty(type)" class="edit"><i-->
+                                                <!--class="fa fa-pencil-square-o fa-fw orange"></i></a></td>-->
+                                        <!--</tr>-->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <!--<div class="col-lg-5 col-md-7 col-sm-10 pagination_" style="float: right; text-align: right; margin-top: 10px;">-->
+                        <!--&lt;!&ndash;<div class="col-sm-12 pagination_">&ndash;&gt;-->
+
+                        <!--<button type="button" class="btn btn-default hi_btn" ng-class="{'diabled-class': first}"-->
+                                <!--ng-disabled="first"-->
+                                <!--ng-click="getPaginatedActionList('firstPage')" ng-model="first">First-->
+                        <!--</button>-->
+                        <!--<button type="button" class="btn btn-default hi_btn" ng-class="{'diabled-class': prev}"-->
+                                <!--ng-disabled="prev"-->
+                                <!--ng-click="getPaginatedActionList('prevPage')" ng-model="prev">Prev-->
+                        <!--</button>-->
+                        <!--<button type="button" class="btn btn-default hi_btn" name="next" ng-disabled="next"-->
+                                <!--ng-click="getPaginatedActionList('nextPage')" value="next"-->
+                                <!--ng-class="{'diabled-class': next}" ng-model="next">Next-->
+                        <!--</button>-->
+                        <!--<button type="button" class="btn btn-default hi_btn"-->
+                                <!--ng-click="getPaginatedActionList('lastPage')" ng-class="{'diabled-class': last}"-->
+                                <!--ng-disabled="last"-->
+                                <!--ng-model="last">Last-->
+                        <!--</button>-->
+                    <!--</div>-->
+
+
+                    <div class="modal fade " tabindex="-1" id="add_new_Property_modal" role="dialog"
+                         data-backdrop="static"
+                         aria-labelledby="mySmallModalLabel">
+                        <div class="modal-dialog modal-md">
+                            <div class="modal-content checkout">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                            aria-hidden="true">&times;</span></button>
+                                    <h4 id="cust-notif" class="modal-title">Add Property</h4>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-md-12 col-sm-12">
+                                            <form class="form-horizontal" name="mail">
+                                                <fieldset>
+                                                    <div class="form-group">
+                                                        <div class="form-group">
+                                                            <div class="col-xs-6 col-xs-offset-2">
+                                                                <input type='file' accept='image/*' id="imageLoad" ng-model-instant
+                                                                       onchange="angular.element(this).scope().imageUpload(event)"><br>
+                                                                <img class="image-preview"
+                                                                     style="width:200px;height:200px; margin-left: 39px;">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="col-md-4 col-sm-4 control-label" for="">Description</label>
+                                                            <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                                <textarea id="Description" name="Description"
+                                                                       type="text" placeholder="Description"
+                                                                       ng-model="description"
+                                                                          class="form-control input-md" autocomplete="off"></textarea>
+
+                                                            </div>
+                                                        </div>
+                                                        <!--<form class="form-horizontal">-->
+                                                                    <!--<fieldset>-->
+                                                                        <!--<div class="form-group" width="100%">-->
+                                                                            <!--<label class="col-sm-3 col-md-3 col-lg-3 control-label">Description</label>-->
+                                                                            <!--&lt;!&ndash;<div class="col-md-6" style="position:relative;">&ndash;&gt;-->
+                                                                            <!--<div class="col-sm-9 col-md-9 col-lg-9">-->
+                                                                                <!--<input type="hidden" name="TermsAndConditionDesc" value="" id="TermsAndConditionDesc">-->
+                                                                                <!--&lt;!&ndash; Buttons for RTE- RichTextEditor &ndash;&gt;-->
+                                                                                <!--<div class="btn-toolbar" data-role="editor-toolbar" data-target="#editor" id="editorButtons">-->
+                                                                                    <!--<div class="btn-group">-->
+                                                                                        <!--<a class="btn dropdown-toggle fonts tooltip-f" data-toggle="dropdown" title=""><i class="icon-font"></i><b class="caret"></b></a>-->
+                                                                                        <!--<ul class="dropdown-menu">-->
+                                                                                            <!--<li><a data-edit="fontName Arial" style="font-family:'Arial'">Arial</a></li>-->
+                                                                                            <!--<li><a data-edit="fontName Arial Black" style="font-family:'Arial Black'">Arial Black</a></li>-->
+                                                                                            <!--<li><a data-edit="fontName Courier" style="font-family:'Courier'">Courier</a></li>-->
+                                                                                            <!--<li><a data-edit="fontName Courier New" style="font-family:'Courier New'">Courier New</a></li>-->
+                                                                                            <!--<li><a data-edit="fontName Comic Sans MS" style="font-family:'Comic Sans MS'">Comic Sans MS</a></li>-->
+                                                                                            <!--<li><a data-edit="fontName Helvetica" style="font-family:'Helvetica'">Helvetica</a></li>-->
+                                                                                            <!--<li><a data-edit="fontName Impact" style="font-family:'Impact'">Impact</a></li>-->
+                                                                                            <!--<li><a data-edit="fontName Lucida Sans" style="font-family:'Lucida Sans'">Lucida Sans</a></li>-->
+                                                                                            <!--<li><a data-edit="fontName Tahoma" style="font-family:'Tahoma'">Tahoma</a></li>-->
+                                                                                            <!--<li><a data-edit="fontName Times" style="font-family:'Times'">Times</a></li>-->
+                                                                                            <!--<li><a data-edit="fontName Times New Roman" style="font-family:'Times New Roman'">Times New Roman</a></li>-->
+                                                                                            <!--<li><a data-edit="fontName Verdana" style="font-family:'Verdana'">Verdana</a></li>-->
+                                                                                        <!--</ul>-->
+                                                                                    <!--</div>-->
+                                                                                    <!--<div class="btn-group">-->
+                                                                                        <!--<a class="btn dropdown-toggle tooltip-f" data-toggle="dropdown" title=""><i class="icon-text-height"></i>&nbsp;<b class="caret"></b></a>-->
+                                                                                        <!--<ul class="dropdown-menu">-->
+                                                                                            <!--<li><a data-edit="fontSize 5"><font size="5">Huge</font></a></li>-->
+                                                                                            <!--<li><a data-edit="fontSize 3"><font size="3">Normal</font></a></li>-->
+                                                                                            <!--<li><a data-edit="fontSize 1"><font size="1">Small</font></a></li>-->
+                                                                                        <!--</ul>-->
+                                                                                    <!--</div>-->
+                                                                                    <!--<div class="btn-group">-->
+                                                                                        <!--<a class="btn tooltip-f btn-info" data-edit="bold" title=""><i class="icon-bold"></i></a>-->
+                                                                                        <!--<a class="btn tooltip-f" data-edit="italic" title=""><i class="icon-italic"></i></a>-->
+                                                                                        <!--<a class="btn tooltip-f" data-edit="strikethrough" title=""><i class="icon-strikethrough"></i></a>-->
+                                                                                        <!--<a class="btn tooltip-f" data-edit="underline" title=""><i class="icon-underline"></i></a>-->
+                                                                                    <!--</div>-->
+                                                                                    <!--<div class="btn-group">-->
+                                                                                        <!--<a class="btn tooltip-f" data-edit="insertunorderedlist" title=""><i class="icon-list-ul"></i></a>-->
+                                                                                        <!--<a class="btn tooltip-f" data-edit="insertorderedlist" title=""><i class="icon-list-ol"></i></a>-->
+                                                                                        <!--<a class="btn tooltip-f" data-edit="outdent" title=""><i class="icon-indent-left"></i></a>-->
+                                                                                        <!--<a class="btn tooltip-f" data-edit="indent" title=""><i class="icon-indent-right"></i></a>-->
+                                                                                    <!--</div>-->
+                                                                                    <!--<div class="btn-group">-->
+                                                                                        <!--<a class="btn tooltip-f btn-info" data-edit="justifyleft" title=""><i class="icon-align-left"></i></a>-->
+                                                                                        <!--<a class="btn tooltip-f" data-edit="justifycenter" title=""><i class="icon-align-center"></i></a>-->
+                                                                                        <!--<a class="btn tooltip-f" data-edit="justifyright" title=""><i class="icon-align-right"></i></a>-->
+                                                                                        <!--<a class="btn tooltip-f" data-edit="justifyfull" title=""><i class="icon-align-justify"></i></a>-->
+                                                                                    <!--</div>-->
+                                                                                    <!--<div class="btn-group">-->
+                                                                                        <!--<a class="btn dropdown-toggle tooltip-f" data-toggle="dropdown" title=""><i class="icon-link"></i></a>-->
+                                                                                        <!--<div class="dropdown-menu input-append">-->
+                                                                                            <!--<input class="span2" placeholder="URL" type="text" data-edit="createLink">-->
+                                                                                            <!--<button class="btn" type="button">Add</button>-->
+                                                                                        <!--</div>-->
+                                                                                        <!--<a class="btn tooltip-f" data-edit="unlink" title=""><i class="icon-cut"></i></a>-->
+                                                                                    <!--</div>-->
+                                                                                    <!--<div class="btn-group">-->
+                                                                                        <!--<a class="btn tooltip-f" title="" id="pictureBtn"><i class="icon-picture"></i></a>-->
+                                                                                        <!--<input type="file" data-role="magic-overlay" data-target="#pictureBtn" data-edit="insertImage" style="opacity: 0; position: absolute; top: 0px; left: 0px; width: 0px; height: 0px;">-->
+                                                                                    <!--</div>-->
+                                                                                    <!--<div class="btn-group">-->
+                                                                                        <!--<a class="btn tooltip-f" data-edit="undo" title=""><i class="icon-undo"></i></a>-->
+                                                                                        <!--<a class="btn tooltip-f" data-edit="redo" title=""><i class="icon-repeat"></i></a>-->
+                                                                                    <!--</div>-->
+                                                                                    <!--<input type="text" value="" data-edit="inserttext" id="voiceBtn" x-webkit-speech="" style="display: none;">-->
+                                                                                <!--</div>-->
+                                                                                <!--&lt;!&ndash; RTE div &ndash;&gt;-->
+                                                                                <!--<div id="editor" contenteditable="true" ng-model="description">-->
+                                                                                    <!--{{description}}-->
+                                                                                <!--</div>-->
+                                                                            <!--</div>-->
+
+
+                                                                        <!--</div>-->
+                                                                    <!--</fieldset>-->
+                                                                <!--</form>-->
+
+
+                                                    <!--<div class="form-group">-->
+                                                    <!--<label class="col-md-4 col-sm-4 control-label"-->
+                                                    <!--for="">DocType</label>-->
+                                                    <!--<div class="col-md-6 col-sm-6">-->
+                                                    <!--<select name="DocType" id="DocType" ng-model="docType"-->
+                                                    <!--class="form-control input-md" required>-->
+                                                    <!--<option value="Purchase">Purchase</option>-->
+                                                    <!--<option value="Sales">Sales</option>-->
+                                                    <!--</select>-->
+                                                    <!--</div>-->
+                                                    <!--</div>-->
+                                                    <!--<div class="form-group">-->
+                                                        <!--<label class="col-md-4 col-sm-4 control-label"-->
+                                                               <!--for="">status</label>-->
+                                                        <!--<div class="col-md-6 col-sm-6">-->
+                                                            <!--<select name="status" id="status" ng-model="status"-->
+                                                                    <!--class="form-control input-md" required>-->
+                                                                <!--<option value="Active">Active</option>-->
+                                                                <!--<option value="InActive">InActive</option>-->
+                                                            <!--</select>-->
+                                                        <!--</div>-->
+                                                    <!--</div>-->
+                                                <!--</fieldset>-->
+
+
+                                                <div class="modal-footer">
+                                                    <button type="submit" class="btn btn-default" data-toggle="modal"
+                                                            data-target=".print-me" ng-click="saveProperty()">save
+                                                    </button>
+                                                    <button type="button" class="btn btn-default"
+                                                            ng-click="removeAction()" data-dismiss="modal">close
+                                                    </button>
+
+                                                </div>
+
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>
+

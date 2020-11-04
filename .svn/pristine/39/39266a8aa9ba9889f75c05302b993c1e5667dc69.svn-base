@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<body>
+<div class="container-fluid">
+    <div class="container cus_main_row">
+        <div class="row">
+            <h2 class="pos-header-new">
+                <div>Customer Notification</div>
+            </h2>
+        </div>
+        <div class="row inner_row_bg">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="panel">
+                    <div class="panel-body" style="height: 65px;">
+                        <div class="col-md-4 col-lg-3 col-sm-5 col-xs-5">
+                            <form class="form-horizontal ng-pristine ng-valid">
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <div class="col-sm-12">
+                                                <p class="input-group" style="display: block;">
+                                                    <input id="search_customer" style="position:relative;width: 77%;"
+                                                           name="textinput" type="text"
+                                                           placeholder="search " ng-model="searchText"
+                                                           class="form-control input-md"
+                                                           ng-change="getpaginatednotificationList()"
+                                                           ng-model-options="{ debounce: 1000 }"/>
+                                                </p>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-md-6 col-sm-6" style="position:relative;width: 34%;">
+                            <select style="position:relative;width: 50%;" name="" ng-model="restaurantName"
+                                    ng-change="getpaginatednotificationList()"
+                                    ng-options="name as name for name in restaurantList"
+                                    class="form-control input-md">
+                                <option value="">Select</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade printreceiptA4" tabindex="-1" id="viewalldetails" role="dialog"
+         data-backdrop="static"
+         aria-labelledby="mySmallModalLabel">
+        <div class="modal-dialog modal-lg" style="width:770px;height:842px;">
+            <div class="modal-content checkout">
+                <div id="receiptPaymentPritableArea" class="panel-body" class="mini-print-wrapper"
+                     style=" max-height:500px;overflow-y: auto;">
+
+                    <button type="button" class="close" data-dismiss="modal" style="color: black !important;">x</button>
+                    <table style="width:700px;border:1px solid gray;">
+                        <tr>
+                            <td style="padding: 0 10px">
+                                <table class="hi_table">
+                                    <tr>
+                                        <td>
+                                            <table class="hi_table"
+                                                   style="width: 700px;border-bottom: 1px solid black;">
+                                                <tr>
+                                                    <td>
+                                                        <div class="invoice-title">
+                                                            <h3 style="text-align: center;font-weight: 600;">
+                                                                {{notification.restaurantName}} Order Details</h3>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+
+                                            <table style="width: 700px; border-bottom: 1px solid black; padding-bottom: 10px !important;">
+                                                <h><b style="text-align: center">Customer Details:</b></h>
+                                                <tr>
+                                                    <td>
+
+                                                        <table style="width:350px;" class="hi_table">
+
+                                                            <tr style="padding-top:20px!important;">
+                                                                <td style="width: 37%;">Customer Name</td>
+                                                                <td style="width: 3%;">:</td>
+                                                                <td>{{notification.customerName}}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td style="width: 37%;">Location</td>
+                                                                <td style="width: 3%;">:</td>
+                                                                <td>{{notification.location}}</td>
+
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Phone Number</td>
+                                                                <td>:</td>
+                                                                <td>{{notification.phone}}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Aggregator</td>
+                                                                <td>:</td>
+                                                                <td>{{notification.fromCompname}}</td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                    <td>
+                                                        <table style="width:350px;" class="hi_table">
+                                                            <tr style="padding-bottom:20px;">
+                                                                <td style="width: 37%;">Order Time</td>
+                                                                <td style="width: 3%;">:</td>
+                                                                <td>{{notification.createdTime|date:'dd-MMM-yyyy
+                                                                    hh:mm:ss'}}
+                                                                </td>
+                                                            </tr>
+                                                            <tr style="padding-bottom:20px;">
+                                                                <td style="width: 37%;">OrderId</td>
+                                                                <td style="width: 3%;">:</td>
+                                                                <td>{{notification.notificationId}}</td>
+                                                            </tr>
+                                                            <tr style="padding-bottom:20px;">
+                                                                <td style="width: 37%;">Email</td>
+                                                                <td style="width: 3%;">:</td>
+                                                                <td>{{notification.email}}</td>
+                                                            </tr>
+
+                                                            <tr style="padding-bottom:20px;">
+                                                                <td>PinCode</td>
+                                                                <td>:</td>
+                                                                <td>{{notification.pincode}}</td>
+                                                            </tr>
+                                                            <tr style="padding-bottom:20px;">
+                                                                <td>Payment Status</td>
+                                                                <td>:</td>
+                                                                <td>{{notification.paymentStatus}}</td>
+                                                            </tr>
+
+                                                            <tr style="padding-bottom:20px;">
+                                                                <td>&nbsp;</td>
+                                                                <td>&nbsp;</td>
+                                                                <td>&nbsp;</td>
+                                                            </tr>
+                                                            <tr>&nbsp;</tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+
+                                            </table>
+                                            <table class="border_info"
+                                                   style="width: 700px;border-bottom: 1px solid black" class="hi_table">
+
+                                                <h><b style="text-align: center">Order Details:</b><br></h>
+                                                <br>
+                                                <thead style="padding-top: 12px; margin-top: 20px;">
+                                                <tr>
+                                                    <th>SL.No</th>
+                                                    <th>Item Name</th>
+                                                    <th>Unit Price</th>
+                                                    <th>Quantity</th>
+                                                    <th>Final Price</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr ng-repeat="item in notification.itemdetails">
+                                                    <td>{{$index+1}}</td>
+                                                    <td>{{item.item_name}}</td>
+                                                    <td>{{item.item_unit_price}}</td>
+                                                    <td>{{item.item_quantity}}</td>
+                                                    <td>{{item.item_final_price}}</td>
+                                                </tr>
+                                                </tbody>
+
+                                            </table>
+
+                                            <table class="hi_tabled"
+                                                   style="width: 700px;padding-bottom:10px;border-bottom: 1px solid black;margin-top: -70px !important;">
+                                                <br>
+                                                <h><b>Payment Details</b></h>
+                                                <tr style="text-align: right;margin-left: 10px">
+                                                    <td>SubTotal</td>
+                                                    <td>:</td>
+                                                    <td>{{notification.subTotal|number:2}}</td>
+                                                    <td>&nbsp;</td>
+                                                </tr>
+                                                <br>
+                                                <tr style="text-align: right;margin-left: 10px"
+                                                    ng-repeat="charge in notification.charges">
+                                                    <td>{{charge.title}}</td>
+                                                    <td>:</td>
+                                                    <td>{{charge.value|number:2}}</td>
+                                                    <td>&nbsp;</td>
+                                                </tr>
+                                                <br>
+                                                <!--<tr style="text-align: right;margin-left: 10px">-->
+                                                    <!--<td>Item Taxes (Total)</td>-->
+                                                    <!--<td>:</td>-->
+                                                    <!--<td>{{notification.itemTaxes|number:2}}</td>-->
+                                                    <!--<td>&nbsp;</td>-->
+                                                <!--</tr>-->
+                                                <!--<br>-->
+                                                <!--<tr style="text-align: right;margin-left: 10px">-->
+                                                    <!--<td>Item Charges (Total)</td>-->
+                                                    <!--<td>:</td>-->
+                                                    <!--<td>{{notification.itemCharge|number:2}}</td>-->
+                                                    <!--<td>&nbsp;</td>-->
+                                                <!--</tr>-->
+                                                <!--<br>-->
+                                                <tr style="text-align: right;margin-left: 10px">
+                                                    <td>Discount</td>
+                                                    <td>:</td>
+                                                    <td>{{notification.discount|number:2}}</td>
+                                                    <td>&nbsp;</td>
+                                                </tr>
+                                                <br>
+                                                <tr style="text-align: right;margin-left: 10px">
+                                                    <td>Order Total</td>
+                                                    <td>:</td>
+                                                    <td>{{notification.total|number:2}}</td>
+                                                    <td>&nbsp;</td>
+                                                </tr>
+                                                <br>
+                                                <tr style="text-align: right">
+                                                    <td>Payment Mode</td>
+                                                    <td> :</td>
+                                                    <td>{{notification.paymentmode}}</td>
+                                                    <td>&nbsp;</td>
+                                                </tr>
+                                            </table>
+                                            <div class="modal-footer">
+                                                <button type="button" ng-click="remove()" class="btn btn-default"
+                                                        data-dismiss="modal">Close
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade printreceiptA4" tabindex="-1" id="viewStatusChange" role="dialog"
+         data-backdrop="static"
+         aria-labelledby="mySmallModalLabel">
+        <div class="modal-dialog modal-lg" style="width:770px;height:842px;">
+            <div class="modal-content checkout">
+                <table class="border_info" style="width: 700px;" class="hi_table">
+                    <thead style="padding-top: 12px;">
+                    <tr>
+                        <th data-field="cmpnyname">
+                            <div class="th-inner">Delivered</div>
+                        </th>
+                        <th data-field="cmpnyname">
+                            <div class="th-inner">Reject</div>
+                        </th>
+                        <th data-field="cmpnyname">
+                            <div class="th-inner">Pick Up</div>
+                        </th>
+                        <th data-field="cmpnyname">
+                            <div class="th-inner">Assign Delivery Boy</div>
+                        </th>
+                        <th data-field="cmpnyname">
+                            <div class="th-inner">Confirm</div>
+                        </th>
+                        <th data-field="cmpnyname">
+                            <div class="th-inner">Ready</div>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td ng-show="orderDetails.typeDoc=='ZSO'">
+                            <button type="button" class="btn btn-default hi_btn" ng-click="savedeliverd()">Delivery
+                            </button>
+                        </td>
+                        <td ng-show="orderDetails.typeDoc=='ZSO'">
+                            <button type="button" class="btn btn-default hi_btn"
+                                    ng-click="pickedup('pickup',orderDetails)">Pickedup
+                            </button>
+                        </td>
+                        <td ng-show="orderDetails.typeDoc=='ZSO'">
+                            <button type="button" class="btn btn-default hi_btn"
+                                    ng-click="asiandeliver('delivery',orderDetails)">Assign Delivered Boy
+                            </button>
+                        </td>
+                        <td ng-show="orderDetails.typeDoc=='ZSO'">
+                            <button type="button" class="btn btn-default hi_btn" ng-click="confirm(orderDetails)">
+                                Confirm
+                            </button>
+                        </td>
+                        <td ng-show="orderDetails.typeDoc=='ZSO'">
+                            <button type="button" class="btn btn-default hi_btn" ng-click="ready(orderDetails)">Ready
+                            </button>
+                        </td>
+                        <td ng-show="orderDetails.typeDoc=='ZSO'">
+                            <button type="button" class="btn btn-default hi_btn" ng-click="ready(orderDetails)">Ready
+                            </button>
+                    </tr>
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="fixed-table-container">
+            <div class="table_wrap fixed-table-container-inner">
+                <div class="header-background"></div>
+                <table data-toggle="table" data-cache="false" data-height="299" style="margin-bottom: 0px;"
+                       class="hi_table table table-hover table-bordered table-striped table-fixed-header">
+                    <thead>
+                    <tr>
+                        <th data-field="name" style="width: 15% !important;">Order Time</th>
+                        <th data-field="name" style="width: 10% !important;">Order Id</th>
+                        <th data-field="name" style="width: 13% !important;">Delivery</th>
+                        <th data-field="name" style="width: 10% !important;">Outlet</th>
+                        <th data-field="name" style="width: 10% !important;">Customer</th>
+                        <th data-field="name" style="width: 10% !important;">Amount</th>
+                        <th data-field="cmpnyname">
+                            <div class="th-inner">Channel</div>
+                        </th>
+                        <th data-field="cmpnyname">
+                            <div class="th-inner">Status</div>
+                        </th>
+                        <th data-field="cmpnyname">
+                            <div class="th-inner">Details</div>
+                        </th>
+                        <th data-field="cmpnyname">
+                            <div class="th-inner">Status Change</div>
+                        </th>
+
+                        <!--<th data-field="deltype"><div class="th-inner">transactionDate;</div></th>-->
+                    <tbody id="parentTable">
+                    <tr ng-repeat="online in notificationList| filter:searchText">
+                        <td style="width: 15% !important;">{{online.createdTime|date:'dd-MMM-yyyy hh:mm:ss'}}</td>
+                        <td style="width: 10% !important;">{{online.notificationId}}</td>
+                        <td style="width: 13% !important;">{{online.deliveryTime|date:'dd-MMM-yyyy hh:mm:ss'}}</td>
+                        <td style="width: 10% !important;">{{online.restaurantName}}</td>
+                        <td style="width: 10% !important;">{{online.customerName}}<br>{{online.phone}}</td>
+                        <td style="width: 10% !important;">{{online.amount}}</td>
+                        <td style="width: 10% !important;" ng-if="online.fromCompname=='zomato'"><img
+                                style="width:40px;height:40px;" src="images/Zomato_logo.png"></td>
+                        <td style="width: 10% !important;" ng-if="online.fromCompname=='swiggy'"><img
+                                style="width:40px;height:40px;" src="images/swiggy-logo.png"></td>
+                        <td style="width: 10% !important;" ng-if="online.fromCompname=='foodpanda'"><img
+                                style="width:40px;height:40px;" src="images/foodpanda.png"></td>
+                        <td style="width: 10% !important;" ng-if="online.fromCompname=='ubereats'"><img
+                                style="width:40px;height:40px;" src="images/uber.png"></td>
+                        <td>{{online.status}}</td>
+                        <td ng-show="online.typeDoc=='ZSO'">
+                            <button type="button" class="btn btn-default hi_btn" ng-click="viewAllDetails(online)">
+                                Details
+                            </button>
+                        </td>
+                        <td ng-show="online.typeDoc=='ZSO'">
+                            <button type="button" class="btn btn-default hi_btn" ng-click="StatusUpdate(online)">Status
+                                Change
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="col-lg-5 col-md-7 col-sm-10 pagination_"
+                 style="float: right; text-align: right; margin-top: 10px;">
+
+                <button type="button" class="btn btn-default hi_btn" ng-class="{'diabled-class': first}"
+                        ng-disabled="first"
+                        ng-click="getpaginatednotificationList('firstPage')" ng-model="first">First
+                </button>
+                <button type="button" class="btn btn-default hi_btn" ng-class="{'diabled-class': prev}"
+                        ng-disabled="prev"
+                        ng-click="getpaginatednotificationList('prevPage')" ng-model="prev">Prev
+                </button>
+                <button type="button" class="btn btn-default hi_btn" name="next" ng-disabled="next"
+                        ng-click="getpaginatednotificationList('nextPage')" value="next"
+                        ng-class="{'diabled-class': next}" ng-model="next">Next
+                </button>
+                <button type="button" class="btn btn-default hi_btn"
+                        ng-click="getpaginatednotificationList('lastPage')" ng-class="{'diabled-class': last}"
+                        ng-disabled="last"
+                        ng-model="last">Last
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade ExchangeRate" tabindex="-1" id="add_new_cust_notif_modal" role="dialog"
+         data-backdrop="static"
+         aria-labelledby="mySmallModalLabel">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content checkout">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 id="cust-notif" class="modal-title">Add cust_notif</h4>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12">
+                            <form class="form-horizontal" name="mail">
+                                <fieldset>
+
+                                    <div class="form-group">
+                                        <label class="col-md-4 col-sm-4 control-label" for="">fromRegno</label>
+                                        <div class="col-md-6 col-sm-6" style="position:relative;">
+                                            <input id="formRegion" name="formRegion"
+                                                   type="text" placeholder="formRegion"
+                                                   ng-model="fromRegno"
+                                                   class="form-control input-md" autocomplete="off">
+
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-4 col-sm-4 control-label" for="">toRegno</label>
+                                        <div class="col-md-6 col-sm-6" style="position:relative;">
+                                            <input id="toRegno" name="toRegno"
+                                                   type="text" placeholder="toRegno"
+                                                   ng-model="toRegno"
+                                                   class="form-control input-md" autocomplete="off">
+
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-4 col-sm-4 control-label" for="">timeStamp</label>
+                                        <div class="col-md-6 col-sm-6" style="position:relative;">
+                                            <input id="timeStamp" name="timeStamp"
+                                                   type="text" placeholder="timeStamp"
+                                                   ng-model="timestamp"
+                                                   class="form-control input-md" autocomplete="off">
+
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-4 col-sm-4 control-label" for="">typeDoc</label>
+                                        <div class="col-md-6 col-sm-6" style="position:relative;">
+                                            <input id="typeDoc" name="typeDoc"
+                                                   type="text" placeholder="typeDoc"
+                                                   ng-model="typeDoc"
+                                                   class="form-control input-md" autocomplete="off">
+
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-4 col-sm-4 control-label" for="">customernotif</label>
+                                        <div class="col-md-6 col-sm-6" style="position:relative;">
+                                            <input id="customernotif" name="customernotif"
+                                                   type="text" placeholder="customernotif"
+                                                   ng-model="customernotif"
+                                                   class="form-control input-md" autocomplete="off">
+
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-4 col-sm-4 control-label" for="">userId</label>
+                                        <div class="col-md-6 col-sm-6" style="position:relative;">
+                                            <input id="customernoyif" name="userId"
+                                                   type="text" placeholder="userId"
+                                                   ng-model="userId"
+                                                   class="form-control input-md" autocomplete="off">
+
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-4 col-sm-4 control-label" for="">tocompname</label>
+                                        <div class="col-md-6 col-sm-6" style="position:relative;">
+                                            <input id="tocompany" name="tocompname"
+                                                   type="text" placeholder="tocompname"
+                                                   ng-model="tocompname"
+                                                   class="form-control input-md" autocomplete="off">
+
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-4 col-sm-4 control-label" for="">fromcompname</label>
+                                        <div class="col-md-6 col-sm-6" style="position:relative;">
+                                            <input id="tocompany" name="fromcompname"
+                                                   type="text" placeholder="fromcompname"
+                                                   ng-model="fromcompname"
+                                                   class="form-control input-md" autocomplete="off">
+
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-4 col-sm-4 control-label" for="">toEmail</label>
+                                        <div class="col-md-6 col-sm-6" style="position:relative;">
+                                            <input id="toEmail" name="toEmail"
+                                                   type="text" placeholder="toEmail"
+                                                   ng-model="toEmail"
+                                                   class="form-control input-md" autocomplete="off">
+
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-4 col-sm-4 control-label" for="">contact</label>
+                                        <div class="col-md-6 col-sm-6" style="position:relative;">
+                                            <input id="toEmail" name="contact"
+                                                   type="text" placeholder="contact"
+                                                   ng-model="contact"
+                                                   class="form-control input-md" autocomplete="off">
+
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-4 col-sm-4 control-label" for="">address</label>
+                                        <div class="col-md-6 col-sm-6" style="position:relative;">
+                                            <input id="toEmail" name="address"
+                                                   type="text" placeholder="address"
+                                                   ng-model="address"
+                                                   class="form-control input-md" autocomplete="off">
+
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-4 col-sm-4 control-label" for="">fromEmail</label>
+                                        <div class="col-md-6 col-sm-6" style="position:relative;">
+                                            <input id="toEmail" name="fromEmail"
+                                                   type="text" placeholder="fromEmail"
+                                                   ng-model="fromEmail"
+                                                   class="form-control input-md" autocomplete="off">
+
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-4 col-sm-4 control-label" for="">fromcontact</label>
+                                        <div class="col-md-6 col-sm-6" style="position:relative;">
+                                            <input id="toEmail" name="fromcontact"
+                                                   type="text" placeholder="fromcontact"
+                                                   ng-model="fromcontact"
+                                                   class="form-control input-md" autocomplete="off">
+
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-4 col-sm-4 control-label" for="">fromaddress</label>
+                                        <div class="col-md-6 col-sm-6" style="position:relative;">
+                                            <input id="toEmail" name="fromaddress"
+                                                   type="text" placeholder="fromaddress"
+                                                   ng-model="fromaddress"
+                                                   class="form-control input-md" autocomplete="off">
+
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-4 col-sm-4 control-label" for="">typeFlag</label>
+                                        <div class="col-md-6 col-sm-6" style="position:relative;">
+                                            <input id="toEmail" name="typeFlag"
+                                                   type="text" placeholder="typeFlag"
+                                                   ng-model="typeFlag"
+                                                   class="form-control input-md" autocomplete="off">
+
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-4 col-sm-4 control-label" for="">viewstatus</label>
+                                        <div class="col-md-6 col-sm-6" style="position:relative;">
+                                            <input id="viewstatus" name="viewstatus"
+                                                   type="text" placeholder="viewstatus"
+                                                   ng-model="viewstatus"
+                                                   class="form-control input-md" autocomplete="off">
+
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-4 col-sm-4 control-label" for="">gstIn</label>
+                                        <div class="col-md-6 col-sm-6" style="position:relative;">
+                                            <input id="gstIn" name="gstIn"
+                                                   type="text" placeholder="gstIn"
+                                                   ng-model="gstIn"
+                                                   class="form-control input-md" autocomplete="off">
+
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-4 col-sm-4 control-label" for="">state</label>
+                                        <div class="col-md-6 col-sm-6" style="position:relative;">
+                                            <input id="state" name="state"
+                                                   type="text" placeholder="state"
+                                                   ng-model="state"
+                                                   class="form-control input-md" autocomplete="off">
+
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-4 col-sm-4 control-label" for="">country</label>
+                                        <div class="col-md-6 col-sm-6" style="position:relative;">
+                                            <input id="country" name="country"
+                                                   type="text" placeholder="country"
+                                                   ng-model="country"
+                                                   class="form-control input-md" autocomplete="off">
+
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-4 col-sm-4 control-label" for="">currency</label>
+                                        <div class="col-md-6 col-sm-6" style="position:relative;">
+                                            <input id="currency" name="currency"
+                                                   type="text" placeholder="currency"
+                                                   ng-model="currency"
+                                                   class="form-control input-md" autocomplete="off">
+
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-4 col-sm-4 control-label" for="">status</label>
+                                        <div class="col-md-6 col-sm-6">
+                                            <select name="status" id="status" ng-model="status"
+                                                    class="form-control input-md" required>
+                                                <option value="Active">Active</option>
+                                                <option value="InActive">InActive</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+
+                                </fieldset>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-default" data-toggle="modal"
+                            data-target=".print-me" ng-click="savecustnotif()">Save
+                    </button>
+                    <button type="button" class="btn btn-default" ng-click="removenotif()" data-dismiss="modal">Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade ExchangeRate" tabindex="-1" id="add_new_picked_modal" role="dialog" data-backdrop="static"
+     aria-labelledby="mySmallModalLabel">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content checkout">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 id="cust-notif" class="modal-title"></h4>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <form class="form-horizontal" name="mail">
+                            <fieldset>
+
+                                <div class="form-group">
+                                    <label class="col-md-4 col-sm-4 control-label" for="">order id</label>
+                                    <div class="col-md-6 col-sm-6" style="position:relative;">
+                                        <input id="orderid" name="orderid"
+                                               type="text" readonly
+                                               ng-model="orderid"
+                                               class="form-control input-md" autocomplete="off">
+
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-4 col-sm-4 control-label" for="">rider_name<sup>*</sup></label>
+                                    <div class="col-md-6 col-sm-6" style="position:relative;">
+                                        <input id="ridername" name="ridername"
+                                               type="text"
+                                               ng-model="ridername"
+                                               class="form-control input-md" autocomplete="off">
+
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-4 col-sm-4 control-label" for="">rider_phone_number<sup>*</sup></label>
+                                    <div class="col-md-6 col-sm-6" style="position:relative;">
+                                        <input id="phonenumber" name="phonenumber"
+                                               type="text"
+                                               ng-model="phonenumber"
+                                               class="form-control input-md" autocomplete="off">
+
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" ng-show="type=='pickup'">
+                <button type="submit" class="btn btn-default" data-toggle="modal"
+                        data-target=".print-me" ng-click="savepickedup()">submit
+                </button>
+                <button type="button" class="btn btn-default" ng-click="removenotif()" data-dismiss="modal">Close
+                </button>
+            </div>
+            <div class="modal-footer" ng-show="type=='deliver'">
+                <button type="submit" class="btn btn-default" data-toggle="modal"
+                        data-target=".print-me" ng-click="saveasiandelivery()">submit
+                </button>
+                <button type="button" class="btn btn-default" ng-click="removenotif()" data-dismiss="modal">Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade ExchangeRate" tabindex="-1" id="add_new_reject_modal" role="dialog" data-backdrop="static"
+     aria-labelledby="mySmallModalLabel">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content checkout">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 id="cust-notif" class="modal-title"></h4>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <form class="form-horizontal" name="mail">
+                            <fieldset>
+
+                                <div class="form-group">
+                                    <label class="col-md-4 col-sm-4 control-label" for="">order id</label>
+                                    <div class="col-md-6 col-sm-6" style="position:relative;">
+                                        <input id="orderid" name="orderid"
+                                               type="text" readonly
+                                               ng-model="orderid"
+                                               class="form-control input-md" autocomplete="off">
+
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-4 col-sm-4 control-label"
+                                           for="">rejection_message_id<sup>*</sup></label>
+                                    <div class="col-md-6 col-sm-6" style="position:relative;">
+                                        <select id="rejectionmessage" name="rejectionmessage"
+                                                type="text"
+                                                ng-model="rejectionmessage"
+                                                class="form-control input-md" autocomplete="off">
+                                            <option value="select">Select</option>
+                                            <option value="Itemsoutofstock">Items Out Of Stock</option>
+                                            <option value="Nodeliveryboysavailable">No Delivery Boys Available</option>
+                                            <option value="Neaingclosingtime">Neaing Closing Time</option>
+                                            <option value="OutofsubZone/Area">Out of SubZone/Area</option>
+                                            <option value="Kitchenisfull">Kitchen is Full</option>
+                                        </select>
+
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-4 col-sm-4 control-label" for="">vendor_rejection_messa
+                                        ge </label>
+                                    <div class="col-md-6 col-sm-6" style="position:relative;">
+                                        <input id="vendormessage" name="vendormessage"
+                                               type="text"
+                                               ng-model="vendormessage"
+                                               class="form-control input-md" autocomplete="off">
+
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-default" data-toggle="modal"
+                        data-target=".print-me" ng-click="savereject()">submit
+                </button>
+                <button type="button" class="btn btn-default" ng-click="removenotif()" data-dismiss="modal">Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade ExchangeRate" tabindex="-1" id="add_new_confirm_modal" role="dialog" data-backdrop="static"
+     aria-labelledby="mySmallModalLabel">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content checkout">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 id="cust-notif" class="modal-title"></h4>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <form class="form-horizontal" name="mail">
+                            <fieldset>
+
+                                <div class="form-group">
+                                    <label class="col-md-4 col-sm-4 control-label" for="">order id</label>
+                                    <div class="col-md-6 col-sm-6" style="position:relative;">
+                                        <input id="orderid" name="orderid"
+                                               type="text" readonly
+                                               ng-model="orderid"
+                                               class="form-control input-md" autocomplete="off">
+
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-4 col-sm-4 control-label" for="">Delivery
+                                        Time<sup>*</sup></label>
+                                    <div class="col-md-6 col-sm-6" style="position:relative;">
+                                        <input id="deliverytime" name="deliverytime"
+                                               type="text"
+                                               ng-model="deliverytime"
+                                               class="form-control input-md" autocomplete="off">
+
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-4 col-sm-4 control-label" for="">Preparation
+                                        Time<sup>*</sup></label>
+                                    <div class="col-md-6 col-sm-6" style="position:relative;">
+                                        <input id="preptime" name="preptime"
+                                               type="text"
+                                               ng-model="preptime"
+                                               class="form-control input-md" autocomplete="off">
+
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-4 col-sm-4 control-label" for="">external_order_id</label>
+                                    <div class="col-md-6 col-sm-6" style="position:relative;">
+                                        <input id="externalid" name="externalid"
+                                               type="text" num-with-out-space
+                                               ng-model="externalid"
+                                               class="form-control input-md" autocomplete="off">
+
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-default" data-toggle="modal"
+                        data-target=".print-me" ng-click="saveconfirm()">submit
+                </button>
+                <button type="button" class="btn btn-default" ng-click="removenotif()" data-dismiss="modal">Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade ExchangeRate" tabindex="-1" id="add_new_ready_modal" role="dialog" data-backdrop="static"
+     aria-labelledby="mySmallModalLabel">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content checkout">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 id="cust-notif" class="modal-title"></h4>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <form class="form-horizontal" name="mail">
+                            <fieldset>
+
+                                <div class="form-group">
+                                    <label class="col-md-4 col-sm-4 control-label" for="">order id</label>
+                                    <div class="col-md-6 col-sm-6" style="position:relative;">
+                                        <input id="orderid" name="orderid"
+                                               type="text" readonly
+                                               ng-model="orderid"
+                                               class="form-control input-md" autocomplete="off">
+
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-4 col-sm-4 control-label" for="">Prepare
+                                        Time<sup>*</sup></label>
+                                    <div class="col-md-6 col-sm-6" style="position:relative;">
+                                        <input id="prepareTime" name="prepareTime"
+                                               type="text"
+                                               ng-model="prepareTime"
+                                               class="form-control input-md" autocomplete="off">
+
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-4 col-sm-4 control-label" for="">Customer Arrival
+                                        Time<sup>*</sup></label>
+                                    <div class="col-md-6 col-sm-6" style="position:relative;">
+                                        <input id="custarrivaltime" name="custarrivaltime"
+                                               type="text"
+                                               ng-model="custarrivaltime"
+                                               class="form-control input-md" autocomplete="off">
+
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-default" data-toggle="modal"
+                        data-target=".print-me" ng-click="saveready()">submit
+                </button>
+                <button type="button" class="btn btn-default" ng-click="removenotif()" data-dismiss="modal">Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

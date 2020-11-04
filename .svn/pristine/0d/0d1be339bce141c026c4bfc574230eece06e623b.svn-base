@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<body>
+<div class="container-fluid">
+    <div class="container cus_main_row" >
+
+        <div class="row">
+            <h2 class="pos-header-new">
+                <div><strong>Personal Information</strong></div>
+            </h2>
+        </div>
+
+        <div class="form-group">
+            <div class="input-group">
+                <span class="input-group-addon"><strong>Company Name</strong></span>
+                <input type="text" class="form-control" value="" readonly ng-model="subscriptionListUser[0].customerName">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="input-group">
+                <span class="input-group-addon"><strong>Customer Name</strong></span>
+                <input type="text" class="form-control" value="" readonly ng-model="subscriptionListUser[0].companyName">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="input-group">
+                <span class="input-group-addon"><strong>Company Registration No</strong></span>
+                <input type="text" class="form-control" value="" readonly ng-model="subscriptionListUser[0].registrationNo">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="input-group">
+                <span class="input-group-addon"><strong>Email Id</strong></span>
+                <input type="text" class="form-control" value="" readonly ng-model="subscriptionListUser[0].email">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="input-group">
+                <span class="input-group-addon"><strong>Mobile</strong></span>
+                <input type="text" class="form-control" value="" readonly ng-model="subscriptionListUser[0].phone" >
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="input-group">
+                <span class="input-group-addon"><strong>Business</strong></span>
+                <input type="text" class="form-control" value="" readonly ng-model="subscriptionListUser[0].companyName" >
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="input-group">
+                <span class="input-group-addon"><strong>Software version</strong></span>
+                <input type="text" class="form-control" value="" readonly ng-model="subscriptionListUser[0].subscriptionName">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="input-group">
+                <span class="input-group-addon"><strong>GSTIN Code</strong></span>
+                <input type="text" class="form-control" readonly value="" ng-model="subscriptionListUser[0].registrationNo">
+            </div>
+        </div>
+
+        <!--<div>-->
+            <!--<button type="button" class="btn btn-default"  ng-click="removeDetails()"data-dismiss="modal"><strong>close</strong></button>-->
+        <!--</div>-->
+    </div>
+</div>
+</body>
+</html>

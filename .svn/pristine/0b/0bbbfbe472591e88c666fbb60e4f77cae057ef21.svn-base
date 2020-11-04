@@ -1,0 +1,15 @@
+package com.hyva.idm.sass.sasspojo;
+
+import lombok.Data;
+
+import java.util.List;
+
+@Data
+public class MenuPojo {
+
+    private String keySubscription;
+    private String menuName;
+    private String sequencenO;
+    private String parentid;
+    List<MenuPojo> sunMenuList;
+}

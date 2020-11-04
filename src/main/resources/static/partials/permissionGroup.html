@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<body>
+<div class="container-fluid">
+    <div class="container cus_main_row">
+
+        <div class="row">
+            <h2 class="pos-header-new">
+                <div>PermissionGroup</div>
+            </h2>
+
+        </div>
+        <div class="row inner_row_bg">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="panel">
+                    <div class="panel-body" style="height: 65px;">
+                        <div class="col-md-4 col-lg-3 col-sm-5 col-xs-5">
+                            <form class="form-horizontal ng-pristine ng-valid">
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <p class="input-group" style="display: block;">
+                                        </p>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="col-md-9 col-lg-7 col-sm-9 col-xs-7">
+
+                            <div class="form-group">
+
+                                <div class="col-lg-2 col-md-3 col-sm-3">
+                                    <button type="button" class="btn btn-default hi_btn"
+                                            ng-click="addpermissiongroup()">Add
+                                    </button>
+                                </div>
+                                <!--<div class="col-lg-2 col-md-3 col-sm-3">-->
+                                    <!--<button id="group_import" type="button" class="btn btn-default hi_btn"-->
+                                            <!--ng-click="importPopup()">{{'group_import'|translate}}-->
+                                    <!--</button>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--<div class="col-lg-3 col-md-5 col-sm-5">-->
+                        <!--<span class="custom-dropdown custom-dropdown&#45;&#45;white">-->
+                            <!--<select ng-model="exportsType" class="form-control ">-->
+                                <!--<option value=""> {{'select_type'|translate}}</option>-->
+                                <!--<option value="pdf"> {{'pdf'|translate}}</option>-->
+                                <!--<option value="excel"> {{'excel'|translate}}</option>-->
+                            <!--</select>-->
+                        <!--</span>-->
+                            <!--</div>-->
+                            <!--<div class="col-lg-2 col-md-3 col-sm-3">-->
+                                <!--<div ng-if="exportsType"><a href="/hipos/{custId}/groupExport?type={{exportsType}}">-->
+                                    <!--<button type="button" class="btn btn-default hi_btn">{{'export'|translate}}</button>-->
+                                <!--</a></div>-->
+                                <!--<div ng-if="!exportsType">-->
+                                    <!--<button type="button" class="btn btn-default hi_btn">{{'export'|translate}}</button>-->
+                                <!--</div>-->
+
+                                <!--<div class="col-md-12 col-sm-12 col-xs-12">-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        </div>
+                    </div>
+                    </div>
+
+                    <div class="fixed-table-container">
+                        <div class="table_wrap fixed-table-container-inner">
+                            <div class="header-background"></div>
+                            <table data-toggle="table" data-cache="false" data-height="299"
+                                   class="hi_table table table-hover table-bordered table-striped table-fixed-header">
+                                <thead>
+                                <tr>
+
+                                    <th data-field="cntryname">
+                                        <div class="th-inner">featureName</div>
+                                    </th>
+                                    <th data-field="edit">
+                                        <div class="th-inner">description</div>
+                                    </th>
+
+                                    <th data-field="projectStatus">
+                                        <div class="th-inner">status</div>
+                                    </th>
+                                    <th data-field="projectStatus">
+                                        <div class="th-inner">edit</div>
+                                    </th>
+                                    <th data-field="projectStatus">
+                                        <div class="th-inner">delete</div>
+                                    </th>
+
+
+
+                                </tr>
+                                </thead>
+                                <tbody id="parentTable">
+
+                                <tr ng-repeat="permission in permissiongroupList| filter:searchText">
+
+                                    <td>{{permission.featureName}}</td>
+                                    <td>{{permission.description}}</td>
+                                    <td>{{permission.saasStatus}}</td>
+                                    <td><a id="edit_{{$index}}" href="javascript:void(0)" ng-click="editgroup(permission)" class="edit"><i class="fa fa-pencil-square-o fa-fw orange"></i></a></td>
+                                    <td><a id="delete_{{$index}}" href="javascript:void(0)" ng-click="deletegroup(permission)" class="delete"><i  class="fa fa-trash-o fa-fw orange"></i></a></td>
+
+
+
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="modal fade addCustomer" tabindex="-1" id="add_new_permission_modal" role="dialog"
+                         data-backdrop="static"
+                         aria-labelledby="mySmallModalLabel">
+                        <div class="modal-dialog modal-md">
+                            <div class="modal-content checkout">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                            aria-hidden="true">&times;</span></button>
+                                    <h4 id="permission-title" class="modal-title">AddPermission</h4>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-md-12 col-sm-12">
+                                            <form class="form-horizontal">
+                                                <fieldset>
+                                                    <div class="form-group">
+                                                        <input type="hidden" ng-model="setupobj.id"
+                                                               value="{{setupobj.id}}"/>
+                                                        <label class="col-md-4 col-sm-4 control-label">featureName</label>
+                                                        <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                            <input id="featuresName" name="featuresName"
+                                                                   type="text"
+                                                                   placeholder="featureName"
+                                                                   ng-model="featuresNameText"
+                                                                   ng-value="setupobj.featuresName"
+                                                                   class="form-control input-md" maxlength="25">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-4 col-sm-4 control-label">description</label>
+                                                        <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                            <input id="description" name="description"
+                                                                   type="text" placeholder="description"
+                                                                   ng-model="descriptiont"
+                                                                   ng-value="setupobj.descriptiont"
+                                                                   class="form-control input-md" maxlength="25">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+
+                                                        <label class="col-md-4 col-sm-4 control-label">pgKey</label>
+                                                        <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                            <input id="pgkey" name="pgkey"
+                                                                   type="text" placeholder="pgKey"
+                                                                   ng-model="pgkey"
+                                                                   ng-value="setupobj.pgkey"
+                                                                   class="form-control input-md" maxlength="25">
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="form-group">
+                                                        <label class="col-md-4 col-sm-4 control-label" for="">status</label>
+                                                        <div class="col-md-6 col-sm-6">
+                                                            <select name="itemStatus" id="itemStatus" ng-model="status"
+                                                                    class="form-control input-md" required>
+                                                                <option value="">Select</option>
+                                                                <option value="Active">Active</option>
+                                                                <option value="InActive">InActive
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </fieldset>
+                                            </form>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-toggle="modal"
+                                                        id="submit"
+                                                        ng-click="savepermisssion()">Save</button>
+
+                                                <button type="button" class="btn btn-default"
+                                                        ng-click="removepermissiongroup()" data-dismiss="modal">Close </button>
+
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--<form class="form-horizontal" id="itemDetails" method="post" ng-submit="saveImport()">-->
+    <!--<div class="modal fade" tabindex="-1" id="import_group" role="dialog" data-backdrop="static"-->
+         <!--aria-labelledby="mySmallModalLabel_1">-->
+        <!--<div class="modal-dialog modal-lg">-->
+            <!--<div class="modal-content">-->
+                <!--<div class="modal-header">-->
+                    <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span-->
+                            <!--aria-hidden="true">&times;</span></button>-->
+                    <!--<h4 class="modal-title">Import group</h4>-->
+                <!--</div>-->
+                <!--<a href="resource\static.resource.ImportSheets\PermissionGroup.xlsx" download>{{'download_excelsheet'|translate}}</a>-->
+                <!--<div class="modal-body checkout-body">-->
+                    <!--<div class="col-md-6">-->
+                        <!--<div class="form-group">-->
+                            <!--<div class="col-xs-5">-->
+                                <!--<input type="file" name="myFile"-->
+                                       <!--id="myFile"/>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="modal-footer">-->
+                    <!--<button type="submit" class="btn btn-default" data-toggle="modal">{{'save'|translate}}</button>-->
+                    <!--<button type="button" class="btn btn-default" data-dismiss="modal">{{'close'|translate}}</button>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--</form>-->
+
+
+</body>
+</html>
